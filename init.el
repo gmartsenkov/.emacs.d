@@ -19,7 +19,7 @@
  '(doom-modeline-mode t)
  '(package-selected-packages
    (quote
-    (exec-path-from-shell alchemist company elixir-mode magit ace-window dashboard doom-themes doom-modeline which-key ivy rspec-mode ruby-end projectile use-package))))
+    (forge yasnippet-snippets elixir-yasnippets yasnippets exec-path-from-shell alchemist company elixir-mode magit ace-window dashboard doom-themes doom-modeline which-key ivy rspec-mode ruby-end projectile use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -65,7 +65,7 @@
 (setq company-tooltip-limit 10) 
 (setq company-idle-delay .1)
 (setq company-tooltip-align-annotations t)
-(global-company-mode t)
+(add-hook 'after-init-hook 'global-company-mode)
 
 ;; IVY
 (use-package ivy :ensure t)
@@ -87,8 +87,14 @@
 
 ;; MAGIT
 (use-package magit :ensure t)
+(use-package forge :ensure t)
 (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1)
 
 ;; Elixir
 (use-package elixir-mode :ensure t)
 (use-package alchemist :ensure t)
+
+;; Yasnippets
+(use-package yasnippet :ensure t)
+(use-package yasnippet-snippets :ensure t)
+(yas-global-mode 1)
