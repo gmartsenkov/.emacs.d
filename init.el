@@ -89,10 +89,12 @@
 (use-package ace-window :ensure t)
 (global-set-key (kbd "M-o") 'ace-window)
 
-;; MAGIT
+;; MAGIT AND OTHER GIT STUFF
 (use-package magit :ensure t)
 (use-package forge :ensure t)
 (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1)
+(use-package diff-hl :ensure t)
+(global-diff-hl-mode)
 
 ;; Elixir
 (use-package elixir-mode :ensure t)
