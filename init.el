@@ -67,6 +67,10 @@
 (setq company-tooltip-align-annotations t)
 (add-hook 'after-init-hook 'global-company-mode)
 
+;; Flycheck
+(use-package flycheck :ensure t)
+(global-flycheck-mode t)
+
 ;; IVY
 (use-package ivy :ensure t)
 (ivy-mode 1)
