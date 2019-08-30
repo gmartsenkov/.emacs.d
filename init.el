@@ -116,9 +116,9 @@
 
 ;; ACE WINDOWS
 (use-package ace-window :ensure t)
-(global-set-key (kbd "M-o") 'ace-window)
+(global-set-key (kbd "C-z") 'ace-window)
 
-;; MAGIT AND OTHER GIT STUFF
+;; Magit AND OTHER GIT STUFF
 (use-package magit :ensure t)
 (use-package forge :ensure t)
 (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1)
