@@ -133,3 +133,45 @@
 (use-package yasnippet :ensure t)
 (use-package yasnippet-snippets :ensure t)
 (yas-global-mode 1)
+
+;; Take care of trailing whitespaces
+(use-package ws-butler :ensure t)
+(add-hook 'prog-mode-hook #'ws-butler-mode)
+
+;; expand-region
+(use-package expand-region :ensure t)
+(global-set-key (kbd "C-=") 'er/expand-region)
+
+;; ace-jump-mode
+(use-package ace-jump-mode :ensure t)
+(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+
+;; JS
+(use-package js2-mode :ensure t)
+(setq-default js2-basic-offset 2)
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-jsx-mode))
+
+;;ag.el
+(use-package ag :ensure t)
+
+;;anzu.el
+(use-package anzu :ensure t)
+(global-anzu-mode +1)
+
+;;shell-pop
+(use-package shell-pop :ensure t)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(shell-pop-default-directory "/Users/martsenkovg")
+ '(shell-pop-shell-type (quote ("terminal" "*terminal*" (lambda nil (term shell-pop-term-shell)))))
+ '(shell-pop-term-shell "/bin/zsh")
+ '(shell-pop-universal-key "C-t")
+ '(shell-pop-window-size 40)
+ '(shell-pop-full-span t)
+ '(shell-pop-window-position "right"))
+
+(define-key term-raw-map (kbd "C-t") 'shell-pop)
