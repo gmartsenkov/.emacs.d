@@ -144,7 +144,7 @@
 
 ;; ace-jump-mode
 (use-package ace-jump-mode :ensure t)
-(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+(define-key global-map (kbd "C-c ,") 'ace-jump-mode)
 
 ;; JS
 (use-package js2-mode :ensure t)

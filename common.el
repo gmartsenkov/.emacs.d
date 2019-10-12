@@ -12,4 +12,4 @@
 (setq coding-system-for-write 'utf-8 )
 (setq sentence-end-double-space nil)
 (setq default-fill-column 80)
-(global-display-line-numbers-mode)
+(global-set-key (kbd "M-a") 'goto-line)
