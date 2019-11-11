@@ -45,6 +45,7 @@
 (setq company-idle-delay .1)
 (setq company-tooltip-align-annotations t)
 (add-hook 'after-init-hook 'global-company-mode)
+(setq doom-modeline-buffer-encoding nil)
 
 ;; Flycheck
 (use-package flycheck :ensure t)
@@ -61,8 +62,8 @@
 (setq rspec-primary-source-dirs '("app"))
 
 ;; WHICH-KEY
-(use-package which-key :ensure t)
-(which-key-mode)
+;;(use-package which-key :ensure t)
+;;(which-key-mode)
 
 ;; ACE WINDOWS
 (use-package ace-window :ensure t)
@@ -70,11 +71,12 @@
 
 ;; Magit AND OTHER GIT STUFF
 (use-package magit :ensure t)
-(use-package forge :ensure t)
+;;(use-package forge :ensure t)
 (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1)
-(use-package diff-hl :ensure t)
-(global-diff-hl-mode)
 (define-key global-map (kbd "C-x g") 'magit)
+
+;;(use-package diff-hl :ensure t)
+;;(global-diff-hl-mode)
 
 ;; Elixir
 (use-package elixir-mode :ensure t)
@@ -123,3 +125,5 @@
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
+
+(use-package cider :ensure t)

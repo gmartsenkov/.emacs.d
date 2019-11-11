@@ -10,6 +10,12 @@
 (setq ring-bell-function 'ignore )
 (setq coding-system-for-read 'utf-8 )
 (setq coding-system-for-write 'utf-8 )
+
 (setq sentence-end-double-space nil)
 (setq default-fill-column 80)
 (global-set-key (kbd "M-a") 'goto-line)
+(global-set-key (kbd "C-k") 'kill-whole-line)
+(global-set-key (kbd "C-c a r") 'anzu-query-replace-regexp)
+(global-set-key (kbd "C-c j r") 'projectile-find-file)
+
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
