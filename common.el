@@ -13,9 +13,55 @@
 
 (setq sentence-end-double-space nil)
 (setq default-fill-column 80)
+(setq compilation-scroll-output t)
 (global-set-key (kbd "M-a") 'goto-line)
-(global-set-key (kbd "C-k") 'kill-whole-line)
 (global-set-key (kbd "C-c a r") 'anzu-query-replace-regexp)
 (global-set-key (kbd "C-c j r") 'projectile-find-file)
-
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+
+(global-set-key (kbd "M-[") 'sp-backward-unwrap-sexp)
+(global-set-key (kbd "M-]") 'sp-unwrap-sexp)
+(global-set-key (kbd "M-p") 'smartparens-strict-mode)
+(global-set-key (kbd "C-c j r") 'projectile-find-file)
+
+(bind-keys
+ :map smartparens-mode-map
+ ("C-M-a" . sp-beginning-of-sexp)
+ ("C-M-e" . sp-end-of-sexp)
+
+ ("M-<down>" . sp-backward-down-sexp)
+ ("M-<up>"   . sp-backward-up-sexp)
+ ("C-M-f" . sp-forward-sexp)
+ ("C-M-b" . sp-backward-sexp)
+ ("C-M-n" . sp-next-sexp)
+ ("C-M-p" . sp-previous-sexp)
+
+ ("C-<right>" . sp-forward-slurp-sexp)
+ ("M-<right>" . sp-forward-barf-sexp)
+ ("C-<left>"  . sp-backward-slurp-sexp)
+ ("M-<left>"  . sp-backward-barf-sexp)
+
+ ("C-M-t" . sp-transpose-sexp)
+ ("C-M-k" . sp-kill-sexp)
+ ("C-k"   . sp-kill-hybrid-sexp)
+ ("M-k"   . sp-backward-kill-sexp)
+ ("C-M-w" . sp-copy-sexp)
+ ("C-M-d" . delete-sexp)
+
+ ("M-<backspace>" . backward-kill-word)
+ ("C-<backspace>" . sp-backward-kill-word)
+ ([remap sp-backward-kill-word] . backward-kill-word)
+
+ ("M-[" . sp-backward-unwrap-sexp)
+ ("M-]" . sp-unwrap-sexp)
+
+ ("C-x C-t" . sp-transpose-hybrid-sexp)
+
+ ("C-c ("  . wrap-with-parens)
+ ("C-c ["  . wrap-with-brackets)
+ ("C-c {"  . wrap-with-braces)
+ ("C-c '"  . wrap-with-single-quotes)
+ ("C-c \"" . wrap-with-double-quotes)
+ ("C-c _"  . wrap-with-underscores)
+ ("C-c `"  . wrap-with-back-quotes)
+ )
