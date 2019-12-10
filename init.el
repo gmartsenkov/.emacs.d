@@ -177,6 +177,23 @@
 (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
 (add-hook 'markdown-mode-hook 'turn-on-smartparens-strict-mode)
 
+
+(use-package lsp-mode
+  :ensure t
+  :commands (lsp lsp-deferred)
+  :hook (js-mode . lsp-deferred)	 
+  :config
+  (add-hook 'js-mode-hook (lambda () (setq js-indent-level 2)))
+  (add-hook 'js-mode-hook (lambda () (setq tab-width 2)))
+
+  (defun fmt-config-hooks ()
+    (add-hook 'before-save-hook #'lsp-format-buffer t t)
+    (add-hook 'before-save-hook #'lsp-organize-imports t t))
+  (add-hook 'prog-mode-hook #'fmt-config-hooks))
+
+(use-package company-lsp :ensure t)
+(push 'company-lsp company-backends)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
