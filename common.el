@@ -17,6 +17,7 @@
 (global-set-key (kbd "M-a") 'goto-line)
 (global-set-key (kbd "C-c a r") 'anzu-query-replace-regexp)
 (global-set-key (kbd "C-c j r") 'projectile-find-file)
+
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
 (global-set-key (kbd "M-[") 'sp-backward-unwrap-sexp)
