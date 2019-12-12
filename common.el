@@ -1,4 +1,4 @@
-(set-frame-font "Hack-15")
+(set-frame-font "Hack Nerd Font-15")
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8)
 (menu-bar-mode -1)

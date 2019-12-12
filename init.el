@@ -179,16 +179,23 @@
 (add-hook 'markdown-mode-hook 'turn-on-smartparens-strict-mode)
 
 
-(use-package lsp-mode
-  :ensure t
-  :commands (lsp lsp-deferred)
-  :hook (js-mode . lsp-deferred)	 
-  :config
-  (add-hook 'js-mode-hook (lambda () (setq js-indent-level 2)))
-  (add-hook 'js-mode-hook (lambda () (setq tab-width 2))))
+;; (use-package lsp-mode
+;;   :ensure t
+;;   :commands (lsp lsp-deferred)
+;;   :hook (js-mode . lsp-deferred)
+;;   :config
+;;   (add-hook 'js-mode-hook (lambda () (setq js-indent-level 4)))
+;;   (add-hook 'js-mode-hook (lambda () (setq tab-width 4))))
 
-(use-package company-lsp :ensure t)
-(push 'company-lsp company-backends)
+;; (use-package company-lsp :ensure t)
+;; (push 'company-lsp company-backends)
+
+(use-package tide
+  :ensure t
+  :after (js company)
+  :hook ((js-mode . tide-setup)
+         (js-mode . tide-hl-identifier-mode)
+         (before-save . tide-format-before-save)))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
