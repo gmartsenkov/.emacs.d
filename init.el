@@ -8,7 +8,7 @@
 
 (use-package doom-themes :ensure t)
 
-(load-theme 'doom-dracula t)
+(load-theme 'doom-gruvbox t)
 (load-file "~/.emacs.d/common.el")
 
 ;; MacOS Path Fix
@@ -205,7 +205,7 @@
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
 (add-hook 'web-mode-hook
           (lambda ()
-            (when (string-equal "jsx" (file-name-extension buffer-file-name))
+            (when (string-equal "js" (file-name-extension buffer-file-name))
               (setup-tide-mode))))
 ;; configure jsx-tide checker to run after your default jsx checker
 (flycheck-add-mode 'javascript-eslint 'web-mode)
@@ -219,6 +219,14 @@
 (global-set-key (kbd "M-c") 'duplicate-thing)
 
 (use-package json-mode :ensure t)
+(use-package csv-mode :ensure t)
+
+(projectile-register-project-type 'npm '("package.json")
+                                  :compile "npm install"
+                                  :test "npm test"
+                                  :run "npm run start"
+                                  :test-suffix ".spec")
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -226,9 +234,9 @@
  ;; If there is more than one, they won't work right.
  '(cider-auto-test-mode t)
  '(custom-safe-themes
-   '("bd6ced8badda12f95e16e641d76d861de096c691720ede6388a226914e97cf23" "2d392972cbe692ee4ac61dc79907af65051450caf690a8c4d36eb40c1857ba7d" "7d56fb712ad356e2dacb43af7ec255c761a590e1182fe0537e1ec824b7897357" "c8f959fb1ea32ddfc0f50db85fea2e7d86b72bb4d106803018be1c3566fd6c72" "1728dfd9560bff76a7dc6c3f61e9f4d3e6ef9d017a83a841c117bd9bebe18613" "728eda145ad16686d4bbb8e50d540563573592013b10c3e2defc493f390f7d83" default))
+   '("a4b9eeeabde73db909e6b080baf29d629507b44276e17c0c411ed5431faf87dd" "e7666261f46e2f4f42fd1f9aa1875bdb81d17cc7a121533cad3e0d724f12faf2" "fe76f3d5094967034192f6a505085db8db6deb0e135749d9a54dc488d6d3ee2f" "bc99493670a29023f99e88054c9b8676332dda83a37adb583d6f1e4c13be62b8" "a02836a5807a687c982d47728e54ff42a91bc9e6621f7fe7205b0225db677f07" "e47c0abe03e0484ddadf2ae57d32b0f29f0b2ddfe7ec810bd6d558765d9a6a6c" "1ca1f43ca32d30b05980e01fa60c107b02240226ac486f41f9b790899f6f6e67" "32fd809c28baa5813b6ca639e736946579159098d7768af6c68d78ffa32063f4" "1897b97f63e91a792e8540c06402f29d5edcbfb0aafd64b1b14270663d6868ee" "15ba8081651869ec689c9004288bed79003de5b4ee9c51a9d4a208d9e3439706" "4b0b568d63b1c6f6dddb080b476cfba43a8bbc34187c3583165e8fb5bbfde3dc" "c6b93ff250f8546c7ad0838534d46e616a374d5cb86663a9ad0807fd0aeb1d16" "0fe9f7a04e7a00ad99ecacc875c8ccb4153204e29d3e57e9669691e6ed8340ce" "bd6ced8badda12f95e16e641d76d861de096c691720ede6388a226914e97cf23" "2d392972cbe692ee4ac61dc79907af65051450caf690a8c4d36eb40c1857ba7d" "7d56fb712ad356e2dacb43af7ec255c761a590e1182fe0537e1ec824b7897357" "c8f959fb1ea32ddfc0f50db85fea2e7d86b72bb4d106803018be1c3566fd6c72" "1728dfd9560bff76a7dc6c3f61e9f4d3e6ef9d017a83a841c117bd9bebe18613" "728eda145ad16686d4bbb8e50d540563573592013b10c3e2defc493f390f7d83" default))
  '(package-selected-packages
-   '(web-mode duplicate-thing js2-mode smex inf-ruby rubocop magit yasnippet-snippets ws-butler which-key use-package tide swiper smartparens shell-pop ruby-end rspec-mode robe projectile ivy-rich indium forge flycheck-pos-tip flycheck-clojure expand-region exec-path-from-shell elixir-yasnippets doom-themes doom-modeline diff-hl dashboard crystal-mode anzu ample-theme alchemist ag ace-window ace-jump-mode ac-js2)))
+   '(csv-mode web-mode duplicate-thing js2-mode smex inf-ruby rubocop magit yasnippet-snippets ws-butler which-key use-package tide swiper smartparens shell-pop ruby-end rspec-mode robe projectile ivy-rich indium forge flycheck-pos-tip flycheck-clojure expand-region exec-path-from-shell elixir-yasnippets doom-themes doom-modeline diff-hl dashboard crystal-mode anzu ample-theme alchemist ag ace-window ace-jump-mode ac-js2)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
