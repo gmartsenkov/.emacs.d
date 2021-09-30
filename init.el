@@ -103,7 +103,9 @@
 
 (use-package cider :ensure t)
 (use-package bundler :ensure t)
-(use-package rspec-mode :ensure t) ;; When you've hit the breakpoint, hit C-x C-q to enable inf-ruby.
+(use-package rspec-mode
+  :diminish rspec-mode
+  :ensure t) ;; When you've hit the breakpoint, hit C-x C-q to enable inf-ruby.
 (use-package inf-ruby
   :ensure t
   :init
