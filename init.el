@@ -41,6 +41,7 @@
   :config
   (setq lsp-clients-elixir-server-executable '("~/elixir-ls/release/language_server.sh"))
   (setq lsp-enable-file-watchers nil)
+  (setq lsp-headerline-breadcrumb-enable nil)
   :init
   (add-hook 'elixir-mode-hook #'lsp)
   (add-hook 'ruby-mode-hook #'lsp))
