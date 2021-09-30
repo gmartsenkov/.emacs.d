@@ -28,7 +28,8 @@
   (evil-define-key 'normal 'global (kbd "<leader>p") 'projectile-command-map)
   (evil-define-key 'normal 'global (kbd "<leader>gg") 'magit)
   (evil-define-key 'normal 'global (kbd "<leader>SPC") 'projectile-find-file)
-  (evil-define-key 'normal 'global (kbd "<leader>ff") 'find-file))
+  (evil-define-key 'normal 'global (kbd "<leader>ff") 'find-file)
+  (evil-define-key 'normal ruby-mode-map (kbd "<leader>mtt") 'projectile-toggle-between-implementation-and-test))
 
 (use-package ivy
   :ensure t
@@ -72,12 +73,19 @@
   (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize)))
 
+(use-package which-key
+  :ensure t
+  :init
+  (which-key-mode))
+(use-package cider :ensure t)
+  
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(ivy evil-collection evil use-package)))
+ '(package-selected-packages '(which-key cider ivy evil-collection evil use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
