@@ -12,3 +12,6 @@
 (setq sentence-end-double-space nil)
 (setq default-fill-column 80)
 (setq compilation-scroll-output t)
+(setq ruby-indent-level 2)
+(setq ruby-insert-encoding-magic-comment nil)
+(setq rspec-primary-source-dirs '("app"))

@@ -29,6 +29,15 @@
   :init
   (ivy-mode))
 
+(use-package lsp-mode
+  :ensure t
+  :config
+  (setq lsp-clients-elixir-server-executable '("~/elixir-ls/release/language_server.sh"))
+  (setq lsp-enable-file-watchers nil)
+  :init
+  (add-hook 'elixir-mode-hook #'lsp)
+  (add-hook 'ruby-mode-hook #'lsp))
+
 (use-package evil-collection
   :after (evil ivy)
   :ensure t
@@ -50,6 +59,12 @@
   :init
   (projectile-mode t)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+
+(use-package exec-path-from-shell
+  :ensure t
+  :init
+  (when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize)))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
