@@ -22,7 +22,13 @@
   (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
   (setq evil-want-keybinding nil)
   :config
-  (evil-mode 1))
+  (evil-mode 1)
+  (evil-set-leader 'normal (kbd "SPC"))
+  (evil-define-key 'normal 'global (kbd "<leader>bb") 'ivy-switch-buffer)
+  (evil-define-key 'normal 'global (kbd "<leader>p") 'projectile-command-map)
+  (evil-define-key 'normal 'global (kbd "<leader>gg") 'magit)
+  (evil-define-key 'normal 'global (kbd "<leader>SPC") 'projectile-find-file)
+  (evil-define-key 'normal 'global (kbd "<leader>ff") 'find-file))
 
 (use-package ivy
   :ensure t
