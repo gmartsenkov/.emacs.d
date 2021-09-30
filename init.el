@@ -15,7 +15,10 @@
 (eval-when-compile
   (require 'use-package))
 
-(use-package magit :ensure t)
+(use-package magit
+  :ensure t
+  :config
+  (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1))
 (use-package evil
   :after (projectile rspec-mode bundler)
   :ensure t
@@ -35,6 +38,7 @@
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>mtv") 'rspec-verify)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>mtc") 'rspec-verify-single)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>mta") 'rspec-verify-all)
+  (evil-define-key 'normal ruby-mode-map (kbd "<leader>mp") 'rubocop-check-project)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>mbi") 'bundle-install))
 
 (use-package ivy
@@ -86,11 +90,13 @@
   (which-key-mode))
 
 (use-package cider :ensure t)
-(use-package bundler)
-(use-package rspec-mode) ;; When you've hit the breakpoint, hit C-x C-q to enable inf-ruby.
+(use-package bundler :ensure t)
+(use-package rspec-mode :ensure t) ;; When you've hit the breakpoint, hit C-x C-q to enable inf-ruby.
 (use-package inf-ruby
+  :ensure t
   :init
   (add-hook 'rspec-mode-hook 'inf-ruby-switch-setup))
+(use-package rubocop :ensure t)
   
 
 (custom-set-variables
@@ -99,7 +105,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(rspec-mode bundler parseedn which-key cider ivy evil-collection evil use-package)))
+   '(rubocop rspec-mode bundler parseedn which-key cider ivy evil-collection evil use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
