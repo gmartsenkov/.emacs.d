@@ -45,6 +45,12 @@
   :init
   (add-hook 'emacs-lisp-mode-hook 'company-mode))
 
+(use-package projectile
+  :ensure t
+  :init
+  (projectile-mode t)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
