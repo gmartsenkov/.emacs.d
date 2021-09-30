@@ -86,8 +86,11 @@
   (which-key-mode))
 
 (use-package cider :ensure t)
-(use-package bundler :ensure t)
-(use-package rspec-mode :ensure t)
+(use-package bundler)
+(use-package rspec-mode)
+(use-package inf-ruby
+  :init
+  (add-hook 'rspec-mode-hook 'inf-ruby-switch-setup))
   
 
 (custom-set-variables
