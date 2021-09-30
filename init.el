@@ -87,7 +87,7 @@
 
 (use-package cider :ensure t)
 (use-package bundler)
-(use-package rspec-mode)
+(use-package rspec-mode) ;; When you've hit the breakpoint, hit C-x C-q to enable inf-ruby.
 (use-package inf-ruby
   :init
   (add-hook 'rspec-mode-hook 'inf-ruby-switch-setup))
