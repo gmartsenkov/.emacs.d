@@ -17,6 +17,7 @@
 
 (use-package magit :ensure t)
 (use-package evil
+  :after (projectile rspec-mode bundler)
   :ensure t
   :init
   (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
@@ -31,6 +32,9 @@
   (evil-define-key 'normal 'global (kbd "<leader>SPC") 'projectile-find-file)
   (evil-define-key 'normal 'global (kbd "<leader>ff") 'find-file)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>mtt") 'projectile-toggle-between-implementation-and-test)
+  (evil-define-key 'normal ruby-mode-map (kbd "<leader>mtv") 'rspec-verify)
+  (evil-define-key 'normal ruby-mode-map (kbd "<leader>mtc") 'rspec-verify-single)
+  (evil-define-key 'normal ruby-mode-map (kbd "<leader>mta") 'rspec-verify-all)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>mbi") 'bundle-install))
 
 (use-package ivy
@@ -80,8 +84,10 @@
   :ensure t
   :init
   (which-key-mode))
+
 (use-package cider :ensure t)
 (use-package bundler :ensure t)
+(use-package rspec-mode :ensure t)
   
 
 (custom-set-variables
@@ -90,7 +96,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(bundler parseedn which-key cider ivy evil-collection evil use-package)))
+   '(rspec-mode bundler parseedn which-key cider ivy evil-collection evil use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
