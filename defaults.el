@@ -2,6 +2,7 @@
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8)
 (tool-bar-mode -1)
+(display-time)
 (setq delete-old-versions -1 )
 (setq backup-directory-alist `(("." . "~/.emacs.d/backups")) )
 (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)) )

@@ -15,6 +15,13 @@
 (eval-when-compile
   (require 'use-package))
 
+(use-package diminish
+  :ensure t
+  :init
+  (diminish 'evil-collection-unimpaired-mode)
+  (diminish 'eldoc-mode)
+  (diminish 'auto-revert-mode))
+
 (use-package magit
   :ensure t
   :config
@@ -43,11 +50,13 @@
 
 (use-package ivy
   :ensure t
+  :diminish ivy-mode
   :init
   (ivy-mode))
 
 (use-package lsp-mode
   :ensure t
+  :diminish lsp-mode
   :config
   (setq lsp-clients-elixir-server-executable '("~/elixir-ls/release/language_server.sh"))
   (setq lsp-enable-file-watchers nil)
@@ -69,11 +78,13 @@
 
 (use-package company
   :ensure t
+  :diminish company-mode
   :init
   (add-hook 'emacs-lisp-mode-hook 'company-mode))
 
 (use-package projectile
   :ensure t
+  :diminish projectile-mode
   :init
   (projectile-mode t)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
@@ -85,6 +96,7 @@
   (exec-path-from-shell-initialize)))
 
 (use-package which-key
+  :diminish which-key-mode
   :ensure t
   :init
   (which-key-mode))
@@ -110,7 +122,7 @@
  '(custom-safe-themes
    '("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
  '(package-selected-packages
-   '(spacemacs-theme rubocop rspec-mode bundler parseedn which-key cider ivy evil-collection evil use-package)))
+   '(diminish simple-modeline spacemacs-theme rubocop rspec-mode bundler parseedn which-key cider ivy evil-collection evil use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
