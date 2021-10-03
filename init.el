@@ -27,7 +27,7 @@
   :config
   (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1))
 (use-package evil
-  :after (projectile rspec-mode bundler)
+  :after (projectile rspec-mode bundler perspective)
   :ensure t
   :init
   (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
@@ -41,6 +41,13 @@
   (evil-define-key 'normal 'global (kbd "<leader>gg") 'magit)
   (evil-define-key 'normal 'global (kbd "<leader>SPC") 'projectile-find-file)
   (evil-define-key 'normal 'global (kbd "<leader>ff") 'find-file)
+  (evil-define-key 'normal 'global (kbd "<leader>TAB TAB") 'persp-switch)
+  (evil-define-key 'normal 'global (kbd "<leader>TAB k") 'persp-kill)
+  (evil-define-key 'normal 'global (kbd "<leader>TAB 1") (lambda () (interactive) (persp-switch-by-number 1)))
+  (evil-define-key 'normal 'global (kbd "<leader>TAB 2") (lambda () (interactive) (persp-switch-by-number 2)))
+  (evil-define-key 'normal 'global (kbd "<leader>TAB 3") (lambda () (interactive) (persp-switch-by-number 3)))
+  (evil-define-key 'normal 'global (kbd "<leader>TAB 4") (lambda () (interactive) (persp-switch-by-number 4)))
+  (evil-define-key 'normal 'global (kbd "<leader>TAB 5") (lambda () (interactive) (persp-switch-by-number 5)))
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>mtt") 'projectile-toggle-between-implementation-and-test)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>mtv") 'rspec-verify)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>mtc") 'rspec-verify-single)
@@ -124,6 +131,13 @@
   :init
   (doom-modeline-mode))
 
+(use-package perspective :ensure t)
+(use-package persp-projectile
+  :after (perspective projectile)
+  :ensure t
+  :init
+  (persp-mode))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -132,7 +146,7 @@
  '(custom-safe-themes
    '("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
  '(package-selected-packages
-   '(doom-modeline diminish simple-modeline spacemacs-theme rubocop rspec-mode bundler parseedn which-key cider ivy evil-collection evil use-package)))
+   '(perspective doom-modeline diminish simple-modeline spacemacs-theme rubocop rspec-mode bundler parseedn which-key cider ivy evil-collection evil use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
