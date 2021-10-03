@@ -45,6 +45,7 @@
   (evil-define-key 'normal 'global (kbd "<leader>c f") 'flymake-show-diagnostics-buffer)
   (evil-define-key 'normal 'global (kbd "<leader>c d") 'lsp-find-definition)
   (evil-define-key 'normal 'global (kbd "<leader>c r") 'lsp-find-references)
+  (evil-define-key 'normal 'global (kbd "<leader>c s") 'lsp-ivy-workspace-symbol)
   (evil-define-key 'normal 'global (kbd "<leader>TAB TAB") 'persp-switch)
   (evil-define-key 'normal 'global (kbd "<leader>TAB k") 'persp-kill)
   (evil-define-key 'normal 'global (kbd "<leader>TAB 1") (lambda () (interactive) (persp-switch-by-number 1)))
@@ -75,7 +76,7 @@
   :init
   (add-hook 'elixir-mode-hook #'lsp)
   (add-hook 'ruby-mode-hook #'lsp))
-
+(use-package lsp-ivy :ensure t)
 (use-package evil-collection
   :after (evil ivy)
   :ensure t
@@ -175,7 +176,7 @@
  '(custom-safe-themes
    '("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
  '(package-selected-packages
-   '(git-gutter-fringe git-link perspective doom-modeline diminish simple-modeline spacemacs-theme rubocop rspec-mode bundler parseedn which-key cider ivy evil-collection evil use-package)))
+   '(lsp-ivy git-gutter-fringe git-link perspective doom-modeline diminish simple-modeline spacemacs-theme rubocop rspec-mode bundler parseedn which-key cider ivy evil-collection evil use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
