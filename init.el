@@ -42,6 +42,9 @@
   (evil-define-key 'normal 'global (kbd "<leader>gl") 'git-link)
   (evil-define-key 'normal 'global (kbd "<leader>SPC") 'projectile-find-file)
   (evil-define-key 'normal 'global (kbd "<leader>ff") 'find-file)
+  (evil-define-key 'normal 'global (kbd "<leader>c f") 'flymake-show-diagnostics-buffer)
+  (evil-define-key 'normal 'global (kbd "<leader>c d") 'lsp-find-definition)
+  (evil-define-key 'normal 'global (kbd "<leader>c r") 'lsp-find-references)
   (evil-define-key 'normal 'global (kbd "<leader>TAB TAB") 'persp-switch)
   (evil-define-key 'normal 'global (kbd "<leader>TAB k") 'persp-kill)
   (evil-define-key 'normal 'global (kbd "<leader>TAB 1") (lambda () (interactive) (persp-switch-by-number 1)))
@@ -140,6 +143,25 @@
   (persp-mode))
 
 (use-package git-link :ensure t)
+(use-package git-gutter-fringe
+  :ensure t
+  :init
+  (defun git-gutter-maybe ()
+    "Enable `git-gutter-mode' in non-remote buffers."
+    (when (and (buffer-file-name)
+	       (not (file-remote-p (buffer-file-name))))
+      (git-gutter-mode +1)))
+  (add-hook 'text-mode #'git-gutter-maybe)
+  (add-hook 'prog-mode #'git-gutter-maybe)
+  (add-hook 'conf-mode #'git-gutter-maybe)
+  :config
+  (add-hook 'focus-in-hook #'git-gutter:update-all-windows)
+  (defun update-git-gutter ()
+    "Refresh git-gutter on ESC. Return nil to prevent shadowing other
+`+evil-esc-hook' hooks."
+    (when git-gutter-mode
+      (ignore (git-gutter))))
+  (add-hook '+evil-esc-hook #'update-git-gutter t))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -149,7 +171,7 @@
  '(custom-safe-themes
    '("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
  '(package-selected-packages
-   '(git-link perspective doom-modeline diminish simple-modeline spacemacs-theme rubocop rspec-mode bundler parseedn which-key cider ivy evil-collection evil use-package)))
+   '(git-gutter-fringe git-link perspective doom-modeline diminish simple-modeline spacemacs-theme rubocop rspec-mode bundler parseedn which-key cider ivy evil-collection evil use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
