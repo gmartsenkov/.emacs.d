@@ -58,7 +58,13 @@
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>mtc") 'rspec-verify-single)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>mta") 'rspec-verify-all)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>mp") 'rubocop-check-project)
-  (evil-define-key 'normal ruby-mode-map (kbd "<leader>mbi") 'bundle-install))
+  (evil-define-key 'normal ruby-mode-map (kbd "<leader>mbi") 'bundle-install)
+  (evil-define-key 'normal clojure-mode-map (kbd "<leader>mc") 'cider)
+  (evil-define-key 'normal clojure-mode-map (kbd "<leader>mtt") 'projectile-toggle-between-implementation-and-test)
+  (evil-define-key 'normal clojure-mode-map (kbd "<leader>mta") 'cider-test-run-project-tests)
+  (evil-define-key 'normal clojure-mode-map (kbd "<leader>mtv") 'cider-test-run-test)
+  (evil-define-key 'normal clojure-mode-map (kbd "<leader>eb") 'cider-eval-buffer)
+  (evil-define-key 'normal clojure-mode-map (kbd "<leader>ee") 'cider-eval-last-sexp))
 
 (use-package ivy
   :ensure t
