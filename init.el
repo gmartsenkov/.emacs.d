@@ -64,7 +64,9 @@
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>mta") 'cider-test-run-project-tests)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>mtv") 'cider-test-run-test)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>eb") 'cider-eval-buffer)
-  (evil-define-key 'normal clojure-mode-map (kbd "<leader>ee") 'cider-eval-last-sexp))
+  (evil-define-key 'normal clojure-mode-map (kbd "<leader>ee") 'cider-eval-last-sexp)
+  (evil-define-key 'normal emacs-lisp-mode-map (kbd "<leader>eb") 'eval-buffer)
+  (evil-define-key 'normal emacs-lisp-mode-map (kbd "<leader>ee") 'eval-last-sexp))
 
 (use-package ivy
   :ensure t
