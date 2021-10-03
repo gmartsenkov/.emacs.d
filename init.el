@@ -143,25 +143,29 @@
   (persp-mode))
 
 (use-package git-link :ensure t)
+(use-package git-gutter :ensure t)
 (use-package git-gutter-fringe
-  :ensure t
+  :diminish git-gutter-mode
+  :after git-gutter
+  :demand fringe-helper
   :init
-  (defun git-gutter-maybe ()
-    "Enable `git-gutter-mode' in non-remote buffers."
-    (when (and (buffer-file-name)
-	       (not (file-remote-p (buffer-file-name))))
-      (git-gutter-mode +1)))
-  (add-hook 'text-mode #'git-gutter-maybe)
-  (add-hook 'prog-mode #'git-gutter-maybe)
-  (add-hook 'conf-mode #'git-gutter-maybe)
+  (add-hook 'text-mode-hook #'git-gutter-mode)
+  (add-hook 'prog-mode-hook #'git-gutter-mode)
+  (add-hook 'conf-mode-hook #'git-gutter-mode)
   :config
-  (add-hook 'focus-in-hook #'git-gutter:update-all-windows)
-  (defun update-git-gutter ()
-    "Refresh git-gutter on ESC. Return nil to prevent shadowing other
-`+evil-esc-hook' hooks."
-    (when git-gutter-mode
-      (ignore (git-gutter))))
-  (add-hook '+evil-esc-hook #'update-git-gutter t))
+  ;; subtle diff indicators in the fringe
+  ;; places the git gutter outside the margins.
+  (setq-default fringes-outside-margins t)
+  ;; thin fringe bitmaps
+  (define-fringe-bitmap 'git-gutter-fr:added
+    [224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224]
+    nil nil 'center)
+  (define-fringe-bitmap 'git-gutter-fr:modified
+    [224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224]
+    nil nil 'center)
+  (define-fringe-bitmap 'git-gutter-fr:deleted
+    [0 0 0 0 0 0 0 0 0 0 0 0 0 128 192 224 240 248]
+    nil nil 'center))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
