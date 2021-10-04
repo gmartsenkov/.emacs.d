@@ -6,3 +6,5 @@ transient/
 .lsp-session*
 auto-save-list/
 eln-cache/
+projectile.cache
+workspace/

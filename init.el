@@ -22,6 +22,11 @@
   (diminish 'eldoc-mode)
   (diminish 'auto-revert-mode))
 
+(use-package flymake
+  :ensure t
+  :config
+  (setq flymake-fringe-indicator-position nil))
+
 (use-package magit
   :ensure t
   :config
@@ -53,16 +58,16 @@
   (evil-define-key 'normal 'global (kbd "<leader>TAB 3") (lambda () (interactive) (persp-switch-by-number 3)))
   (evil-define-key 'normal 'global (kbd "<leader>TAB 4") (lambda () (interactive) (persp-switch-by-number 4)))
   (evil-define-key 'normal 'global (kbd "<leader>TAB 5") (lambda () (interactive) (persp-switch-by-number 5)))
-  (evil-define-key 'normal ruby-mode-map (kbd "<leader>mtt") 'projectile-toggle-between-implementation-and-test)
-  (evil-define-key 'normal ruby-mode-map (kbd "<leader>mtv") 'rspec-verify)
-  (evil-define-key 'normal ruby-mode-map (kbd "<leader>mtc") 'rspec-verify-single)
-  (evil-define-key 'normal ruby-mode-map (kbd "<leader>mta") 'rspec-verify-all)
+  (evil-define-key 'normal ruby-mode-map (kbd "<leader>tt") 'projectile-toggle-between-implementation-and-test)
+  (evil-define-key 'normal ruby-mode-map (kbd "<leader>tv") 'rspec-verify)
+  (evil-define-key 'normal ruby-mode-map (kbd "<leader>tc") 'rspec-verify-single)
+  (evil-define-key 'normal ruby-mode-map (kbd "<leader>ta") 'rspec-verify-all)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>mp") 'rubocop-check-project)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>mbi") 'bundle-install)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>mc") 'cider)
-  (evil-define-key 'normal clojure-mode-map (kbd "<leader>mtt") 'projectile-toggle-between-implementation-and-test)
-  (evil-define-key 'normal clojure-mode-map (kbd "<leader>mta") 'cider-test-run-project-tests)
-  (evil-define-key 'normal clojure-mode-map (kbd "<leader>mtv") 'cider-test-run-test)
+  (evil-define-key 'normal clojure-mode-map (kbd "<leader>tt") 'projectile-toggle-between-implementation-and-test)
+  (evil-define-key 'normal clojure-mode-map (kbd "<leader>ta") 'cider-test-run-project-tests)
+  (evil-define-key 'normal clojure-mode-map (kbd "<leader>tv") 'cider-test-run-test)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>eb") 'cider-eval-buffer)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>ee") 'cider-eval-last-sexp)
   (evil-define-key 'normal emacs-lisp-mode-map (kbd "<leader>eb") 'eval-buffer)
@@ -74,6 +79,7 @@
   :init
   (ivy-mode))
 
+(use-package clojure-mode :ensure t)
 (use-package lsp-mode
   :ensure t
   :diminish lsp-mode
@@ -83,6 +89,7 @@
   (setq lsp-headerline-breadcrumb-enable nil)
   :init
   (add-hook 'elixir-mode-hook #'lsp)
+  ;(add-hook 'clojure-mode-hook #'lsp)
   (add-hook 'ruby-mode-hook #'lsp))
 (use-package lsp-ivy :ensure t)
 (use-package evil-collection
@@ -99,7 +106,14 @@
 (use-package company
   :ensure t
   :diminish company-mode
+  :config
+  (setq company-tooltip-limit 10) 
+  (setq company-idle-delay .1)
+  (setq company-tooltip-align-annotations t)
+  (setq company-minimum-prefix-length 1)
   :init
+  (add-hook 'ruby-mode-hook 'company-mode)
+  (add-hook 'clojure-mode-hook 'company-mode)
   (add-hook 'emacs-lisp-mode-hook 'company-mode))
 
 (use-package projectile
@@ -131,10 +145,14 @@
   :init
   (add-hook 'rspec-mode-hook 'inf-ruby-switch-setup))
 (use-package rubocop :ensure t)
-(use-package spacemacs-theme
-  :defer t
+;; (use-package spacemacs-theme
+;;   :defer t
+;;   :init
+;;   (load-theme 'spacemacs-dark t))
+(use-package doom-themes
+  :ensure t
   :init
-  (load-theme 'spacemacs-dark t))
+  (load-theme 'doom-one t))
 
 (use-package doom-modeline
   :ensure t
@@ -182,9 +200,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
+   '("835868dcd17131ba8b9619d14c67c127aa18b90a82438c8613586331129dda63" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
  '(package-selected-packages
-   '(lsp-ivy git-gutter-fringe git-link perspective doom-modeline diminish simple-modeline spacemacs-theme rubocop rspec-mode bundler parseedn which-key cider ivy evil-collection evil use-package)))
+   '(doom-themes cider :clojure-mode lsp-ivy git-gutter-fringe git-link perspective doom-modeline diminish simple-modeline spacemacs-theme rubocop rspec-mode bundler parseedn which-key ivy evil-collection evil use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
