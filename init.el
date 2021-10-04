@@ -194,6 +194,14 @@
     [0 0 0 0 0 0 0 0 0 0 0 0 0 128 192 224 240 248]
     nil nil 'center))
 
+(use-package yasnippet
+  :ensure t
+  :init
+  (add-hook 'ruby-mode-hook #'yas-minor-mode)
+  (add-hook 'clojure-mode-hook #'yas-minor-mode)
+  (add-hook 'elixir-mode-hook #'yas-minor-mode))
+(use-package yasnippet-snippets :ensure t)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -202,7 +210,7 @@
  '(custom-safe-themes
    '("835868dcd17131ba8b9619d14c67c127aa18b90a82438c8613586331129dda63" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
  '(package-selected-packages
-   '(doom-themes cider :clojure-mode lsp-ivy git-gutter-fringe git-link perspective doom-modeline diminish simple-modeline spacemacs-theme rubocop rspec-mode bundler parseedn which-key ivy evil-collection evil use-package)))
+   '(yasnippet-snippets yasnippet doom-themes cider :clojure-mode lsp-ivy git-gutter-fringe git-link perspective doom-modeline diminish simple-modeline spacemacs-theme rubocop rspec-mode bundler parseedn which-key ivy evil-collection evil use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
