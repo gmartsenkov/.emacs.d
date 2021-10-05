@@ -40,6 +40,7 @@
   :config
   (evil-mode 1)
   (evil-set-leader 'normal (kbd "SPC"))
+  (evil-define-key 'normal 'global (kbd "<leader>sr") 'anzu-query-replace-regexp)
   (evil-define-key 'normal 'global (kbd "<leader>bb") 'ivy-switch-buffer)
   (evil-define-key 'normal 'global (kbd "<leader>bk") 'kill-this-buffer)
   (evil-define-key 'normal 'global (kbd "<leader>p") 'projectile-command-map)
@@ -203,6 +204,13 @@
   (add-hook 'elixir-mode-hook #'yas-minor-mode))
 (use-package yasnippet-snippets :ensure t)
 
+(use-package anzu
+  :ensure t
+  :init
+  (add-hook 'text-mode-hook #'anzu-mode)
+  (add-hook 'prog-mode-hook #'anzu-mode)
+  (add-hook 'conf-mode-hook #'anzu-mode))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -211,7 +219,7 @@
  '(custom-safe-themes
    '("835868dcd17131ba8b9619d14c67c127aa18b90a82438c8613586331129dda63" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
  '(package-selected-packages
-   '(yasnippet-snippets yasnippet doom-themes cider :clojure-mode lsp-ivy git-gutter-fringe git-link perspective doom-modeline diminish simple-modeline spacemacs-theme rubocop rspec-mode bundler parseedn which-key ivy evil-collection evil use-package)))
+   '(anzu yasnippet-snippets yasnippet doom-themes cider :clojure-mode lsp-ivy git-gutter-fringe git-link perspective doom-modeline diminish simple-modeline spacemacs-theme rubocop rspec-mode bundler parseedn which-key ivy evil-collection evil use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

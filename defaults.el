@@ -3,7 +3,7 @@
 (set-default-coding-systems 'utf-8)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
-(global-linum-mode)
+;(global-linum-mode)
 (setq delete-old-versions -1 )
 (setq backup-directory-alist `(("." . "~/.emacs.d/backups")) )
 (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)) )
