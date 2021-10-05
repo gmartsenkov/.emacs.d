@@ -42,7 +42,8 @@
   (evil-mode 1)
   (evil-set-leader 'normal (kbd "SPC"))
   (evil-define-key 'normal 'global (kbd "<leader>sr") 'anzu-query-replace-regexp)
-  (evil-define-key 'normal 'global (kbd "<leader>bb") 'ivy-switch-buffer)
+  (evil-define-key 'normal 'global (kbd "<leader>bb") 'persp-ivy-switch-buffer)
+  (evil-define-key 'normal 'global (kbd "<leader>bB") 'ivy-switch-buffer)
   (evil-define-key 'normal 'global (kbd "<leader>bk") 'kill-this-buffer)
   (evil-define-key 'normal 'global (kbd "<leader>p") 'projectile-command-map)
   (evil-define-key 'normal 'global (kbd "<leader>gg") 'magit)
@@ -218,7 +219,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("835868dcd17131ba8b9619d14c67c127aa18b90a82438c8613586331129dda63" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
+   '("b0e446b48d03c5053af28908168262c3e5335dcad3317215d9fdeb8bac5bacf9" "e8df30cd7fb42e56a4efc585540a2e63b0c6eeb9f4dc053373e05d774332fc13" "7eea50883f10e5c6ad6f81e153c640b3a288cd8dc1d26e4696f7d40f754cc703" "835868dcd17131ba8b9619d14c67c127aa18b90a82438c8613586331129dda63" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
  '(package-selected-packages
    '(ag anzu yasnippet-snippets yasnippet doom-themes cider :clojure-mode lsp-ivy git-gutter-fringe git-link perspective doom-modeline diminish simple-modeline spacemacs-theme rubocop rspec-mode bundler parseedn which-key ivy evil-collection evil use-package)))
 (custom-set-faces
