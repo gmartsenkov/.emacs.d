@@ -175,6 +175,7 @@
   :diminish git-gutter-mode
   :after git-gutter
   :demand fringe-helper
+  :ensure t
   :init
   (add-hook 'text-mode-hook #'git-gutter-mode)
   (add-hook 'prog-mode-hook #'git-gutter-mode)
