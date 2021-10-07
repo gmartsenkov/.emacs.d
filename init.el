@@ -52,6 +52,7 @@
   (evil-define-key 'normal 'global (kbd "<leader>ff") 'find-file)
   (evil-define-key 'normal 'global (kbd "<leader>c f") 'flymake-show-diagnostics-buffer)
   (evil-define-key 'normal 'global (kbd "<leader>c d") 'lsp-find-definition)
+  (evil-define-key 'normal 'global (kbd "<leader>c D") 'xref-find-definitions-other-window)
   (evil-define-key 'normal 'global (kbd "<leader>c r") 'lsp-find-references)
   (evil-define-key 'normal 'global (kbd "<leader>c s") 'lsp-ivy-workspace-symbol)
   (evil-define-key 'normal 'global (kbd "<leader>TAB TAB") 'persp-switch)
