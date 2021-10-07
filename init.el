@@ -64,6 +64,7 @@
   (evil-define-key 'normal 'global (kbd "<leader>TAB 5") (lambda () (interactive) (persp-switch-by-number 5)))
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>tt") 'rspec-toggle-spec-and-target)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>tv") 'rspec-verify)
+  (evil-define-key 'normal ruby-mode-map (kbd "<leader>tl") 'rspec-run-last-failed)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>tc") 'rspec-verify-single)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>ta") 'rspec-verify-all)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>mp") 'rubocop-check-project)
