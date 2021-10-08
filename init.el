@@ -53,6 +53,7 @@
   (evil-define-key 'normal 'global (kbd "<leader>ff") 'find-file)
   (evil-define-key 'normal 'global (kbd "<leader>c f") 'flymake-show-diagnostics-buffer)
   (evil-define-key 'normal 'global (kbd "<leader>c d") 'lsp-find-definition)
+  (evil-define-key 'normal 'global (kbd "<leader>c D") 'xref-find-definitions-other-window)
   (evil-define-key 'normal 'global (kbd "<leader>c r") 'lsp-find-references)
   (evil-define-key 'normal 'global (kbd "<leader>c s") 'lsp-ivy-workspace-symbol)
   (evil-define-key 'normal 'global (kbd "<leader>TAB TAB") 'persp-switch)
@@ -64,16 +65,21 @@
   (evil-define-key 'normal 'global (kbd "<leader>TAB 5") (lambda () (interactive) (persp-switch-by-number 5)))
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>tt") 'rspec-toggle-spec-and-target)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>tv") 'rspec-verify)
+  (evil-define-key 'normal ruby-mode-map (kbd "<leader>tl") 'rspec-run-last-failed)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>tc") 'rspec-verify-single)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>ta") 'rspec-verify-all)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>mp") 'rubocop-check-project)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>mbi") 'bundle-install)
+  (evil-define-key 'normal clojure-mode-map (kbd "<leader>md") 'cider-clojuredocs)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>mc") 'cider)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>tt") 'projectile-toggle-between-implementation-and-test)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>ta") 'cider-test-run-project-tests)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>tv") 'cider-test-run-test)
+  (evil-define-key 'normal clojure-mode-map (kbd "<leader>tn") 'cider-test-run-ns-tests)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>eb") 'cider-eval-buffer)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>ee") 'cider-eval-last-sexp)
+  (evil-define-key 'normal clojure-mode-map (kbd "<leader>rn") 'cider-repl-set-ns)
+  (evil-define-key 'normal clojure-mode-map (kbd "<leader>rb") 'cider-switch-to-repl-buffer)
   (evil-define-key 'normal emacs-lisp-mode-map (kbd "<leader>eb") 'eval-buffer)
   (evil-define-key 'normal emacs-lisp-mode-map (kbd "<leader>ee") 'eval-last-sexp))
 
@@ -83,7 +89,13 @@
   :init
   (ivy-mode))
 
-(use-package clojure-mode :ensure t)
+(use-package flycheck-clj-kondo :ensure t)
+(use-package clojure-mode
+  :ensure t
+  :config
+  (require 'flycheck-clj-kondo)
+  :init
+  (add-hook 'clojure-mode-hook #'flycheck-mode))
 (use-package lsp-mode
   :ensure t
   :diminish lsp-mode
@@ -228,7 +240,7 @@
  '(custom-safe-themes
    '("1d5e33500bc9548f800f9e248b57d1b2a9ecde79cb40c0b1398dec51ee820daf" "7a7b1d475b42c1a0b61f3b1d1225dd249ffa1abb1b7f726aec59ac7ca3bf4dae" "234dbb732ef054b109a9e5ee5b499632c63cc24f7c2383a849815dacc1727cb6" "5784d048e5a985627520beb8a101561b502a191b52fa401139f4dd20acb07607" "b0e446b48d03c5053af28908168262c3e5335dcad3317215d9fdeb8bac5bacf9" "e8df30cd7fb42e56a4efc585540a2e63b0c6eeb9f4dc053373e05d774332fc13" "7eea50883f10e5c6ad6f81e153c640b3a288cd8dc1d26e4696f7d40f754cc703" "835868dcd17131ba8b9619d14c67c127aa18b90a82438c8613586331129dda63" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
  '(package-selected-packages
-   '(nano-modeline elixir-mode ag anzu yasnippet-snippets yasnippet doom-themes cider :clojure-mode lsp-ivy git-gutter-fringe git-link perspective doom-modeline diminish simple-modeline spacemacs-theme rubocop rspec-mode bundler parseedn which-key ivy evil-collection evil use-package)))
+   '(flycheck-clj-kondo nano-modeline elixir-mode ag anzu yasnippet-snippets yasnippet doom-themes cider :clojure-mode lsp-ivy git-gutter-fringe git-link perspective doom-modeline diminish simple-modeline spacemacs-theme rubocop rspec-mode bundler parseedn which-key ivy evil-collection evil use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
