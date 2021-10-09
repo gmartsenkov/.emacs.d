@@ -180,8 +180,9 @@
 
 (use-package nano-modeline
   :ensure t
-  :config
-  (setq nano-modeline-position 'bottom))
+  :init
+  (setq nano-modeline-position 'bottom)
+  (nano-modeline-mode))
 
 (use-package perspective :ensure t)
 (use-package persp-projectile
