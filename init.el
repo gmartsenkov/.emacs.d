@@ -1,12 +1,12 @@
-(load-file "~/.emacs.d/defaults.el")
-
+(setq nano-font-size 15)
+(load-file "~/nano-emacs/nano.el")
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/")
              '("elpa" . "https://elpa.org/packages/"))
 
-(package-initialize)
+;; (package-initialize)
 
 ;; Bootstrap `use-package'
 (unless (package-installed-p 'use-package)
@@ -16,10 +16,21 @@
 (eval-when-compile
   (require 'use-package))
 
+(load-file "~/.emacs.d/defaults.el")
+
+(use-package expand-region
+  :ensure t
+  :init
+  (global-set-key (kbd "C-=") 'er/expand-region))
+
+(use-package smartparens
+  :ensure t
+  :init
+  (smartparens-global-mode))
+
 (use-package diminish
   :ensure t
   :init
-  (diminish 'evil-collection-unimpaired-mode)
   (diminish 'eldoc-mode)
   (diminish 'auto-revert-mode))
 
@@ -34,13 +45,12 @@
   :config
   (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1))
 (use-package evil
-  :after (projectile rspec-mode bundler perspective)
   :ensure t
   :init
   (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
   (setq evil-want-keybinding nil)
   :config
-  (evil-mode 1)
+  ;(evil-mode 1)
   (evil-set-leader 'normal (kbd "SPC"))
   (evil-define-key 'normal 'global (kbd "<leader>sr") 'anzu-query-replace-regexp)
   (evil-define-key 'normal 'global (kbd "<leader>bb") 'persp-ivy-switch-buffer)
@@ -88,6 +98,11 @@
   :diminish ivy-mode
   :init
   (ivy-mode))
+
+(use-package flycheck
+  :ensure t
+  :config
+  (setq-default flycheck-indication-mode nil))
 
 (use-package flycheck-clj-kondo :ensure t)
 (use-package clojure-mode
@@ -178,12 +193,6 @@
 ;;   :init
 ;;   (doom-modeline-mode))
 
-(use-package nano-modeline
-  :ensure t
-  :init
-  (setq nano-modeline-position 'bottom)
-  (nano-modeline-mode))
-
 (use-package perspective :ensure t)
 (use-package persp-projectile
   :after (perspective projectile)
@@ -205,8 +214,13 @@
   :config
   ;; subtle diff indicators in the fringe
   ;; places the git gutter outside the margins.
-  (setq-default fringes-outside-margins t)
+  ;; (setq-default fringes-outside-margins t)
   ;; thin fringe bitmaps
+  (set-face-foreground 'git-gutter-fr:modified "SteelBlue4")
+  (set-face-foreground 'git-gutter-fr:added    "DarkOliveGreen4")
+  (set-face-foreground 'git-gutter-fr:deleted  "IndianRed1")
+  (setq-default left-fringe-width  20)
+  (setq-default right-fringe-width 20)
   (define-fringe-bitmap 'git-gutter-fr:added
     [224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224]
     nil nil 'center)
@@ -239,9 +253,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("1d5e33500bc9548f800f9e248b57d1b2a9ecde79cb40c0b1398dec51ee820daf" "7a7b1d475b42c1a0b61f3b1d1225dd249ffa1abb1b7f726aec59ac7ca3bf4dae" "234dbb732ef054b109a9e5ee5b499632c63cc24f7c2383a849815dacc1727cb6" "5784d048e5a985627520beb8a101561b502a191b52fa401139f4dd20acb07607" "b0e446b48d03c5053af28908168262c3e5335dcad3317215d9fdeb8bac5bacf9" "e8df30cd7fb42e56a4efc585540a2e63b0c6eeb9f4dc053373e05d774332fc13" "7eea50883f10e5c6ad6f81e153c640b3a288cd8dc1d26e4696f7d40f754cc703" "835868dcd17131ba8b9619d14c67c127aa18b90a82438c8613586331129dda63" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
+   '("aca70b555c57572be1b4e4cec57bc0445dcb24920b12fb1fea5f6baa7f2cad02" "1ca05bdae217adeb636e9bc5e84c8f1d045be2c8004fafd5337d141d9b67a96f" "1d5e33500bc9548f800f9e248b57d1b2a9ecde79cb40c0b1398dec51ee820daf" "7a7b1d475b42c1a0b61f3b1d1225dd249ffa1abb1b7f726aec59ac7ca3bf4dae" "234dbb732ef054b109a9e5ee5b499632c63cc24f7c2383a849815dacc1727cb6" "5784d048e5a985627520beb8a101561b502a191b52fa401139f4dd20acb07607" "b0e446b48d03c5053af28908168262c3e5335dcad3317215d9fdeb8bac5bacf9" "e8df30cd7fb42e56a4efc585540a2e63b0c6eeb9f4dc053373e05d774332fc13" "7eea50883f10e5c6ad6f81e153c640b3a288cd8dc1d26e4696f7d40f754cc703" "835868dcd17131ba8b9619d14c67c127aa18b90a82438c8613586331129dda63" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
  '(package-selected-packages
-   '(flycheck-clj-kondo nano-modeline elixir-mode ag anzu yasnippet-snippets yasnippet doom-themes cider :clojure-mode lsp-ivy git-gutter-fringe git-link perspective doom-modeline diminish simple-modeline spacemacs-theme rubocop rspec-mode bundler parseedn which-key ivy evil-collection evil use-package)))
+   '(git-gutter-fringe diff-hl smartparens expand-region mini-frame flycheck-clj-kondo elixir-mode ag anzu yasnippet-snippets yasnippet doom-themes cider :clojure-mode lsp-ivy git-link perspective doom-modeline diminish simple-modeline spacemacs-theme rubocop rspec-mode bundler parseedn which-key ivy evil-collection evil use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

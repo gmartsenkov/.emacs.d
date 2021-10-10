@@ -1,4 +1,4 @@
-(set-frame-font "JetbrainsMono Nerd Font Mono-15")
+;(set-frame-font "JetbrainsMono Nerd Font Mono-15")
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8)
 (tool-bar-mode -1)
