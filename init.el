@@ -16,6 +16,7 @@
 (eval-when-compile
   (require 'use-package))
 
+(use-package smartparens :ensure t :init (smartparens-global-mode))
 (use-package diminish
   :ensure t
   :init
