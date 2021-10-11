@@ -81,7 +81,10 @@
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>rn") 'cider-repl-set-ns)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>rb") 'cider-switch-to-repl-buffer)
   (evil-define-key 'normal emacs-lisp-mode-map (kbd "<leader>eb") 'eval-buffer)
-  (evil-define-key 'normal emacs-lisp-mode-map (kbd "<leader>ee") 'eval-last-sexp))
+  (evil-define-key 'normal emacs-lisp-mode-map (kbd "<leader>ee") 'eval-last-sexp)
+  (evil-define-key 'normal elixir-mode-map (kbd "<leader>tp") 'alchemist-mix-test)
+  (evil-define-key 'normal elixir-mode-map (kbd "<leader>tv") 'alchemist-mix-test-this-buffer)
+  (evil-define-key 'normal elixir-mode-map (kbd "<leader>tt") 'alchemist-project-toggle-file-and-tests))
 
 (use-package ivy
   :ensure t
@@ -233,6 +236,7 @@
   (add-hook 'conf-mode-hook #'anzu-mode))
 
 (use-package elixir-mode :ensure t)
+(use-package alchemist :ensure t)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
