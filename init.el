@@ -185,7 +185,7 @@
 (use-package nano-modeline
   :ensure t
   :init
-  (setq nano-modeline-position 'top)
+  (setq nano-modeline-position 'bottom)
   (nano-modeline-mode))
 
 (use-package perspective :ensure t)
