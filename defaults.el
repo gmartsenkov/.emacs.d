@@ -37,10 +37,3 @@
                '(right-fringe   . 1)
                '(tool-bar-lines . 0)
                '(menu-bar-lines . 0))))
-
-(setq x-underline-at-descent-line t)
-
-;; Vertical window divider
-(setq window-divider-default-right-width 24)
-(setq window-divider-default-places 'right-only)
-(window-divider-mode 1)

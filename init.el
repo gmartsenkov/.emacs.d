@@ -220,3 +220,16 @@
 
 (use-package elixir-mode :ensure t)
 (use-package alchemist :ensure t)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(doom-themes yasnippet-snippets which-key use-package smartparens rubocop rspec-mode persp-projectile nano-modeline magit lsp-ivy git-link git-gutter-fringe flycheck-clj-kondo expand-region exec-path-from-shell evil-collection diminish diff-hl cider bundler anzu all-the-icons alchemist ag ace-window)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
