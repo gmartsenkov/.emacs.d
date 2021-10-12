@@ -1,3 +1,4 @@
+(load-file "~/nano-emacs/nano.el")
 (load-file "~/.emacs.d/defaults.el")
 
 (require 'package)
@@ -6,7 +7,7 @@
              '("melpa" . "https://melpa.org/packages/")
              '("elpa" . "https://elpa.org/packages/"))
 
-(package-initialize)
+;;(package-initialize)
 
 ;; Bootstrap `use-package'
 (unless (package-installed-p 'use-package)
@@ -35,7 +36,7 @@
   :config
   (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1))
 (use-package evil
-  :after (projectile rspec-mode bundler perspective)
+  :after (projectile rspec-mode bundler)
   :ensure t
   :init
   (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
@@ -44,8 +45,7 @@
   (evil-mode 1)
   (evil-set-leader 'normal (kbd "SPC"))
   (evil-define-key 'normal 'global (kbd "<leader>sr") 'anzu-query-replace-regexp)
-  (evil-define-key 'normal 'global (kbd "<leader>bb") 'persp-ivy-switch-buffer)
-  (evil-define-key 'normal 'global (kbd "<leader>bB") 'ivy-switch-buffer)
+  (evil-define-key 'normal 'global (kbd "<leader>bb") 'ivy-switch-buffer)
   (evil-define-key 'normal 'global (kbd "<leader>bk") 'kill-this-buffer)
   (evil-define-key 'normal 'global (kbd "<leader>p") 'projectile-command-map)
   (evil-define-key 'normal 'global (kbd "<leader>gg") 'magit)
@@ -57,13 +57,6 @@
   (evil-define-key 'normal 'global (kbd "<leader>c D") 'xref-find-definitions-other-window)
   (evil-define-key 'normal 'global (kbd "<leader>c r") 'lsp-find-references)
   (evil-define-key 'normal 'global (kbd "<leader>c s") 'lsp-ivy-workspace-symbol)
-  (evil-define-key 'normal 'global (kbd "<leader>TAB TAB") 'persp-switch)
-  (evil-define-key 'normal 'global (kbd "<leader>TAB k") 'persp-kill)
-  (evil-define-key 'normal 'global (kbd "<leader>TAB 1") (lambda () (interactive) (persp-switch-by-number 1)))
-  (evil-define-key 'normal 'global (kbd "<leader>TAB 2") (lambda () (interactive) (persp-switch-by-number 2)))
-  (evil-define-key 'normal 'global (kbd "<leader>TAB 3") (lambda () (interactive) (persp-switch-by-number 3)))
-  (evil-define-key 'normal 'global (kbd "<leader>TAB 4") (lambda () (interactive) (persp-switch-by-number 4)))
-  (evil-define-key 'normal 'global (kbd "<leader>TAB 5") (lambda () (interactive) (persp-switch-by-number 5)))
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>tt") 'rspec-toggle-spec-and-target)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>tv") 'rspec-verify)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>tl") 'rspec-run-last-failed)
@@ -93,6 +86,7 @@
   :init
   (ivy-mode))
 
+(use-package go-mode :ensure t)
 (use-package flycheck-clj-kondo :ensure t)
 (use-package clojure-mode
   :ensure t
@@ -108,9 +102,11 @@
   (setq lsp-enable-file-watchers nil)
   (setq lsp-headerline-breadcrumb-enable nil)
   :init
-  (add-hook 'elixir-mode-hook #'lsp)
+  (add-hook 'elixir-mode-hook #'lsp-deferred)
   ;(add-hook 'clojure-mode-hook #'lsp)
-  (add-hook 'ruby-mode-hook #'lsp))
+  (add-hook 'ruby-mode-hook #'lsp-deferred)
+  (add-hook 'go-mode-hook #'lsp-deferred)
+  )
 (use-package lsp-ivy :ensure t)
 (use-package evil-collection
   :after (evil ivy)
@@ -165,35 +161,6 @@
   :init
   (add-hook 'rspec-mode-hook 'inf-ruby-switch-setup))
 (use-package rubocop :ensure t)
-;; (use-package spacemacs-theme
-;;   :defer t
-;;   :init
-;;   (load-theme 'spacemacs-dark t))
-(use-package doom-themes
-  :ensure t
-  :init
-  (load-theme 'doom-one t))
-
-;; (use-package doom-modeline
-;;   :ensure t
-;;   :config
-;;   (setq doom-modeline-major-mode-icon nil)
-;;   (setq doom-modeline-buffer-encoding nil)
-;;   :init
-;;   (doom-modeline-mode))
-
-(use-package nano-modeline
-  :ensure t
-  :init
-  (setq nano-modeline-position 'bottom)
-  (nano-modeline-mode))
-
-(use-package perspective :ensure t)
-(use-package persp-projectile
-  :after (perspective projectile)
-  :ensure t
-  :init
-  (persp-mode))
 
 (use-package git-link :ensure t)
 (use-package diff-hl
@@ -225,8 +192,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("835868dcd17131ba8b9619d14c67c127aa18b90a82438c8613586331129dda63" default))
  '(package-selected-packages
-   '(doom-themes yasnippet-snippets which-key use-package smartparens rubocop rspec-mode persp-projectile nano-modeline magit lsp-ivy git-link git-gutter-fringe flycheck-clj-kondo expand-region exec-path-from-shell evil-collection diminish diff-hl cider bundler anzu all-the-icons alchemist ag ace-window)))
+   '(go-mode doom-themes yasnippet-snippets which-key use-package smartparens rubocop rspec-mode magit lsp-ivy git-link git-gutter-fringe flycheck-clj-kondo expand-region exec-path-from-shell evil-collection diminish diff-hl cider bundler anzu all-the-icons alchemist ag ace-window)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
