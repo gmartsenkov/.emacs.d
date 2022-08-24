@@ -4,9 +4,11 @@
   (projectile-mode t)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
+(use-package orderless :ensure t)
 (use-package vertico
   :ensure t
   :init
+  (setq completion-styles '(basic partial-completion orderless))
   (vertico-mode)
   :bind (:map vertico-map
 	      ("C-j" . vertico-next)
