@@ -19,6 +19,12 @@
 
 (load-file "~/.emacs.d/configs/completion.el")
 (load-file "~/.emacs.d/configs/git.el")
+
+;; Languages
+(load-file "~/.emacs.d/configs/ruby.el")
+(load-file "~/.emacs.d/configs/elixir.el")
+
+;; VIM
 (load-file "~/.emacs.d/configs/evil.el")
 
 (custom-set-variables
