@@ -15,10 +15,17 @@
 (eval-when-compile
   (require 'use-package))
 
-(use-package exec-path-from-shell :ensure t :init)
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize)))
 
+(load-file "~/.emacs.d/configs/ui.el")
 (load-file "~/.emacs.d/configs/completion.el")
+(load-file "~/.emacs.d/configs/persp.el")
 (load-file "~/.emacs.d/configs/git.el")
+(load-file "~/.emacs.d/configs/lsp.el")
 
 ;; Languages
 (load-file "~/.emacs.d/configs/ruby.el")
@@ -33,6 +40,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages '(magit vertico evil use-package))
+ '(safe-local-variable-values
+   '((eval set
+           (make-local-variable 'rspec-primary-source-dirs)
+           (setq rspec-primary-source-dirs
+                 '("app" "apps" "lib")))))
  '(warning-suppress-types '((comp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
