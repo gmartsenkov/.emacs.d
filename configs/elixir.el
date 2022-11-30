@@ -1,2 +1,3 @@
-(use-package elixir-mode :ensure t)
-(use-package alchemist :ensure t)
+(use-package elixir-mode
+  :mode ("\\.ex\\'" "\\.exs\\'"))
+(use-package alchemist :after elixir-mode)

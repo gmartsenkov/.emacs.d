@@ -27,6 +27,7 @@
 (setq ruby-indent-level 2)
 (setq ruby-insert-encoding-magic-comment nil)
 (setq js-indent-level 2)
+(setq visual-line-mode nil)
 
 (add-hook 'text-mode-hook 'display-line-numbers-mode)
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
