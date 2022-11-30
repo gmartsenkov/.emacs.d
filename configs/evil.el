@@ -9,6 +9,10 @@
   (evil-mode 1)
   (evil-set-leader 'normal (kbd "SPC"))
 
+  (global-set-key (kbd "C-h") 'evil-window-left)
+  (global-set-key (kbd "C-l") 'evil-window-right)
+  (global-set-key (kbd "C-j") 'evil-window-down)
+  (global-set-key (kbd "C-k") 'evil-window-up)
   (evil-define-key 'normal 'global (kbd "<leader>T") (lambda
 						       ()
 						       (interactive)
@@ -66,4 +70,9 @@
   :ensure t
   :custom (evil-collection-setup-minibuffer t)
   :init
-  (evil-collection-init))
+  (evil-collection-init)
+  (evil-collection-define-key 'insert 'vertico-map
+    (kbd "<escape>") 'abort-recursive-edit)
+
+  (evil-collection-define-key 'insert 'vertico-map
+    (kbd "C-k") 'vertico-previous))
