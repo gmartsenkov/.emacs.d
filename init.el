@@ -40,7 +40,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(persp-projectile orderless hotfuzz magit vertico evil use-package))
+   '(rg yasnippet-snippets yasnippet persp-projectile orderless hotfuzz magit vertico evil use-package))
  '(safe-local-variable-values
    '((eval set
            (make-local-variable 'rspec-primary-source-dirs)

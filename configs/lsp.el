@@ -27,4 +27,5 @@
   (add-hook 'clojure-mode-hook 'company-mode)
   (add-hook 'elixir-mode-hook 'company-mode)
   (add-hook 'inf-ruby-mode 'company-mode)
+  (add-hook 'rspec-compilation-mode 'company-mode)
   (add-hook 'emacs-lisp-mode-hook 'company-mode))

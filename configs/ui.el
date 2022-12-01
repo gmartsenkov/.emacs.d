@@ -22,7 +22,9 @@
   :init
   (setq popper-reference-buffers
         '("\\*Async Shell Command\\*"
-          "*rspec-compilation*"))
+          "*rspec-compilation*"
+          "*RuboCop"
+          "\\*Bundler\\*"))
   (setq popper-window-height 20)
   (popper-mode +1)
   (popper-echo-mode +1))

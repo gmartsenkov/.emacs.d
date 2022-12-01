@@ -22,7 +22,7 @@
   (evil-define-key 'normal 'global (kbd "<leader>wu") 'winner-undo)
   (evil-define-key 'normal 'global (kbd "<leader>wr") 'winner-redo)
   (evil-define-key 'normal 'global (kbd "<leader>sr") 'anzu-query-replace-regexp)
-  (evil-define-key 'normal 'global (kbd "<leader>bb") 'ivy-switch-buffer)
+  (evil-define-key 'normal 'global (kbd "<leader>bb") 'projectile-switch-to-buffer)
   (evil-define-key 'normal 'global (kbd "<leader>bk") 'kill-this-buffer)
   (evil-define-key 'normal 'global (kbd "<leader>bd") 'kill-this-buffer)
   (evil-define-key 'normal 'global (kbd "<leader>pp") 'projectile-switch-project)
