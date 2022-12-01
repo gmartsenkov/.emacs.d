@@ -10,8 +10,6 @@
 (use-package ruby-end :ensure t)
 
 (use-package inf-ruby
-  :ensure t
-  :init
-  (add-hook 'rspec-mode-hook 'inf-ruby-maybe-switch-to-compilation))
+  :ensure t)
 
 (use-package rubocop :ensure t)

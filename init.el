@@ -21,6 +21,10 @@
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize)))
 
+(use-package ws-butler
+  :ensure t
+  :hook prog-mode slim-mode)
+
 (load-file "~/.emacs.d/configs/ui.el")
 (load-file "~/.emacs.d/configs/completion.el")
 (load-file "~/.emacs.d/configs/persp.el")
@@ -29,6 +33,7 @@
 
 ;; Languages
 (load-file "~/.emacs.d/configs/ruby.el")
+(load-file "~/.emacs.d/configs/js.el")
 (load-file "~/.emacs.d/configs/elixir.el")
 
 ;; VIM
@@ -40,7 +45,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(rg yasnippet-snippets yasnippet persp-projectile orderless hotfuzz magit vertico evil use-package))
+   '(ws-butler ws-buttler slim-mode tide rg yasnippet persp-projectile orderless hotfuzz magit vertico evil use-package))
  '(safe-local-variable-values
    '((eval set
            (make-local-variable 'rspec-primary-source-dirs)

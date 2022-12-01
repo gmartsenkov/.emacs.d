@@ -5,6 +5,7 @@
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
 (winner-mode t)
+(electric-pair-mode t)
 (setq ns-use-thin-smoothing t)
 (setq delete-old-versions -1 )
 (setq backup-directory-alist `(("." . "~/.emacs.d/backups")) )

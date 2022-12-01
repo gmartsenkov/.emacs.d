@@ -18,6 +18,7 @@
 						       (other-window 1)
 						       (term "/bin/zsh")))
   (evil-define-key 'normal 'global (kbd "<leader>TAB") 'persp-switch)
+  (evil-define-key 'normal 'global (kbd "<leader>/") 'projectile-ripgrep)
   (evil-define-key 'normal 'global (kbd "<leader>bd") 'kill-this-buffer)
   (evil-define-key 'normal 'global (kbd "<leader>wu") 'winner-undo)
   (evil-define-key 'normal 'global (kbd "<leader>wr") 'winner-redo)

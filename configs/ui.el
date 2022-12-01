@@ -25,10 +25,9 @@
           "*rspec-compilation*"
           "*RuboCop"
           "\\*Bundler\\*"))
-  (setq popper-window-height 20)
+  (setq popper-window-height 30)
   (popper-mode +1)
   (popper-echo-mode +1))
-
 
 (defun nano-modeline-default-mode (&optional icon)
   (let ((icon (or icon

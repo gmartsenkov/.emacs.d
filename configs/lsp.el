@@ -19,7 +19,7 @@
   (setq company-tooltip-align-annotations t)
   (setq company-minimum-prefix-length 1)
   (setq lsp-completion-provider :none)
-  (setq company-backends '((:separate company-yasnippet company-capf company-files)))
+  (setq company-backends '((:separate company-yasnippet company-tide company-capf company-files)))
   :init
   (add-hook 'ruby-mode-hook 'company-mode)
   (add-hook 'go-mode-hook 'company-mode)
@@ -28,4 +28,5 @@
   (add-hook 'elixir-mode-hook 'company-mode)
   (add-hook 'inf-ruby-mode 'company-mode)
   (add-hook 'rspec-compilation-mode 'company-mode)
+  (add-hook 'javascript-mode 'company-mode)
   (add-hook 'emacs-lisp-mode-hook 'company-mode))
