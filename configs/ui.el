@@ -24,8 +24,9 @@
         '("\\*Async Shell Command\\*"
           "*rspec-compilation*"
           "*RuboCop"
+          "*Help*"
           "\\*Bundler\\*"))
-  (setq popper-window-height 30)
+  (setq popper-window-height 25)
   (add-hook 'popper-open-popup-hook 'popper-keep-focus)
   (popper-mode +1)
   (popper-echo-mode +1))
