@@ -15,5 +15,7 @@
 
 (setq ruby-deep-indent-paren nil)
 (setq ruby-method-call-indent nil)
+(setq ruby-after-operator-indent nil)
+(setq ruby-parenless-call-arguments-indent nil)
 (setq ruby-method-params-indent 0)
 (setq ruby-block-indent nil)
