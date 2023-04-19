@@ -10,3 +10,8 @@
 (use-package ruby-end :ensure t)
 (use-package inf-ruby :ensure t)
 (use-package rubocop :ensure t)
+
+(setq ruby-deep-indent-paren nil)
+(setq ruby-method-call-indent nil)
+(setq ruby-method-params-indent 0)
+(setq ruby-block-indent nil)
