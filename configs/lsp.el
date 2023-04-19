@@ -5,11 +5,9 @@
   (setq lsp-enable-file-watchers nil)
   (setq lsp-headerline-breadcrumb-enable nil)
   (setq lsp-lens-enable nil)
-  :init
-  (add-hook 'elixir-mode-hook #'lsp-deferred)
-  (add-hook 'go-mode-hook #'lsp-deferred)
-  (add-hook 'rust-mode-hook #'lsp-deferred)
-  (add-hook 'ruby-mode-hook #'lsp-deferred))
+  :hook
+  (rust-mode . lsp-deferred)
+  (ruby-mode . lsp-deferred))
 
 (use-package company
   :ensure t

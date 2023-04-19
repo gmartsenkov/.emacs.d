@@ -8,8 +8,5 @@
   ) ;; When you've hit the breakpoint, hit C-x C-q to enable inf-ruby.
 
 (use-package ruby-end :ensure t)
-
-(use-package inf-ruby
-  :ensure t)
-
+(use-package inf-ruby :ensure t)
 (use-package rubocop :ensure t)
