@@ -11,6 +11,9 @@
   (global-set-key (kbd "C-l") 'evil-window-right)
   (global-set-key (kbd "C-j") 'evil-window-down)
   (global-set-key (kbd "C-k") 'evil-window-up)
+  (evil-define-key 'normal rspec-compilation-mode-map (kbd "C-k") 'evil-window-up)
+  (evil-define-key 'insert inf-ruby-mode-map (kbd "C-k") 'evil-window-up)
+  (evil-define-key 'normal inf-ruby-mode-map (kbd "C-k") 'evil-window-up)
   (evil-define-key 'normal 'global (kbd "<leader>T") (lambda
 						       ()
 						       (interactive)

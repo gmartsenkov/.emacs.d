@@ -10,10 +10,6 @@
 
 ;; (use-package doom-modeline :ensure t :init (doom-modeline-mode 1))
 
-(defun popper-keep-focus ()
-  (message "HIT")
-  (other-window))
-
 (use-package popper
   :ensure t ; or :straight t
   :bind (("C-`"   . popper-toggle-latest)
@@ -27,7 +23,7 @@
           "*Help*"
           "\\*Bundler\\*"))
   (setq popper-window-height 25)
-  (add-hook 'popper-open-popup-hook 'popper-keep-focus)
+  (setq popper-display-function 'popper-display-popup-at-bottom)
   (popper-mode +1)
   (popper-echo-mode +1))
 
