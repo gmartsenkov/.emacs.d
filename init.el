@@ -133,7 +133,7 @@
  '(custom-safe-themes
    '("60ada0ff6b91687f1a04cc17ad04119e59a7542644c7c59fc135909499400ab8" "56044c5a9cc45b6ec45c0eb28df100d3f0a576f18eef33ff8ff5d32bac2d9700" default))
  '(package-selected-packages
-   '(evil-surround consult consult-lsp anzu doom-modeline ws-butler ws-buttler slim-mode tide rg yasnippet persp-projectile orderless hotfuzz magit vertico evil use-package))
+   '(vertico-directory evil-surround consult consult-lsp anzu doom-modeline ws-butler ws-buttler slim-mode tide rg yasnippet persp-projectile orderless hotfuzz magit vertico evil use-package))
  '(safe-local-variable-values
    '((eval set
            (make-local-variable 'rspec-primary-source-dirs)
