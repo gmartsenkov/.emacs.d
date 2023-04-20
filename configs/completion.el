@@ -12,6 +12,7 @@
   :ensure t
   :init
   (setq completion-styles '(basic partial-completion orderless))
+  (setq vertico-count 15)
   (vertico-mode)
   :bind (:map vertico-map
 	      ("C-j" . vertico-next)
