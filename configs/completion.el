@@ -4,6 +4,9 @@
   (projectile-mode t)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
+(use-package consult :ensure t)
+(use-package consult-lsp :ensure t)
+(use-package anzu :ensure t :config (global-anzu-mode +1))
 (use-package orderless :ensure t)
 (use-package vertico
   :ensure t

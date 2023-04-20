@@ -10,3 +10,5 @@ forge-database.sqlite
 persp-confs/
 transient/
 var/
+projects
+tree-sitter

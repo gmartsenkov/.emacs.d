@@ -39,13 +39,13 @@
   (evil-define-key 'normal 'global (kbd "<leader>gg") 'magit)
   (evil-define-key 'normal 'global (kbd "<leader>gl") 'git-link)
   (evil-define-key 'normal 'global (kbd "<leader>gb") 'magit-blame)
-  (evil-define-key 'normal ruby-mode-map (kbd "<leader>tt") 'rspec-toggle-spec-and-target)
-  (evil-define-key 'normal ruby-mode-map (kbd "<leader>tv") 'rspec-verify)
-  (evil-define-key 'normal ruby-mode-map (kbd "<leader>tl") 'rspec-run-last-failed)
-  (evil-define-key 'normal ruby-mode-map (kbd "<leader>tc") 'rspec-verify-single)
-  (evil-define-key 'normal ruby-mode-map (kbd "<leader>ta") 'rspec-verify-all)
-  (evil-define-key 'normal ruby-mode-map (kbd "<leader>mp") 'rubocop-check-project)
-  (evil-define-key 'normal ruby-mode-map (kbd "<leader>mbi") 'bundle-install)
+  (evil-define-key 'normal ruby-ts-mode-map (kbd "<leader>tt") 'rspec-toggle-spec-and-target)
+  (evil-define-key 'normal ruby-ts-mode-map (kbd "<leader>tv") 'rspec-verify)
+  (evil-define-key 'normal ruby-ts-mode-map (kbd "<leader>tl") 'rspec-run-last-failed)
+  (evil-define-key 'normal ruby-ts-mode-map (kbd "<leader>tc") 'rspec-verify-single)
+  (evil-define-key 'normal ruby-ts-mode-map (kbd "<leader>ta") 'rspec-verify-all)
+  (evil-define-key 'normal ruby-ts-mode-map (kbd "<leader>mp") 'rubocop-check-project)
+  (evil-define-key 'normal ruby-ts-mode-map (kbd "<leader>mbi") 'bundle-install)
   (evil-define-key 'normal rust-mode-map (kbd "<leader>ta") 'rust-test)
   (evil-define-key 'normal rust-mode-map (kbd "<leader>mr") 'rust-run)
   (evil-define-key 'normal rust-mode-map (kbd "<leader>mb") 'rust-compile)
@@ -68,6 +68,11 @@
   (evil-define-key 'normal go-mode-map (kbd "<leader>tv") 'go-test-current-file)
   (evil-define-key 'normal go-mode-map (kbd "<leader>tc") 'go-test-current-test)
   (evil-define-key 'normal go-mode-map (kbd "<leader>ta") 'go-test-current-project))
+
+(use-package evil-surround
+  :ensure t
+  :config
+  (global-evil-surround-mode 1))
 
 (use-package evil-collection
   :ensure t

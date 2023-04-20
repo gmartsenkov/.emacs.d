@@ -6,8 +6,8 @@
   (setq lsp-headerline-breadcrumb-enable nil)
   (setq lsp-lens-enable nil)
   :hook
-  (rust-mode . lsp-deferred)
-  (ruby-mode . lsp-deferred))
+  (rust-ts-mode . lsp-deferred)
+  (ruby-ts-mode . lsp-deferred))
 
 (use-package company
   :ensure t
@@ -19,7 +19,7 @@
   (setq lsp-completion-provider :none)
   (setq company-backends '((:separate company-yasnippet company-tide company-capf company-files)))
   :init
-  (add-hook 'ruby-mode-hook 'company-mode)
+  (add-hook 'ruby-ts-mode-hook 'company-mode)
   (add-hook 'go-mode-hook 'company-mode)
   (add-hook 'rust-mode-hook 'company-mode)
   (add-hook 'clojure-mode-hook 'company-mode)
