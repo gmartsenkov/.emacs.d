@@ -21,6 +21,7 @@
           "*rspec-compilation*"
           "*RuboCop"
           "*Help*"
+          "*compilation*"
           "\\*Bundler\\*"))
   (setq popper-window-height 25)
   (setq popper-display-function 'popper-display-popup-at-bottom)

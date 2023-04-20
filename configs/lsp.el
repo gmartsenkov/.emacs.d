@@ -21,7 +21,7 @@
   :init
   (add-hook 'ruby-ts-mode-hook 'company-mode)
   (add-hook 'go-mode-hook 'company-mode)
-  (add-hook 'rust-mode-hook 'company-mode)
+  (add-hook 'rust-ts-mode-hook 'company-mode)
   (add-hook 'clojure-mode-hook 'company-mode)
   (add-hook 'elixir-mode-hook 'company-mode)
   (add-hook 'inf-ruby-mode 'company-mode)
