@@ -28,3 +28,4 @@
   (popper-mode +1)
   (popper-echo-mode +1))
 
+(zone-when-idle 120)
