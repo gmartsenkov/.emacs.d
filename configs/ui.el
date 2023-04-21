@@ -28,4 +28,10 @@
   (popper-mode +1)
   (popper-echo-mode +1))
 
+(require 'zone)
 (zone-when-idle 120)
+
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
+(setq frame-title-format "\n")
+(setq ns-use-proxy-icon nil)

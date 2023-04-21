@@ -8,6 +8,15 @@
   :hook
   (rust-ts-mode . lsp-deferred)
   (ruby-ts-mode . lsp-deferred))
+;; (use-package consult-lsp :ensure t)
+
+;; (use-package eglot
+;;   :ensure t
+;;   :init
+;;   (setq eglot-connect-timeout 60)
+;;   :config
+;;   (add-hook 'ruby-ts-mode-hook 'eglot-ensure)
+;;   (add-hook 'rust-ts-mode-hook 'eglot-ensure))
 
 (use-package company
   :ensure t
