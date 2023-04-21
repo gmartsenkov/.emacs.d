@@ -86,6 +86,11 @@
   :config
   (global-evil-surround-mode 1))
 
+(use-package evil-commentary
+  :ensure t
+  :config
+  (evil-commentary-mode))
+
 (use-package evil-collection
   :ensure t
   :custom (evil-collection-setup-minibuffer t)
