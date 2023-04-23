@@ -10,6 +10,10 @@
 
 ;; (use-package doom-modeline :ensure t :init (doom-modeline-mode 1))
 
+(use-package jetbrains-darcula-theme
+  :config
+  (load-theme 'jetbrains-darcula t))
+
 (use-package popper
   :ensure t ; or :straight t
   :bind (("C-`"   . popper-toggle-latest)
@@ -35,3 +39,9 @@
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 (setq frame-title-format "\n")
 (setq ns-use-proxy-icon nil)
+
+(use-package nano-modeline
+  :ensure t
+  :config
+  (setq nano-modeline-position "bottom")
+  :init (nano-modeline-mode))
