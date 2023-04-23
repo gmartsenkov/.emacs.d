@@ -44,4 +44,4 @@
   :ensure t
   :config
   (setq nano-modeline-position "bottom")
-  :init (nano-modeline-mode))
+  (nano-modeline-mode))
