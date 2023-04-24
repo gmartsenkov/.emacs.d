@@ -8,7 +8,7 @@
   :hook
   (rust-ts-mode . lsp-deferred)
   (ruby-ts-mode . lsp-deferred))
-;; (use-package consult-lsp :ensure t)
+(use-package consult-lsp :ensure t)
 
 ;; (use-package eglot
 ;;   :ensure t
