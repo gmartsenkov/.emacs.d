@@ -26,7 +26,7 @@
   (setq company-tooltip-align-annotations t)
   (setq company-minimum-prefix-length 1)
   (setq lsp-completion-provider :none)
-  (setq company-backends '((:separate company-yasnippet company-tide company-capf company-files)))
+  (setq company-backends '((company-files company-yasnippet :separate company-tide company-capf :separate company-files)))
   :init
   (add-hook 'ruby-ts-mode-hook 'company-mode)
   (add-hook 'go-mode-hook 'company-mode)
