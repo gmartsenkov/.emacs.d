@@ -15,6 +15,8 @@
   (evil-define-key 'normal rspec-compilation-mode-map (kbd "C-k") 'evil-window-up)
   (evil-define-key 'insert inf-ruby-mode-map (kbd "C-k") 'evil-window-up)
   (evil-define-key 'normal inf-ruby-mode-map (kbd "C-k") 'evil-window-up)
+  (evil-define-key 'normal 'global (kbd "<leader>nt") 'org-roam-dailies-goto-today)
+  (evil-define-key 'normal 'global (kbd "<leader>nc") 'org-roam-dailies-capture-today)
   (evil-define-key 'insert 'global (kbd "C-v") 'yank)
   (evil-define-key 'normal 'global (kbd "<leader>T") (lambda
 						       ()

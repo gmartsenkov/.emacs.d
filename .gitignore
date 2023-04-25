@@ -12,3 +12,4 @@ transient/
 var/
 projects
 tree-sitter
+org-roam.db
