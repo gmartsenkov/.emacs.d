@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: it ... end
+# key: it
+# --
+it "${1:context}" do
+    $0
+end
