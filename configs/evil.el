@@ -12,6 +12,7 @@
   (global-set-key (kbd "C-l") 'evil-window-right)
   (global-set-key (kbd "C-j") 'evil-window-down)
   (global-set-key (kbd "C-k") 'evil-window-up)
+  (evil-define-key 'normal 'global (kbd "gt") 'evil-avy-goto-word-1)
   (evil-define-key 'normal rspec-compilation-mode-map (kbd "C-k") 'evil-window-up)
   (evil-define-key 'insert inf-ruby-mode-map (kbd "C-k") 'evil-window-up)
   (evil-define-key 'normal inf-ruby-mode-map (kbd "C-k") 'evil-window-up)
@@ -108,3 +109,5 @@
 
   (evil-collection-define-key 'insert 'vertico-map
     (kbd "C-k") 'vertico-previous))
+
+(use-package avy :ensure t)
