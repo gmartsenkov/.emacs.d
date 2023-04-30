@@ -21,9 +21,11 @@
 	      ("M-h" . backward-kill-word)))
 
 (use-package vertico-directory
+  :elpaca nil
   :after vertico
-  :ensure nil
   ;; More convenient directory navigation commands
+  :init
+  (load-file "~/.emacs.d/elpaca/repos/vertico/extensions/vertico-directory.el")
   :bind (:map vertico-map
               ("RET" . vertico-directory-enter)
               ("DEL" . vertico-directory-delete-char)
@@ -32,6 +34,7 @@
   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
 (use-package savehist
+  :elpaca nil
   :ensure t
   :init
   (savehist-mode))
