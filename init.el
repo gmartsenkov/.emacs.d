@@ -132,7 +132,7 @@
      (eshell-connection-default-profile
       (eshell-path-env-list))))
  '(custom-safe-themes
-   '("8419922e21a1eca6ebb181b3a924e9d17f4ffcb648744a6ab24c60509e3440f4" "79586dc4eb374231af28bbc36ba0880ed8e270249b07f814b0e6555bdcb71fab" "60ada0ff6b91687f1a04cc17ad04119e59a7542644c7c59fc135909499400ab8" "56044c5a9cc45b6ec45c0eb28df100d3f0a576f18eef33ff8ff5d32bac2d9700" default))
+   '("02f57ef0a20b7f61adce51445b68b2a7e832648ce2e7efb19d217b6454c1b644" "8419922e21a1eca6ebb181b3a924e9d17f4ffcb648744a6ab24c60509e3440f4" "79586dc4eb374231af28bbc36ba0880ed8e270249b07f814b0e6555bdcb71fab" "60ada0ff6b91687f1a04cc17ad04119e59a7542644c7c59fc135909499400ab8" "56044c5a9cc45b6ec45c0eb28df100d3f0a576f18eef33ff8ff5d32bac2d9700" default))
  '(package-selected-packages
    '(avy org-roam yasnippet consult-lsp git-gutter-fringe git-gutter nano-modeline darcula-theme jetbrains-darcula-theme lsp-mode evil-commentary vertico-directory evil-surround consult anzu doom-modeline ws-butler ws-buttler slim-mode tide rg persp-projectile orderless hotfuzz magit vertico evil use-package))
  '(safe-local-variable-values

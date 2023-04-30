@@ -4,20 +4,20 @@
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
         doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-tokyo-night t)
+  (load-theme 'doom-ir-black t)
   (doom-themes-org-config))
 
 ;; (use-package doom-modeline :ensure t :init (doom-modeline-mode 1))
 
-(use-package jetbrains-darcula-theme
-  :config
-  (with-eval-after-load "jetbrains-darcula-theme"
-    (custom-theme-set-faces
-     'jetbrains-darcula
-     '(line-number ((t (:background "2b2b2b" :foreground "#737980"))))))
-  (load-theme 'jetbrains-darcula t)
-  (set-face-attribute 'line-number nil
-                      :background "#2b2b2b" :foreground "#737980"))
+;; (use-package jetbrains-darcula-theme
+;;   :config
+;;   (with-eval-after-load "jetbrains-darcula-theme"
+;;     (custom-theme-set-faces
+;;      'jetbrains-darcula
+;;      '(line-number ((t (:background "2b2b2b" :foreground "#737980"))))))
+;;   (load-theme 'jetbrains-darcula t)
+;;   (set-face-attribute 'line-number nil
+;;                       :background "#2b2b2b" :foreground "#737980"))
 
 (use-package popper
   :ensure t ; or :straight t
@@ -37,8 +37,8 @@
   (popper-mode +1)
   (popper-echo-mode +1))
 
-(require 'zone)
-(zone-when-idle 120)
+;; (require 'zone)
+;; (zone-when-idle 120)
 
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
