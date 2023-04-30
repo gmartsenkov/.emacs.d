@@ -2,8 +2,10 @@
   :ensure t
   :init
   (projectile-mode t)
+  (setq projectile-completion-system 'default)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
+(use-package consult-projectile :ensure t)
 (use-package consult :ensure t)
 (use-package anzu :ensure t :config (global-anzu-mode +1))
 (use-package orderless :ensure t)

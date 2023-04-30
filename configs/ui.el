@@ -51,3 +51,8 @@
   :config
   (setq nano-modeline-position "bottom")
   (nano-modeline-mode))
+
+(use-package all-the-icons-completion
+  :ensure t
+  :config
+  (all-the-icons-completion-mode))
