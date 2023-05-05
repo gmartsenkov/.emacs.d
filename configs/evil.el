@@ -12,6 +12,7 @@
   (global-set-key (kbd "C-l") 'evil-window-right)
   (global-set-key (kbd "C-j") 'evil-window-down)
   (global-set-key (kbd "C-k") 'evil-window-up)
+  (evil-define-key 'normal 'magit-mode-map (kbd "q") 'winner-undo)
   (evil-define-key 'normal 'global (kbd "gt") 'evil-avy-goto-char-2)
   (evil-define-key 'normal 'global (kbd "<leader>nt") 'org-roam-dailies-goto-today)
   (evil-define-key 'normal 'global (kbd "<leader>nc") 'org-roam-dailies-capture-today)
