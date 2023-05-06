@@ -12,12 +12,12 @@
   :hook prog-mode slim-mode)
 
 (load-file "~/.emacs.d/configs/treesitter.el")
-(load-file "~/.emacs.d/configs/ui.el")
 (load-file "~/.emacs.d/configs/completion.el")
 (load-file "~/.emacs.d/configs/persp.el")
 (load-file "~/.emacs.d/configs/git.el")
 (load-file "~/.emacs.d/configs/lsp.el")
 (load-file "~/.emacs.d/configs/org.el")
+(load-file "~/.emacs.d/configs/ui.el")
 
 ;; Languages
 (load-file "~/.emacs.d/configs/ruby.el")

@@ -6,6 +6,7 @@
 (menu-bar-mode -1)
 (winner-mode t)
 (electric-pair-mode t)
+(setq max-lisp-eval-depth 10000)
 (setq ns-use-thin-smoothing t)
 (setq delete-old-versions -1 )
 (setq backup-directory-alist `(("." . "~/.emacs.d/backups")) )
