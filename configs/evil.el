@@ -1,3 +1,9 @@
+(defun buffer-mode (&optional buffer-or-name)
+  "Returns the major mode associated with a buffer.
+If buffer-or-name is nil return current buffer's mode."
+  (buffer-local-value 'major-mode
+   (if buffer-or-name (get-buffer buffer-or-name) (current-buffer))))
+
 (use-package evil
   :ensure t
   :init
@@ -12,6 +18,9 @@
   (global-set-key (kbd "C-l") 'evil-window-right)
   (global-set-key (kbd "C-j") 'evil-window-down)
   (global-set-key (kbd "C-k") 'evil-window-up)
+  (evil-define-key 'normal 'global (kbd "<escape>") (lambda ()
+                                                      (interactive)
+                                                      (popper--bury-all)))
   (evil-define-key 'normal 'global (kbd "gt") 'evil-avy-goto-char-2)
   (evil-define-key 'normal 'global (kbd "<leader>nt") 'org-roam-dailies-goto-today)
   (evil-define-key 'normal 'global (kbd "<leader>nc") 'org-roam-dailies-capture-today)
