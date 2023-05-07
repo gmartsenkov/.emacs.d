@@ -57,10 +57,10 @@
   :config
   (all-the-icons-completion-mode))
 
-(use-package perspective
-  :ensure t
-  :config
-  (setq persp-mode-prefix-key (kbd "C-x x"))
-  (persp-mode))
-(use-package persp-projectile
-  :ensure t)
+;; (use-package perspective
+;;   :ensure t
+;;   :config
+;;   (setq persp-mode-prefix-key (kbd "C-x x"))
+;;   (persp-mode))
+;; (use-package persp-projectile
+;;   :ensure t)

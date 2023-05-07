@@ -32,19 +32,19 @@ If buffer-or-name is nil return current buffer's mode."
 						       (split-window-sensibly)
 						       (other-window 1)
 						       (term "/bin/zsh")))
-  (evil-define-key 'normal 'global (kbd "<leader><tab><tab>") (lambda
-                                                         ()
-                                                         (interactive)
-                                                         (->
-                                                          (let ((x 0)) (mapcar
-                                                                        (lambda (a) (string-join (list (concat "[" (number-to-string (cl-incf x)) "]") a) ""))
-                                                                        (persp-all-names)))
-                                                          (string-join " | ")
-                                                          (message))))
-  (evil-define-key 'normal 'global (kbd "<leader><tab>1") (lambda () (interactive) (persp-switch-by-number 1)))
-  (evil-define-key 'normal 'global (kbd "<leader><tab>2") (lambda () (interactive) (persp-switch-by-number 2)))
-  (evil-define-key 'normal 'global (kbd "<leader><tab>3") (lambda () (interactive) (persp-switch-by-number 3)))
-  (evil-define-key 'normal 'global (kbd "<leader><tab>4") (lambda () (interactive) (persp-switch-by-number 4)))
+  ;; (evil-define-key 'normal 'global (kbd "<leader><tab><tab>") (lambda
+  ;;                                                        ()
+  ;;                                                        (interactive)
+  ;;                                                        (->
+  ;;                                                         (let ((x 0)) (mapcar
+  ;;                                                                       (lambda (a) (string-join (list (concat "[" (number-to-string (cl-incf x)) "]") a) ""))
+  ;;                                                                       (persp-all-names)))
+  ;;                                                         (string-join " | ")
+  ;;                                                         (message))))
+  ;; (evil-define-key 'normal 'global (kbd "<leader><tab>1") (lambda () (interactive) (persp-switch-by-number 1)))
+  ;; (evil-define-key 'normal 'global (kbd "<leader><tab>2") (lambda () (interactive) (persp-switch-by-number 2)))
+  ;; (evil-define-key 'normal 'global (kbd "<leader><tab>3") (lambda () (interactive) (persp-switch-by-number 3)))
+  ;; (evil-define-key 'normal 'global (kbd "<leader><tab>4") (lambda () (interactive) (persp-switch-by-number 4)))
   (evil-define-key 'normal 'global (kbd "<leader>/") 'projectile-ripgrep)
   (evil-define-key 'normal 'global (kbd "<leader>hv") 'describe-variable)
   (evil-define-key 'normal 'global (kbd "<leader>hf") 'describe-function)
