@@ -74,6 +74,7 @@ If buffer-or-name is nil return current buffer's mode."
   (evil-define-key 'normal 'global (kbd "<leader>cr") 'lsp-find-references)
   (evil-define-key 'normal 'global (kbd "<leader>cs") 'consult-imenu)
   (evil-define-key 'normal 'global (kbd "<leader>gg") 'magit)
+  (evil-define-key 'normal 'global (kbd "<leader>gc") 'magit-branch-or-checkout)
   (evil-define-key '(normal visual) 'global (kbd "<leader>gl") 'git-link)
   (evil-define-key 'normal 'global (kbd "<leader>gb") 'magit-blame)
   (evil-define-key 'normal magit-status-mode-map (kbd "q") (lambda ()

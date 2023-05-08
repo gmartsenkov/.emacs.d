@@ -5,10 +5,22 @@
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
         doom-themes-enable-italic t ; if nil, italics is universally disabled
         doom-gruvbox-dark-variant "soft")
-  (load-theme 'doom-ir-black t)
+  ;; (load-theme 'doom-ir-black t)
   (doom-themes-org-config))
 
-;; (use-package doom-modeline :ensure t :init (doom-modeline-mode 1))
+(use-package ef-themes
+  :ensure t
+  :config
+  (load-theme 'ef-trio-dark))
+;; (use-package nerd-icons :ensure t)
+;; (use-package doom-modeline
+;;   :ensure t
+;;   :config
+;;   (setq
+;;    doom-modeline-buffer-file-name-style 'relative-to-project
+;;    doom-modeline-buffer-encoding nil
+;;    doom-modeline-modal-icon nil)
+;;   :init (doom-modeline-mode 1))
 
 ;; (use-package jetbrains-darcula-theme
 ;;   :config
@@ -49,7 +61,7 @@
 (use-package nano-modeline
   :ensure t
   :config
-  (setq nano-modeline-position "bottom")
+  (setq nano-modeline-position 'top)
   (nano-modeline-mode))
 
 (use-package all-the-icons-completion

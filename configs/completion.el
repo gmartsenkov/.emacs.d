@@ -2,7 +2,9 @@
   :ensure t
   :init
   (projectile-mode t)
-  (setq projectile-completion-system 'default)
+  (setq projectile-completion-system 'default
+        projectile-auto-discover nil
+        projectile-project-search-path '("~/Development"))
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
 (use-package consult-projectile :ensure t)
