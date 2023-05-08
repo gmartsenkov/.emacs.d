@@ -10,7 +10,11 @@
 (use-package consult-projectile :ensure t)
 (use-package consult :ensure t)
 (use-package anzu :ensure t :config (global-anzu-mode +1))
-(use-package orderless :ensure t)
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
 (use-package vertico
   :ensure t
   :init
