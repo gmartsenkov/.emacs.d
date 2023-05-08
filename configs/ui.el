@@ -64,10 +64,14 @@
   (setq nano-modeline-position 'top)
   (nano-modeline-mode))
 
-(use-package all-the-icons-completion
+(use-package nerd-icons-completion
   :ensure t
-  :config
-  (all-the-icons-completion-mode))
+  :config (nerd-icons-completion-mode))
+
+;; (use-package all-the-icons-completion
+;;   :ensure t
+;;   :config
+;;   (all-the-icons-completion-mode))
 
 ;; (use-package perspective
 ;;   :ensure t
