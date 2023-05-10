@@ -19,6 +19,8 @@ If buffer-or-name is nil return current buffer's mode."
   (global-set-key (kbd "C-l") 'evil-window-right)
   (global-set-key (kbd "C-j") 'evil-window-down)
   (global-set-key (kbd "C-k") 'evil-window-up)
+  (evil-define-key 'insert 'global (kbd "C-e") 'end-of-line)
+  (evil-define-key 'insert 'global (kbd "C-a") 'beginning-of-line)
   (evil-define-key 'normal 'global (kbd "<escape>") (lambda ()
                                                       (interactive)
                                                       (popper--bury-all)))
