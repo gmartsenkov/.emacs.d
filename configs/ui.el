@@ -5,13 +5,14 @@
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
         doom-themes-enable-italic t ; if nil, italics is universally disabled
         doom-gruvbox-dark-variant "soft")
-  ;; (load-theme 'doom-ir-black t)
+  (load-theme 'doom-gruvbox t)
   (doom-themes-org-config))
 
 (use-package ef-themes
   :ensure t
   :config
-  (load-theme 'ef-trio-dark))
+  ;;(load-theme 'ef-trio-dark)
+  )
 ;; (use-package nerd-icons :ensure t)
 ;; (use-package doom-modeline
 ;;   :ensure t

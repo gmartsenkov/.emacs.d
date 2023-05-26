@@ -29,6 +29,9 @@
   (setq company-backends '((company-files company-yasnippet :separate company-tide company-capf :separate company-files)))
   :init
   (add-hook 'ruby-ts-mode-hook 'company-mode)
+  (add-hook 'js-ts-mode-hook 'company-mode)
+  (add-hook 'js-mode-hook 'company-mode)
+  (add-hook 'tsx-ts-mode-hook 'company-mode)
   (add-hook 'go-mode-hook 'company-mode)
   (add-hook 'rust-ts-mode-hook 'company-mode)
   (add-hook 'clojure-mode-hook 'company-mode)

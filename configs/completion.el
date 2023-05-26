@@ -9,6 +9,12 @@
 
 (use-package consult-projectile :ensure t)
 (use-package consult :ensure t)
+(use-package consult-ag :ensure t)
+(use-package consult-org-roam :ensure t)
+(use-package consult-dash
+  :ensure t
+  :config
+  (setq consult-dash-docsets '("ruby" "rust")))
 (use-package anzu :ensure t :config (global-anzu-mode +1))
 (use-package orderless
   :ensure t
