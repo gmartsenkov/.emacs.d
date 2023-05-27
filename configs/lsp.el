@@ -35,6 +35,7 @@
   (add-hook 'go-mode-hook 'company-mode)
   (add-hook 'rust-ts-mode-hook 'company-mode)
   (add-hook 'clojure-mode-hook 'company-mode)
+  (add-hook 'cider-repl-mode-hook 'company-mode)
   (add-hook 'elixir-mode-hook 'company-mode)
   (add-hook 'inf-ruby-mode-hook 'company-mode)
   (add-hook 'javascript-mode-hook 'company-mode)

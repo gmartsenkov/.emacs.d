@@ -25,6 +25,7 @@
 (load-file "~/.emacs.d/configs/js.el")
 (load-file "~/.emacs.d/configs/elixir.el")
 (load-file "~/.emacs.d/configs/rust.el")
+(load-file "~/.emacs.d/configs/clojure.el")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
