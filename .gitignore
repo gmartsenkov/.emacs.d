@@ -1,0 +1,17 @@
+.cache
+auto-save-list/
+backups/
+eln-cache/
+elpa
+history
+projectile-bookmarks.eld
+forge-database.sqlite
+.lsp-session-*
+persp-confs/
+transient/
+var/
+projects
+tree-sitter
+org-roam.db
+elpaca
+type-break
