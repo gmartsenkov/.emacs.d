@@ -109,7 +109,7 @@
   (setq popper-reference-buffers
         '("\\*Async Shell Command\\*"
           "*rspec-compilation*"
-          "*mix-test*"
+          "*mix test*"
           "*RuboCop"
           "*Help*"
           "*compilation*"
@@ -313,31 +313,25 @@
 
 (use-package mix
   :ensure t
-  :config
-  (setq mix-command-test "espec"))
+  :custom
+  (mix-command-test "espec"))
 (use-package rspec-mode
   :ensure t
-  :config
-  (setq rspec-primary-source-dirs '("app" "apps" "lib"))
+  :custom
+  (rspec-primary-source-dirs '("app" "apps" "lib"))
   ;;(setq rspec-primary-source-dirs '("apps"))
-  ) ;; When you've hit the breakpoint, hit C-x C-q to enable inf-ruby.
+  )
 
 (use-package corfu
   ;; Optional customizations
   :custom
   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
   (corfu-auto t)                 ;; Enable auto completion
-  ;; (corfu-separator ?\s)          ;; Orderless field separator
-  ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
-  ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
-  ;; (corfu-preview-current nil)    ;; Disable current candidate preview
-  ;; (corfu-preselect 'prompt)      ;; Preselect the prompt
-  ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
-  ;; (corfu-scroll-margin 5)        ;; Use scroll margin
-  :config
-  (setq completion-cycle-threshold 3)
-  (setq tab-always-indent 'complete)
+  (corfu-popupinfo-delay 0)
+  (completion-cycle-threshold 3)
+  (tab-always-indent 'complete)
   :init
+  (corfu-popupinfo-mode)
   (global-corfu-mode))
 
 ;; (use-package alchemist)
@@ -359,8 +353,8 @@
                                     :test-suffix "_spec"))
 (use-package flycheck
   :ensure t
-  :config
-  (setq flycheck-indication-mode nil)
+  :custom
+  (flycheck-indication-mode nil)
   :init
   (add-hook 'ruby-ts-mode-hook 'flycheck-mode)
   (add-hook 'elixir-ts-mode-hook 'flycheck-mode)
@@ -371,8 +365,8 @@
 (use-package git-gutter
   :ensure t
   :hook (prog-mode . git-gutter-mode)
-  :config
-  (setq git-gutter:update-interval 0.1))
+  :custom
+  (git-gutter:update-interval 0.1))
 
 (use-package git-gutter-fringe
   :ensure t
@@ -408,6 +402,17 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("e3daa8f18440301f3e54f2093fe15f4fe951986a8628e98dcd781efbec7a46f2"
+     "88f7ee5594021c60a4a6a1c275614103de8c1435d6d08cc58882f920e0cec65e"
+     "9e1cf0f16477d0da814691c1b9add22d7cb34e0bb3334db7822424a449d20078"
+     default))
  '(safe-local-variable-values
    '((eval set (make-local-variable 'rspec-primary-source-dirs)
            (setq rspec-primary-source-dirs '("app" "apps" "lib"))))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
