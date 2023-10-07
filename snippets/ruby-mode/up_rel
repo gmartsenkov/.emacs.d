@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: relation
+# key: rel
+# condition: (cl-search "uplisting-api" buffer-file-name)
+# --
+Uplisting.relations[:${1:relation}]
