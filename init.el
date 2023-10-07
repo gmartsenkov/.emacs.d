@@ -119,6 +119,11 @@
   (popper-mode +1)
   (popper-echo-mode +1))
 
+(with-eval-after-load 'evil
+  (defalias #'forward-evil-word #'forward-evil-symbol)
+  ;; make evil-search-word look for symbol rather than word boundaries
+  (setq-default evil-symbol-word-search t))
+
 (use-package evil
   :ensure t
   :init
@@ -222,7 +227,7 @@
   (evil-define-key 'normal emacs-lisp-mode-map (kbd "<leader>ee") 'eval-last-sexp)
   (evil-define-key 'normal elixir-ts-mode-map (kbd "<leader>ta") 'mix-test)
   (evil-define-key 'normal elixir-ts-mode-map (kbd "<leader>tv") 'mix-test-current-test)
-  (evil-define-key 'normal elixir-ts-mode-map (kbd "<leader>tt") 'projectile-toggle-between-implementation-and-test)
+  (evil-define-key 'normal elixir-ts-mode-map (kbd "<leader>tt") 'gotospec)
   (evil-define-key 'normal go-mode-map (kbd "<leader>tt") 'projectile-toggle-between-implementation-and-test)
   (evil-define-key 'normal go-mode-map (kbd "<leader>tv") 'go-test-current-file)
   (evil-define-key 'normal go-mode-map (kbd "<leader>tc") 'go-test-current-test)
@@ -257,6 +262,8 @@
 
 (use-package projectile
   :ensure t
+  :custom
+  (projectile-create-missing-test-files t)
   :init
   (projectile-mode t)
   (setq projectile-completion-system 'default
@@ -301,6 +308,28 @@
   :init
   (savehist-mode))
 
+(use-package company
+  :ensure t
+  :custom
+  (company-tooltip-limit 10)
+  (company-idle-delay .1)
+  (company-tooltip-align-annotations t)
+  (company-minimum-prefix-length 2)
+  (company-backends '((company-files company-yasnippet :separate company-tide company-capf)))
+  :init
+  (add-hook 'ruby-ts-mode-hook 'company-mode)
+  (add-hook 'js-ts-mode-hook 'company-mode)
+  (add-hook 'js-mode-hook 'company-mode)
+  (add-hook 'tsx-ts-mode-hook 'company-mode)
+  (add-hook 'go-mode-hook 'company-mode)
+  (add-hook 'rust-ts-mode-hook 'company-mode)
+  (add-hook 'clojure-mode-hook 'company-mode)
+  (add-hook 'cider-repl-mode-hook 'company-mode)
+  (add-hook 'elixir-mode-hook 'company-mode)
+  (add-hook 'inf-ruby-mode-hook 'company-mode)
+  (add-hook 'javascript-mode-hook 'company-mode)
+  (add-hook 'emacs-lisp-mode-hook 'company-mode))
+
 (use-package yasnippet
   :ensure t
   :init (yas-global-mode 1))
@@ -322,21 +351,20 @@
   ;;(setq rspec-primary-source-dirs '("apps"))
   )
 
-(use-package corfu
-  ;; Optional customizations
-  :custom
-  (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
-  (corfu-auto t)                 ;; Enable auto completion
-  (corfu-popupinfo-delay 0)
-  (completion-cycle-threshold 3)
-  (tab-always-indent 'complete)
-  :init
-  (corfu-popupinfo-mode)
-  (global-corfu-mode))
+;; (use-package corfu
+;;   ;; Optional customizations
+;;   :custom
+;;   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+;;   (corfu-auto t)                 ;; Enable auto completion
+;;   (corfu-popupinfo-delay 0)
+;;   (completion-cycle-threshold 3)
+;;   (tab-always-indent 'complete)
+;;   :init
+;;   (corfu-popupinfo-mode)
+;;   (global-corfu-mode))
 
 ;; (use-package alchemist)
 
-;; (require 'eglot)
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
                '(elixir-ts-mode . ("/opt/homebrew/bin/elixir-ls")))
@@ -349,6 +377,7 @@
                                     :project-file "mix.exs"
                                     :compile "mix compile"
                                     :src-dir "lib/"
+                                    :test-dir "spec/"
                                     :test "mix espec"
                                     :test-suffix "_spec"))
 (use-package flycheck
@@ -390,6 +419,39 @@
       )
 
 
+(setq gotospec-config
+      '((ex . ((test-folder . "spec")
+               (source-strip-folder . "lib")
+               (strip-file-suffix . "")
+               (test-suffix . "_spec.exs")))
+        (exs . ((test-folder . "lib")
+                (source-strip-folder . "spec")
+                (strip-file-suffix . "_spec")
+                (test-suffix . ".ex")))))
+
+(defun gotospec ()
+  (interactive
+   (let* ((project-root (cdr (project-current)))
+          (file-path (buffer-file-name))
+          (relative-file-path (file-relative-name file-path project-root))
+          (file (->> file-path (file-name-split) (last) (nth 0)))
+          (extension (file-name-extension file))
+          (config (alist-get (intern extension) gotospec-config))
+          (test-folder (file-name-as-directory (alist-get 'test-folder config)))
+          (test-suffix (alist-get 'test-suffix config))
+          (strip-file-suffix (alist-get 'strip-file-suffix config))
+          (source-strip-folder (file-name-as-directory (alist-get 'source-strip-folder config)))
+          (target (concat
+                   project-root
+                   test-folder
+                   (string-remove-prefix
+                    (file-name-as-directory source-strip-folder)
+                    (file-name-directory relative-file-path))
+                   (concat
+                    (string-remove-suffix strip-file-suffix (file-name-sans-extension file))
+                    test-suffix))))
+     (find-file target))))
+
 (add-hook 'ruby-ts-mode-hook 'eglot-ensure)
 (add-hook 'elixir-ts-mode-hook 'eglot-ensure)
 
@@ -403,12 +465,16 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("e3daa8f18440301f3e54f2093fe15f4fe951986a8628e98dcd781efbec7a46f2"
+   '("e4a702e262c3e3501dfe25091621fe12cd63c7845221687e36a79e17cf3a67e0"
+     "f5f80dd6588e59cfc3ce2f11568ff8296717a938edd448a947f9823a4e282b66"
+     "e3daa8f18440301f3e54f2093fe15f4fe951986a8628e98dcd781efbec7a46f2"
      "88f7ee5594021c60a4a6a1c275614103de8c1435d6d08cc58882f920e0cec65e"
      "9e1cf0f16477d0da814691c1b9add22d7cb34e0bb3334db7822424a449d20078"
      default))
  '(safe-local-variable-values
-   '((eval set (make-local-variable 'rspec-primary-source-dirs)
+   '((eval set (make-local-variable 'mix-command-test)
+           (setq mix-command-test "test"))
+     (eval set (make-local-variable 'rspec-primary-source-dirs)
            (setq rspec-primary-source-dirs '("app" "apps" "lib"))))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
