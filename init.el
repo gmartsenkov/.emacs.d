@@ -6,6 +6,7 @@
 (menu-bar-mode -1)
 (winner-mode t)
 (electric-pair-mode t)
+(setq compilation-always-kill t)
 (setq max-lisp-eval-depth 10000)
 (setq ns-use-thin-smoothing t)
 (setq delete-old-versions -1 )
@@ -226,7 +227,8 @@
   (evil-define-key 'normal emacs-lisp-mode-map (kbd "<leader>eb") 'eval-buffer)
   (evil-define-key 'normal emacs-lisp-mode-map (kbd "<leader>ee") 'eval-last-sexp)
   (evil-define-key 'normal elixir-ts-mode-map (kbd "<leader>ta") 'mix-test)
-  (evil-define-key 'normal elixir-ts-mode-map (kbd "<leader>tv") 'mix-test-current-test)
+  (evil-define-key 'normal elixir-ts-mode-map (kbd "<leader>tv") 'elixir-run-test)
+  (evil-define-key 'normal elixir-ts-mode-map (kbd "<leader>tc") 'mix-test-current-test)
   (evil-define-key 'normal elixir-ts-mode-map (kbd "<leader>tt") 'gotospec)
   (evil-define-key 'normal go-mode-map (kbd "<leader>tt") 'projectile-toggle-between-implementation-and-test)
   (evil-define-key 'normal go-mode-map (kbd "<leader>tv") 'go-test-current-file)
@@ -429,28 +431,46 @@
                 (strip-file-suffix . "_spec")
                 (test-suffix . ".ex")))))
 
-(defun gotospec ()
+(require 'ansi-color)
+(defun my/ansi-colorize-buffer ()
+  (let ((buffer-read-only nil))
+    (ansi-color-apply-on-region (point-min) (point-max))))
+
+(add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
+(defun elixir-run-test ()
   (interactive
-   (let* ((project-root (cdr (project-current)))
-          (file-path (buffer-file-name))
-          (relative-file-path (file-relative-name file-path project-root))
+   (let* ((file-path (buffer-file-name))
+          (default-directory (cdr (project-current)))
           (file (->> file-path (file-name-split) (last) (nth 0)))
           (extension (file-name-extension file))
-          (config (alist-get (intern extension) gotospec-config))
-          (test-folder (file-name-as-directory (alist-get 'test-folder config)))
-          (test-suffix (alist-get 'test-suffix config))
-          (strip-file-suffix (alist-get 'strip-file-suffix config))
-          (source-strip-folder (file-name-as-directory (alist-get 'source-strip-folder config)))
-          (target (concat
-                   project-root
-                   test-folder
-                   (string-remove-prefix
-                    (file-name-as-directory source-strip-folder)
-                    (file-name-directory relative-file-path))
-                   (concat
-                    (string-remove-suffix strip-file-suffix (file-name-sans-extension file))
-                    test-suffix))))
-     (find-file target))))
+          (target (if (string= extension "ex") (find-spec) (find-spec))))
+         (compile (concat "mix espec " target)))))
+
+(defun find-spec ()
+  (let* ((project-root (cdr (project-current)))
+         (file-path (buffer-file-name))
+         (relative-file-path (file-relative-name file-path project-root))
+         (file (->> file-path (file-name-split) (last) (nth 0)))
+         (extension (file-name-extension file))
+         (config (alist-get (intern extension) gotospec-config))
+         (test-folder (file-name-as-directory (alist-get 'test-folder config)))
+         (test-suffix (alist-get 'test-suffix config))
+         (strip-file-suffix (alist-get 'strip-file-suffix config))
+         (source-strip-folder (file-name-as-directory (alist-get 'source-strip-folder config)))
+         (target (concat
+                  project-root
+                  test-folder
+                  (string-remove-prefix
+                   (file-name-as-directory source-strip-folder)
+                   (file-name-directory relative-file-path))
+                  (concat
+                   (string-remove-suffix strip-file-suffix (file-name-sans-extension file))
+                   test-suffix))))
+    target))
+  
+(defun gotospec ()
+  (interactive
+   (find-file (find-spec))))
 
 (add-hook 'ruby-ts-mode-hook 'eglot-ensure)
 (add-hook 'elixir-ts-mode-hook 'eglot-ensure)
@@ -465,7 +485,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("e4a702e262c3e3501dfe25091621fe12cd63c7845221687e36a79e17cf3a67e0"
+   '("5ec088e25ddfcfe37b6ae7712c9cb37fd283ea5df7ac609d007cafa27dab6c64"
+     "d43860349c9f7a5b96a090ecf5f698ff23a8eb49cd1e5c8a83bb2068f24ea563"
+     "e4a702e262c3e3501dfe25091621fe12cd63c7845221687e36a79e17cf3a67e0"
      "f5f80dd6588e59cfc3ce2f11568ff8296717a938edd448a947f9823a4e282b66"
      "e3daa8f18440301f3e54f2093fe15f4fe951986a8628e98dcd781efbec7a46f2"
      "88f7ee5594021c60a4a6a1c275614103de8c1435d6d08cc58882f920e0cec65e"
