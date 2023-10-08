@@ -342,10 +342,6 @@
   :config
   (inf-ruby-enable-auto-breakpoint))
 
-(use-package mix
-  :ensure t
-  :custom
-  (mix-command-test "espec"))
 (use-package rspec-mode
   :ensure t
   :custom
@@ -353,35 +349,11 @@
   ;;(setq rspec-primary-source-dirs '("apps"))
   )
 
-;; (use-package corfu
-;;   ;; Optional customizations
-;;   :custom
-;;   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
-;;   (corfu-auto t)                 ;; Enable auto completion
-;;   (corfu-popupinfo-delay 0)
-;;   (completion-cycle-threshold 3)
-;;   (tab-always-indent 'complete)
-;;   :init
-;;   (corfu-popupinfo-mode)
-;;   (global-corfu-mode))
-
-;; (use-package alchemist)
-
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
                '(elixir-ts-mode . ("/opt/homebrew/bin/elixir-ls")))
   (add-to-list 'eglot-server-programs
                '(ruby-ts-mode . ("/Users/gogo/.asdf/shims/solargraph" "stdio"))))
-;;
-
-(with-eval-after-load 'projectile
-  (projectile-register-project-type 'elixir '("mix.exs")
-                                    :project-file "mix.exs"
-                                    :compile "mix compile"
-                                    :src-dir "lib/"
-                                    :test-dir "spec/"
-                                    :test "mix espec"
-                                    :test-suffix "_spec"))
 (use-package flycheck
   :ensure t
   :custom
