@@ -6,6 +6,8 @@
 (menu-bar-mode -1)
 (winner-mode t)
 (electric-pair-mode t)
+(setq read-process-output-max (* 1024 1024))
+(setq gc-cons-threshold 100000000)
 (setq-default mode-line-mule-info "")
 (setq-default mode-line-modified "")
 (setq-default mode-line-front-space "")
@@ -14,7 +16,7 @@
 (setq compilation-always-kill t)
 (setq max-lisp-eval-depth 10000)
 (setq ns-use-thin-smoothing t)
-(setq delete-old-versions -1 )
+(setq delete-old-versions -1)
 (setq backup-directory-alist `(("." . "~/.emacs.d/backups")) )
 (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)) )
 (setq ring-bell-function 'ignore )
@@ -34,6 +36,13 @@
 (setq compilation-scroll-output t)
 (setq ruby-indent-level 2)
 (setq ruby-insert-encoding-magic-comment nil)
+(setq ruby-method-call-indent nil)
+(setq ruby-after-operator-indent nil)
+(setq ruby-parenless-call-arguments-indent nil)
+(setq ruby-method-params-indent 0)
+(setq ruby-block-indent nil)
+(setq ruby-align-chained-calls nil)
+(setq ruby-deep-indent-paren nil)
 (setq js-indent-level 2)
 (setq visual-line-mode nil)
 (setq frame-title-format "\n")
@@ -128,12 +137,21 @@
           "*mix test*"
           "*RuboCop"
           "*Help*"
+          "*grep"
+          "*grep*"
+          "*rg*"
           "*compilation*"
           "\\*Bundler\\*"))
-  (setq popper-window-height 25)
+  (setq popper-window-height 45)
   (setq popper-display-function 'popper-display-popup-at-bottom)
   (popper-mode +1)
   (popper-echo-mode +1))
+
+(add-hook 'compilation-mode-hook
+  (lambda ()
+    (setq-local compilation-scroll-output t)
+    (setq-local scroll-conservatively most-positive-fixnum)
+    (setq-local scroll-margin 0)))
 
 (with-eval-after-load 'evil
   (defalias #'forward-evil-word #'forward-evil-symbol)
@@ -224,7 +242,7 @@
   (evil-define-key 'normal ruby-ts-mode-map (kbd "<leader>tf") 'rspec-run-last-failed)
   (evil-define-key 'normal ruby-ts-mode-map (kbd "<leader>tc") 'rspec-verify-single)
   (evil-define-key 'normal ruby-ts-mode-map (kbd "<leader>ta") 'rspec-verify-all)
-  (evil-define-key 'normal ruby-ts-mode-map (kbd "<leader>mp") 'rubocop-check-project)
+  (evil-define-key 'normal ruby-ts-mode-map (kbd "<leader>mp") 'rubocop-project)
   (evil-define-key 'normal ruby-ts-mode-map (kbd "<leader>mbi") 'bundle-install)
   (evil-define-key 'normal rust-ts-mode-map (kbd "<leader>ta") 'rust-test)
   (evil-define-key 'normal rust-ts-mode-map (kbd "<leader>mr") 'rust-run)
@@ -267,6 +285,12 @@
   (evil-collection-init)
   (evil-collection-define-key 'insert 'vertico-map
     (kbd "<escape>") 'abort-recursive-edit)
+  (evil-collection-define-key 'insert 'ivy-minibuffer-map
+    (kbd "<escape>") 'minibuffer-keyboard-quit)
+  (evil-collection-define-key 'insert 'ivy-minibuffer-map
+    (kbd "C-j") 'ivy-next-line)
+  (evil-collection-define-key 'insert 'ivy-minibuffer-map
+    (kbd "C-k") 'ivy-previous-line)
 
   (evil-collection-define-key 'insert 'vertico-map
     (kbd "C-k") 'vertico-previous))
@@ -293,6 +317,8 @@
   :custom
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
+
+(use-package counsel :ensure t)
 (use-package vertico
   :ensure t
   :init
@@ -325,34 +351,63 @@
   :init
   (savehist-mode))
 
-(use-package company
-  :ensure t
+(use-package corfu
+  ;; Optional customizations
   :custom
-  (company-tooltip-limit 10)
-  (company-idle-delay .1)
-  (company-tooltip-align-annotations t)
-  (company-minimum-prefix-length 2)
-  (company-backends '((company-files company-yasnippet :separate company-tide company-capf)))
+  (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+  (corfu-auto t)                 ;; Enable auto completion
+  (completion-cycle-threshold 2)
+  (tab-always-indent 'complete)
+  ;; (corfu-separator ?\s)          ;; Orderless field separator
+  ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
+  ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
+  ;; (corfu-preview-current nil)    ;; Disable current candidate preview
+  ;; (corfu-preselect 'prompt)      ;; Preselect the prompt
+  ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
+  (corfu-scroll-margin 1)        ;; Use scroll margin
   :init
-  (add-hook 'ruby-ts-mode-hook 'company-mode)
-  (add-hook 'js-ts-mode-hook 'company-mode)
-  (add-hook 'js-mode-hook 'company-mode)
-  (add-hook 'tsx-ts-mode-hook 'company-mode)
-  (add-hook 'go-mode-hook 'company-mode)
-  (add-hook 'rust-ts-mode-hook 'company-mode)
-  (add-hook 'clojure-mode-hook 'company-mode)
-  (add-hook 'cider-repl-mode-hook 'company-mode)
-  (add-hook 'elixir-mode-hook 'company-mode)
-  (add-hook 'inf-ruby-mode-hook 'company-mode)
-  (add-hook 'javascript-mode-hook 'company-mode)
-  (add-hook 'emacs-lisp-mode-hook 'company-mode))
+  (global-corfu-mode))
+
+(use-package company :ensure t)
+
+(use-package cape :ensure t)
+(defun my/eglot-capf ()
+  (setq-local completion-at-point-functions
+              (list (cape-super-capf
+                     #'eglot-completion-at-point (cape-company-to-capf #'company-yasnippet)
+                     #'cape-dabbrev
+                     #'cape-file
+                     ))))
+(add-hook 'eglot-managed-mode-hook #'my/eglot-capf)
+
+;; (use-package company
+;;   :ensure t
+;;   :custom
+;;   (company-tooltip-limit 10)
+;;   (company-idle-delay .1)
+;;   (company-tooltip-align-annotations t)
+;;   (company-minimum-prefix-length 2)
+;;   (company-backends '((company-files company-yasnippet :separate company-tide company-capf)))
+;;   :init
+;;   (add-hook 'ruby-ts-mode-hook 'company-mode)
+;;   (add-hook 'js-ts-mode-hook 'company-mode)
+;;   (add-hook 'js-mode-hook 'company-mode)
+;;   (add-hook 'tsx-ts-mode-hook 'company-mode)
+;;   (add-hook 'go-mode-hook 'company-mode)
+;;   (add-hook 'rust-ts-mode-hook 'company-mode)
+;;   (add-hook 'clojure-mode-hook 'company-mode)
+;;   (add-hook 'cider-repl-mode-hook 'company-mode)
+;;   (add-hook 'elixir-mode-hook 'company-mode)
+;;   (add-hook 'inf-ruby-mode-hook 'company-mode)
+;;   (add-hook 'javascript-mode-hook 'company-mode)
+;;   (add-hook 'emacs-lisp-mode-hook 'company-mode))
 
 (use-package yasnippet
   :ensure t
   :init (yas-global-mode 1))
 
 (use-package rg :ensure t)
-
+(use-package ruby-end :ensure t)
 (use-package inf-ruby :ensure t
   :config
   (inf-ruby-enable-auto-breakpoint))
@@ -368,7 +423,14 @@
   (add-to-list 'eglot-server-programs
                '(elixir-ts-mode . ("/opt/homebrew/bin/elixir-ls")))
   (add-to-list 'eglot-server-programs
-               '(ruby-ts-mode . ("/Users/gogo/.asdf/shims/solargraph" "stdio"))))
+               '(ruby-ts-mode . ("/Users/gogo/.asdf/shims/solargraph" "stdio")))
+  (setq eldoc-idle-delay 0.75)
+  (setq company-idle-delay 0.75)
+  (setq flymake-no-changes-timeout 0.5)
+   (setq eglot-events-buffer-size 0
+        eglot-ignored-server-capabilities '(:hoverProvider
+                                            :documentHighlightProvider)
+        eglot-autoshutdown t))
 (use-package flycheck
   :ensure t
   :custom
@@ -433,6 +495,11 @@
           (target (if (string= extension "ex") (find-spec) (find-spec))))
          (compile (concat "mix espec " target)))))
 
+(defun rubocop-project ()
+  (interactive
+   (let ((default-directory (cdr (project-current))))
+     (compile "bundle exec rubocop"))))
+
 (defun find-spec ()
   (let* ((project-root (cdr (project-current)))
          (file-path (buffer-file-name))
@@ -459,14 +526,37 @@
   (interactive
    (find-file (find-spec))))
 
+(defun sw-buff ()
+  "Run `switch-to-buffer' with the projects included as annotations."
+  (interactive)
+  (let ((completion-extra-properties
+         '(:annotation-function
+           (lambda (buffers)
+             (mapcar (lambda (buffer)
+                       (list buffer
+                             (concat
+                              (with-current-buffer buffer
+                                (if-let ((proj (project-current)))
+                                    (propertize (project-root proj)
+                                                'face 'dired-directory)
+                                  "<none>"))
+                              "	")
+                             nil))
+                     buffers)))))
+    (call-interactively #'projectile-switch-to-buffer)))
+
 (defun mode-line-buffer-file-parent-directory ()
   (when buffer-file-name
     (concat "[" (file-name-nondirectory (directory-file-name (file-name-directory buffer-file-name))) "]")))
 (setq-default mode-line-buffer-identification
       (cons (car mode-line-buffer-identification) '((:eval (mode-line-buffer-file-parent-directory)))))
 
+
 (add-hook 'ruby-ts-mode-hook 'eglot-ensure)
 (add-hook 'elixir-ts-mode-hook 'eglot-ensure)
+(add-hook 'compilation-mode-hook (lambda () (setq-local selective-display-ellipses nil)))
+(add-hook 'rspec-compilation-mode-hook (lambda () (setq-local selective-display-ellipses nil)))
+(advice-add '+emacs-lisp-truncate-pin :override (lambda () ()) )
 
 (add-to-list 'auto-mode-alist '("\\.ex\\'" . elixir-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.exs\\'" . elixir-ts-mode))
@@ -488,7 +578,9 @@
      "9e1cf0f16477d0da814691c1b9add22d7cb34e0bb3334db7822424a449d20078"
      default))
  '(safe-local-variable-values
-   '((eval set (make-local-variable 'mix-command-test)
+   '((eval set (make-local-variable 'rspec-primary-source-dirs)
+           (setq rspec-primary-source-dirs '("app")))
+     (eval set (make-local-variable 'mix-command-test)
            (setq mix-command-test "test"))
      (eval set (make-local-variable 'rspec-primary-source-dirs)
            (setq rspec-primary-source-dirs '("app" "apps" "lib"))))))
