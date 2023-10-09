@@ -145,7 +145,7 @@
   (setq popper-window-height (lambda (win)
                                (->
                                 window-total-height
-                                (/ 3)
+                                (/ 2.5)
                                 (floor))))
   (setq popper-display-function 'popper-display-popup-at-bottom)
   (popper-mode +1)
@@ -495,7 +495,7 @@
           (default-directory (cdr (project-current)))
           (file (->> file-path (file-name-split) (last) (nth 0)))
           (extension (file-name-extension file))
-          (target (if (string= extension "ex") (find-spec) (find-spec))))
+          (target (if (string= extension "ex") (find-spec) file-path)))
          (compile (concat "mix espec " target)))))
 
 (defun rubocop-project ()
