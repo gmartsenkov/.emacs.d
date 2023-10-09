@@ -142,11 +142,14 @@
           "*rg*"
           "*compilation*"
           "\\*Bundler\\*"))
-  (setq popper-window-height 45)
+  (setq popper-window-height (lambda (win)
+                               (->
+                                window-total-height
+                                (/ 3)
+                                (floor))))
   (setq popper-display-function 'popper-display-popup-at-bottom)
   (popper-mode +1)
   (popper-echo-mode +1))
-
 (add-hook 'compilation-mode-hook
   (lambda ()
     (setq-local compilation-scroll-output t)
