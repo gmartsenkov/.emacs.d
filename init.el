@@ -262,7 +262,7 @@
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>rb") 'cider-switch-to-repl-buffer)
   (evil-define-key 'normal emacs-lisp-mode-map (kbd "<leader>eb") 'eval-buffer)
   (evil-define-key 'normal emacs-lisp-mode-map (kbd "<leader>ee") 'eval-last-sexp)
-  (evil-define-key 'normal elixir-ts-mode-map (kbd "<leader>ta") 'mix-test)
+  (evil-define-key 'normal elixir-ts-mode-map (kbd "<leader>ta") 'elixir-test-project)
   (evil-define-key 'normal elixir-ts-mode-map (kbd "<leader>tv") 'elixir-run-test)
   (evil-define-key 'normal elixir-ts-mode-map (kbd "<leader>tc") 'mix-test-current-test)
   (evil-define-key 'normal elixir-ts-mode-map (kbd "<leader>tt") 'gotospec)
@@ -498,6 +498,11 @@
           (target (if (string= extension "ex") (find-spec) file-path)))
          (compile (concat "mix espec " target)))))
 
+(defun elixir-test-project ()
+  (interactive
+   (let ((default-directory (cdr (project-current))))
+     (compile "mix espec"))))
+
 (defun rubocop-project ()
   (interactive
    (let ((default-directory (cdr (project-current))))
@@ -557,8 +562,6 @@
 
 (add-hook 'ruby-ts-mode-hook 'eglot-ensure)
 (add-hook 'elixir-ts-mode-hook 'eglot-ensure)
-(add-hook 'compilation-mode-hook (lambda () (setq-local selective-display-ellipses nil)))
-(add-hook 'rspec-compilation-mode-hook (lambda () (setq-local selective-display-ellipses nil)))
 (advice-add '+emacs-lisp-truncate-pin :override (lambda () ()) )
 
 (add-to-list 'auto-mode-alist '("\\.ex\\'" . elixir-ts-mode))
