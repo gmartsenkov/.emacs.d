@@ -7,7 +7,7 @@
 (winner-mode t)
 (electric-pair-mode t)
 (setq read-process-output-max (* 1024 1024))
-(setq gc-cons-threshold 100000000)
+;;(setq gc-cons-threshold 100000000)
 (setq-default mode-line-mule-info "")
 (setq-default mode-line-modified "")
 (setq-default mode-line-front-space "")
@@ -122,7 +122,8 @@
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
         doom-themes-enable-italic t ; if nil, italics is universally disabled
         doom-gruvbox-dark-variant "soft")
-  (load-theme 'doom-tokyo-night t)
+  ;; (load-theme 'doom-tokyo-night t)
+  (load-theme 'doom-miramare t)
   (doom-themes-org-config))
 
 (use-package popper
@@ -247,6 +248,14 @@
   (evil-define-key 'normal ruby-ts-mode-map (kbd "<leader>ta") 'rspec-verify-all)
   (evil-define-key 'normal ruby-ts-mode-map (kbd "<leader>mp") 'rubocop-project)
   (evil-define-key 'normal ruby-ts-mode-map (kbd "<leader>mbi") 'bundle-install)
+  (evil-define-key 'normal ruby-mode-map (kbd "<leader>tt") 'rspec-toggle-spec-and-target)
+  (evil-define-key 'normal ruby-mode-map (kbd "<leader>tv") 'rspec-verify)
+  (evil-define-key 'normal ruby-mode-map (kbd "<leader>tl") 'rspec-rerun)
+  (evil-define-key 'normal ruby-mode-map (kbd "<leader>tf") 'rspec-run-last-failed)
+  (evil-define-key 'normal ruby-mode-map (kbd "<leader>tc") 'rspec-verify-single)
+  (evil-define-key 'normal ruby-mode-map (kbd "<leader>ta") 'rspec-verify-all)
+  (evil-define-key 'normal ruby-mode-map (kbd "<leader>mp") 'rubocop-project)
+  (evil-define-key 'normal ruby-mode-map (kbd "<leader>mbi") 'bundle-install)
   (evil-define-key 'normal rust-ts-mode-map (kbd "<leader>ta") 'rust-test)
   (evil-define-key 'normal rust-ts-mode-map (kbd "<leader>mr") 'rust-run)
   (evil-define-key 'normal rust-ts-mode-map (kbd "<leader>mb") 'rust-compile)
@@ -262,6 +271,7 @@
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>rb") 'cider-switch-to-repl-buffer)
   (evil-define-key 'normal emacs-lisp-mode-map (kbd "<leader>eb") 'eval-buffer)
   (evil-define-key 'normal emacs-lisp-mode-map (kbd "<leader>ee") 'eval-last-sexp)
+  (evil-define-key 'normal elixir-ts-mode-map (kbd "<leader>fm") 'eglot-format)
   (evil-define-key 'normal elixir-ts-mode-map (kbd "<leader>ta") 'elixir-test-project)
   (evil-define-key 'normal elixir-ts-mode-map (kbd "<leader>tv") 'elixir-run-test)
   (evil-define-key 'normal elixir-ts-mode-map (kbd "<leader>tc") 'mix-test-current-test)
@@ -320,6 +330,21 @@
   :custom
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
+
+(use-package marginalia
+  ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
+  ;; available in the *Completions* buffer, add it to the
+  ;; `completion-list-mode-map'.
+  :bind (:map minibuffer-local-map
+         ("M-A" . marginalia-cycle))
+
+  ;; The :init section is always executed.
+  :init
+
+  ;; Marginalia must be activated in the :init section of use-package such that
+  ;; the mode gets enabled right away. Note that this forces loading the
+  ;; package.
+  (marginalia-mode))
 
 (use-package counsel :ensure t)
 (use-package vertico
@@ -427,6 +452,8 @@
                '(elixir-ts-mode . ("/opt/homebrew/bin/elixir-ls")))
   (add-to-list 'eglot-server-programs
                '(ruby-ts-mode . ("/Users/gogo/.asdf/shims/solargraph" "stdio")))
+  (add-to-list 'eglot-server-programs
+               '(ruby-mode . ("/Users/gogo/.asdf/shims/solargraph" "stdio")))
   (setq eldoc-idle-delay 0.75)
   (setq company-idle-delay 0.75)
   (setq flymake-no-changes-timeout 0.5)
@@ -560,6 +587,7 @@
       (cons (car mode-line-buffer-identification) '((:eval (mode-line-buffer-file-parent-directory)))))
 
 
+(add-hook 'ruby-mode-hook 'eglot-ensure)
 (add-hook 'ruby-ts-mode-hook 'eglot-ensure)
 (add-hook 'elixir-ts-mode-hook 'eglot-ensure)
 (advice-add '+emacs-lisp-truncate-pin :override (lambda () ()) )
@@ -574,7 +602,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("3de5c795291a145452aeb961b1151e63ef1cb9565e3cdbd10521582b5fd02e9a"
+   '("b9761a2e568bee658e0ff723dd620d844172943eb5ec4053e2b199c59e0bcc22"
+     "9d29a302302cce971d988eb51bd17c1d2be6cd68305710446f658958c0640f68"
+     "7e377879cbd60c66b88e51fad480b3ab18d60847f31c435f15f5df18bdb18184"
+     "e1f4f0158cd5a01a9d96f1f7cdcca8d6724d7d33267623cc433fe1c196848554"
+     "da75eceab6bea9298e04ce5b4b07349f8c02da305734f7c0c8c6af7b5eaa9738"
+     "3de5c795291a145452aeb961b1151e63ef1cb9565e3cdbd10521582b5fd02e9a"
      "5ec088e25ddfcfe37b6ae7712c9cb37fd283ea5df7ac609d007cafa27dab6c64"
      "d43860349c9f7a5b96a090ecf5f698ff23a8eb49cd1e5c8a83bb2068f24ea563"
      "e4a702e262c3e3501dfe25091621fe12cd63c7845221687e36a79e17cf3a67e0"
