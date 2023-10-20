@@ -12,7 +12,7 @@
 (setq-default mode-line-modified "")
 (setq-default mode-line-front-space "")
 (setq-default mode-line-remote "")
-(setq-default mode-line-format (delq 'mode-line-modes mode-line-format))
+
 (setq compilation-always-kill t)
 (setq max-lisp-eval-depth 10000)
 (setq ns-use-thin-smoothing t)
@@ -122,8 +122,8 @@
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
         doom-themes-enable-italic t ; if nil, italics is universally disabled
         doom-gruvbox-dark-variant "soft")
-  ;; (load-theme 'doom-tokyo-night t)
-  (load-theme 'doom-miramare t)
+  (load-theme 'doom-tokyo-night t)
+  ;; (load-theme 'doom-miramare t)
   (doom-themes-org-config))
 
 (use-package popper
@@ -140,6 +140,7 @@
           "*Help*"
           "*grep"
           "*grep*"
+          "*xref*"
           "*rg*"
           "*compilation*"
           "\\*Bundler\\*"))
@@ -206,7 +207,7 @@
   ;; (evil-define-key 'normal 'global (kbd "<leader><tab>2") (lambda () (interactive) (persp-switch-by-number 2)))
   ;; (evil-define-key 'normal 'global (kbd "<leader><tab>3") (lambda () (interactive) (persp-switch-by-number 3)))
   ;; (evil-define-key 'normal 'global (kbd "<leader><tab>4") (lambda () (interactive) (persp-switch-by-number 4)))
-  (evil-define-key 'normal 'global (kbd "<leader>/") 'projectile-ripgrep)
+  (evil-define-key 'normal 'global (kbd "<leader>/") 'counsel-ag)
   (evil-define-key 'normal 'global (kbd "<leader>hv") 'describe-variable)
   (evil-define-key 'normal 'global (kbd "<leader>hf") 'describe-function)
   (evil-define-key 'normal 'global (kbd "<leader>hk") 'describe-key)
@@ -234,6 +235,7 @@
   (evil-define-key 'normal 'global (kbd "<leader>cr") 'lsp-find-references)
   (evil-define-key 'normal 'global (kbd "<leader>gg") 'magit)
   (evil-define-key 'normal 'global (kbd "<leader>gc") 'magit-branch-or-checkout)
+  (evil-define-key 'normal 'global (kbd "<leader>gF") 'magit-pull)
   (evil-define-key '(normal visual) 'global (kbd "<leader>gl") 'git-link)
   (evil-define-key 'normal 'global (kbd "<leader>gb") 'magit-blame)
   (evil-define-key 'normal magit-status-mode-map (kbd "q") (lambda ()
@@ -276,6 +278,9 @@
   (evil-define-key 'normal elixir-ts-mode-map (kbd "<leader>tv") 'elixir-run-test)
   (evil-define-key 'normal elixir-ts-mode-map (kbd "<leader>tc") 'mix-test-current-test)
   (evil-define-key 'normal elixir-ts-mode-map (kbd "<leader>tt") 'gotospec)
+  (evil-define-key 'normal elixir-ts-mode-map (kbd "<leader>mp") (lambda () (interactive) (me/run-command "mix credo")))
+  (evil-define-key 'normal elixir-ts-mode-map (kbd "<leader>mf") (lambda () (interactive) (me/run-command "mix format")))
+  (evil-define-key 'normal elixir-ts-mode-map (kbd "<leader>md") (lambda () (interactive) (me/run-command "mix deps.get")))
   (evil-define-key 'normal go-mode-map (kbd "<leader>tt") 'projectile-toggle-between-implementation-and-test)
   (evil-define-key 'normal go-mode-map (kbd "<leader>tv") 'go-test-current-file)
   (evil-define-key 'normal go-mode-map (kbd "<leader>tc") 'go-test-current-test)
@@ -525,6 +530,10 @@
           (target (if (string= extension "ex") (find-spec) file-path)))
          (compile (concat "mix espec " target)))))
 
+(defun me/run-command (cmd)
+  (let ((default-directory (cdr (project-current))))
+    (compile cmd)))
+
 (defun elixir-test-project ()
   (interactive
    (let ((default-directory (cdr (project-current))))
@@ -586,7 +595,6 @@
 (setq-default mode-line-buffer-identification
       (cons (car mode-line-buffer-identification) '((:eval (mode-line-buffer-file-parent-directory)))))
 
-
 (add-hook 'ruby-mode-hook 'eglot-ensure)
 (add-hook 'ruby-ts-mode-hook 'eglot-ensure)
 (add-hook 'elixir-ts-mode-hook 'eglot-ensure)
@@ -594,15 +602,40 @@
 
 (add-to-list 'auto-mode-alist '("\\.ex\\'" . elixir-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.exs\\'" . elixir-ts-mode))
-(add-to-list 'major-mode-remap-alist
-             '(ruby-mode . ruby-ts-mode))
+
+
+(setq-default mode-line-format
+              (cl-set-difference
+               mode-line-format
+               '(mode-line-modes mode-line-position mode-line-end-spaces evil-mode-line-tag)))
+;; (add-to-list 'major-mode-remap-alist
+;;              '(ruby-mode . ruby-ts-mode))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("b9761a2e568bee658e0ff723dd620d844172943eb5ec4053e2b199c59e0bcc22"
+   '("dfb1c8b5bfa040b042b4ef660d0aab48ef2e89ee719a1f24a4629a0c5ed769e8"
+     "014cb63097fc7dbda3edf53eb09802237961cbb4c9e9abd705f23b86511b0a69"
+     "badd1a5e20bd0c29f4fe863f3b480992c65ef1fa63951f59aa5d6b129a3f9c4c"
+     "8b148cf8154d34917dfc794b5d0fe65f21e9155977a36a5985f89c09a9669aa0"
+     "bf948e3f55a8cd1f420373410911d0a50be5a04a8886cabe8d8e471ad8fdba8e"
+     "38c0c668d8ac3841cb9608522ca116067177c92feeabc6f002a27249976d7434"
+     "f64189544da6f16bab285747d04a92bd57c7e7813d8c24c30f382f087d460a33"
+     "c517e98fa036a0c21af481aadd2bdd6f44495be3d4ac2ce9d69201fcb2578533"
+     "dc8285f7f4d86c0aebf1ea4b448842a6868553eded6f71d1de52f3dcbc960039"
+     "a9eeab09d61fef94084a95f82557e147d9630fbbb82a837f971f83e66e21e5ad"
+     "a9dc7790550dcdb88a23d9f81cc0333490529a20e160a8599a6ceaf1104192b5"
+     "8d8207a39e18e2cc95ebddf62f841442d36fcba01a2a9451773d4ed30b632443"
+     "3fe1ebb870cc8a28e69763dde7b08c0f6b7e71cc310ffc3394622e5df6e4f0da"
+     "631c52620e2953e744f2b56d102eae503017047fb43d65ce028e88ef5846ea3b"
+     "443e2c3c4dd44510f0ea8247b438e834188dc1c6fb80785d83ad3628eadf9294"
+     "56044c5a9cc45b6ec45c0eb28df100d3f0a576f18eef33ff8ff5d32bac2d9700"
+     "89d9dc6f4e9a024737fb8840259c5dd0a140fd440f5ed17b596be43a05d62e67"
+     "8c7e832be864674c220f9a9361c851917a93f921fedb7717b1b5ece47690c098"
+     "70e7f094987e3c6226c54078dd986e11cab7246ea1c9e58a9907afa90f3c10c9"
+     "b9761a2e568bee658e0ff723dd620d844172943eb5ec4053e2b199c59e0bcc22"
      "9d29a302302cce971d988eb51bd17c1d2be6cd68305710446f658958c0640f68"
      "7e377879cbd60c66b88e51fad480b3ab18d60847f31c435f15f5df18bdb18184"
      "e1f4f0158cd5a01a9d96f1f7cdcca8d6724d7d33267623cc433fe1c196848554"
