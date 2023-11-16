@@ -55,13 +55,13 @@
 
 
 ;; ELPACA
-(defvar elpaca-installer-version 0.5)
+(defvar elpaca-installer-version 0.6)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
 (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
 (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
                               :ref nil
-                              :files (:defaults (:exclude "extensions"))
+                              :files (:defaults "elpaca-test.el" (:exclude "extensions"))
                               :build (:not elpaca--activate-package)))
 (let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
        (build (expand-file-name "elpaca/" elpaca-builds-directory))
@@ -99,11 +99,10 @@
 (elpaca-wait)
 ;; ELPACA END
 
-;; PACKAGES
-;; (use-package ef-themes
-;;   :ensure t
-;;   :config
-;;   (load-theme 'ef-trio-dark))
+(use-package ef-themes
+  :ensure t
+  :config
+  (load-theme 'ef-dark))
 
 (use-package exec-path-from-shell
   :ensure t
@@ -122,7 +121,7 @@
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
         doom-themes-enable-italic t ; if nil, italics is universally disabled
         doom-gruvbox-dark-variant "soft")
-  (load-theme 'doom-tokyo-night t)
+  ;; (load-theme 'doom-tokyo-night t)
   ;; (load-theme 'doom-miramare t)
   (doom-themes-org-config))
 
@@ -249,7 +248,7 @@
   (evil-define-key 'normal ruby-ts-mode-map (kbd "<leader>tc") 'rspec-verify-single)
   (evil-define-key 'normal ruby-ts-mode-map (kbd "<leader>ta") 'rspec-verify-all)
   (evil-define-key 'normal ruby-ts-mode-map (kbd "<leader>mp") 'rubocop-project)
-  (evil-define-key 'normal ruby-ts-mode-map (kbd "<leader>mbi") 'bundle-install)
+  (evil-define-key 'normal ruby-ts-mode-map (kbd "<leader>mbi") (lambda () (interactive) (me/run-command "bundle install")))
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>tt") 'rspec-toggle-spec-and-target)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>tv") 'rspec-verify)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>tl") 'rspec-rerun)
@@ -257,7 +256,7 @@
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>tc") 'rspec-verify-single)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>ta") 'rspec-verify-all)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>mp") 'rubocop-project)
-  (evil-define-key 'normal ruby-mode-map (kbd "<leader>mbi") 'bundle-install)
+  (evil-define-key 'normal ruby-mode-map (kbd "<leader>mbi") (lambda () (interactive) (me/run-command "bundle install")))
   (evil-define-key 'normal rust-ts-mode-map (kbd "<leader>ta") 'rust-test)
   (evil-define-key 'normal rust-ts-mode-map (kbd "<leader>mr") 'rust-run)
   (evil-define-key 'normal rust-ts-mode-map (kbd "<leader>mb") 'rust-compile)
@@ -616,7 +615,17 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("dfb1c8b5bfa040b042b4ef660d0aab48ef2e89ee719a1f24a4629a0c5ed769e8"
+   '("0d0936adf23bba16569c73876991168d0aed969d1e095c3f68d61f87dd7bab9a"
+     "3454885b915a176dce4b53e35053b7ee0aa9362fb9e934057ac44b6842a97453"
+     "e8ab68ce371f48623dab9658d7910458e98affec3e09585a39552dbd3fd1ecda"
+     "46325e20421d2b4423cc90db5a35e0a45bd78a6f3e26c52314b189af3cc00733"
+     "d31c3706f7c1b0520405c796b33f515bc481d2062cbc964f3c36925665999a6d"
+     "9b64a681308383067359cf06bfa6a1bc4fa75c5b68182e4d6ba4d1816277d70e"
+     "6ed8a3705a4296955010ecfcf808f02ac0d52985373e07c63f7fe5bc85206bb4"
+     "d9c038dc91688c433de8e83709449563ec6475b900a21d7016856035ae4dcd32"
+     "f84dbe5cfa80aa6774c57fef30d76bcdeb71bd0077665fb74f75728c42f5675d"
+     "71acf47cc8cd4158e52ef63a9f8c4d128aa33d6772a0106b5a72757486047e08"
+     "dfb1c8b5bfa040b042b4ef660d0aab48ef2e89ee719a1f24a4629a0c5ed769e8"
      "014cb63097fc7dbda3edf53eb09802237961cbb4c9e9abd705f23b86511b0a69"
      "badd1a5e20bd0c29f4fe863f3b480992c65ef1fa63951f59aa5d6b129a3f9c4c"
      "8b148cf8154d34917dfc794b5d0fe65f21e9155977a36a5985f89c09a9669aa0"
