@@ -12,6 +12,7 @@
 (setq-default mode-line-modified "")
 (setq-default mode-line-front-space "")
 (setq-default mode-line-remote "")
+(setq package-install-upgrade-built-in t)
 
 (setq compilation-always-kill t)
 (setq max-lisp-eval-depth 10000)
@@ -312,6 +313,7 @@
   (evil-collection-define-key 'insert 'vertico-map
     (kbd "C-k") 'vertico-previous))
 
+(use-package transient)
 (use-package magit
   :ensure t
   :config
@@ -615,7 +617,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("0d0936adf23bba16569c73876991168d0aed969d1e095c3f68d61f87dd7bab9a"
+   '("4b0c6453047e26395cd601f9c9d034bd34e943d8f5f08f5126edd48c39d42837"
+     "242f33ba517c05f45e075d8ed3d13c0a7b7d1392e0c95d66830029e561607085"
+     "0d0936adf23bba16569c73876991168d0aed969d1e095c3f68d61f87dd7bab9a"
      "3454885b915a176dce4b53e35053b7ee0aa9362fb9e934057ac44b6842a97453"
      "e8ab68ce371f48623dab9658d7910458e98affec3e09585a39552dbd3fd1ecda"
      "46325e20421d2b4423cc90db5a35e0a45bd78a6f3e26c52314b189af3cc00733"
