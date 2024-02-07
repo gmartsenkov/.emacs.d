@@ -100,10 +100,17 @@
 (elpaca-wait)
 ;; ELPACA END
 
+;; (use-package nano-theme
+;;   :ensure t
+;;   :elpaca (:repo "https://github.com/rougier/nano-theme")
+;;   :config
+;;   (load-theme 'nano-dark t)
+;;   (nano-dark))
+
 (use-package ef-themes
   :ensure t
   :config
-  (load-theme 'ef-dark))
+  (load-theme 'ef-winter))
 
 (use-package exec-path-from-shell
   :ensure t
@@ -284,7 +291,11 @@
   (evil-define-key 'normal go-mode-map (kbd "<leader>tt") 'projectile-toggle-between-implementation-and-test)
   (evil-define-key 'normal go-mode-map (kbd "<leader>tv") 'go-test-current-file)
   (evil-define-key 'normal go-mode-map (kbd "<leader>tc") 'go-test-current-test)
-  (evil-define-key 'normal go-mode-map (kbd "<leader>ta") 'go-test-current-project))
+  (evil-define-key 'normal go-mode-map (kbd "<leader>ta") 'go-test-current-project)
+  (evil-define-key 'normal crystal-mode-map (kbd "<leader>tt") 'projectile-toggle-between-implementation-and-test)
+  (evil-define-key 'normal crystal-mode-map (kbd "<leader>mp") (lambda () (interactive) (me/run-command "./bin/ameba")))
+  (evil-define-key 'normal crystal-mode-map (kbd "<leader>mf") (lambda () (interactive) (me/run-command "crystal tool format")))
+  (evil-define-key 'normal crystal-mode-map (kbd "<leader>ta") (lambda () (interactive) (me/run-command "crystal spec"))))
 
 (use-package evil-surround
   :ensure t
@@ -407,7 +418,7 @@
 (use-package cape :ensure t)
 (defun my/eglot-capf ()
   (setq-local completion-at-point-functions
-              (list (cape-super-capf
+              (list (cape-capf-super
                      #'eglot-completion-at-point (cape-company-to-capf #'company-yasnippet)
                      #'cape-dabbrev
                      #'cape-file
@@ -483,6 +494,17 @@
   :hook (prog-mode . git-gutter-mode)
   :custom
   (git-gutter:update-interval 0.1))
+
+(use-package crystal-mode
+  :ensure t
+  :config
+  (setenv "CRYSTAL_OPTS" "--link-flags=-Wl,-ld_classic"))
+(use-package ameba
+  :ensure t)
+(use-package flycheck-ameba
+  :ensure t
+  :init
+  (flycheck-ameba-setup))
 
 (use-package git-gutter-fringe
   :ensure t
@@ -601,6 +623,7 @@
 (add-hook 'elixir-ts-mode-hook 'eglot-ensure)
 (advice-add '+emacs-lisp-truncate-pin :override (lambda () ()) )
 
+(add-to-list 'auto-mode-alist '("\\.cr$" . crystal-mode))
 (add-to-list 'auto-mode-alist '("\\.ex\\'" . elixir-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.exs\\'" . elixir-ts-mode))
 
@@ -617,7 +640,13 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("4b0c6453047e26395cd601f9c9d034bd34e943d8f5f08f5126edd48c39d42837"
+   '("e7820b899036ae7e966dcaaec29fd6b87aef253748b7de09e74fdc54407a7a02"
+     "eb3141ffdf8f8070f447e51b085ef4d1e6074c47e9cae84b103a9256dca9ed56"
+     "b9c804f672050817981dcc58a04e236d685417c3318554088d5552c819243281"
+     "4fe4a418bb02cda8df3fe5dad1c1d177fd517c1ea20871a2e8fce329edd3952d"
+     "9cf3d97bb6d526cd51b903a2db02d2034074437f202375feeca9c36c60c007bc"
+     "30526ab3507de50fd504df6d7ccff2fd9a564999f831ead500f0a10b1fe43053"
+     "4b0c6453047e26395cd601f9c9d034bd34e943d8f5f08f5126edd48c39d42837"
      "242f33ba517c05f45e075d8ed3d13c0a7b7d1392e0c95d66830029e561607085"
      "0d0936adf23bba16569c73876991168d0aed969d1e095c3f68d61f87dd7bab9a"
      "3454885b915a176dce4b53e35053b7ee0aa9362fb9e934057ac44b6842a97453"
