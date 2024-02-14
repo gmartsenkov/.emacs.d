@@ -110,7 +110,7 @@
 (use-package ef-themes
   :ensure t
   :config
-  (load-theme 'ef-winter))
+  (load-theme 'ef-dark))
 
 (use-package exec-path-from-shell
   :ensure t
@@ -245,10 +245,7 @@
   (evil-define-key 'normal 'global (kbd "<leader>gF") 'magit-pull)
   (evil-define-key '(normal visual) 'global (kbd "<leader>gl") 'git-link)
   (evil-define-key 'normal 'global (kbd "<leader>gb") 'magit-blame)
-  (evil-define-key 'normal magit-status-mode-map (kbd "q") (lambda ()
-                                                       (interactive)
-                                                       (winner-undo)
-                                                       (mapc #'kill-buffer (magit-mode-get-buffers))))
+  (evil-define-key 'normal magit-status-mode-map (kbd "q") 'mu-magit-kill-buffers)
   (evil-define-key 'normal ruby-ts-mode-map (kbd "<leader>tt") 'rspec-toggle-spec-and-target)
   (evil-define-key 'normal ruby-ts-mode-map (kbd "<leader>tv") 'rspec-verify)
   (evil-define-key 'normal ruby-ts-mode-map (kbd "<leader>tl") 'rspec-rerun)
@@ -593,6 +590,13 @@
   (interactive
    (find-file (find-spec))))
 
+(defun mu-magit-kill-buffers ()
+   "Restore window configuration and kill all Magit buffers."
+    (interactive)
+    (let ((buffers (magit-mode-get-buffers)))
+      (magit-restore-window-configuration)
+      (mapc #'kill-buffer buffers)))
+
 (defun sw-buff ()
   "Run `switch-to-buffer' with the projects included as annotations."
   (interactive)
@@ -640,7 +644,16 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("e7820b899036ae7e966dcaaec29fd6b87aef253748b7de09e74fdc54407a7a02"
+   '("6f5bdd8dd506365a61c9fbfb430b58e7908796fe20d34e675ec9848b67e62350"
+     "bb979d408eee95bbccdbda45bb0e4be8d55e4fc3d6f8739decafa82e6df93532"
+     "2a9eb9743efe8a3602a90ef564b763f76cc9ecba73ea1f075ce3981bef7fa653"
+     "2e7c6dfaaabcef29764b111a9ad4ff2037a1dc275ef191c90222b973542cd5ea"
+     "d11e54ae9e37d61deb2c92c74bc52a27462f62d2ff68c5d01119b0cc30377042"
+     "ad400d9c36d7257b2a5152875f5f242c61c6d40619e2d4ee9c501daf9158a674"
+     "eee1e4b3207b70de3d9ea8e9b6c78b4be6f86955b0a0917a48675fe3964ed374"
+     "088c0504a552e4b00f671369411919373e3563f16bb790a1e3e3fd7d39a0e050"
+     "553a6676b68142a652c034cfe2179a2271240bc1e33611c2de3a7207ce7608ca"
+     "e7820b899036ae7e966dcaaec29fd6b87aef253748b7de09e74fdc54407a7a02"
      "eb3141ffdf8f8070f447e51b085ef4d1e6074c47e9cae84b103a9256dca9ed56"
      "b9c804f672050817981dcc58a04e236d685417c3318554088d5552c819243281"
      "4fe4a418bb02cda8df3fe5dad1c1d177fd517c1ea20871a2e8fce329edd3952d"
