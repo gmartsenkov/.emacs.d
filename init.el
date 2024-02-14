@@ -595,7 +595,7 @@
     (interactive)
     (let ((buffers (magit-mode-get-buffers)))
       (magit-restore-window-configuration)
-      (mapc #'kill-buffer buffers)))
+      (mapc #'bury-buffer buffers)))
 
 (defun sw-buff ()
   "Run `switch-to-buffer' with the projects included as annotations."
