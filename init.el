@@ -110,7 +110,8 @@
 (use-package ef-themes
   :ensure t
   :config
-  (load-theme 'ef-dark))
+  ;; (load-theme 'ef-dark)
+  )
 
 (use-package exec-path-from-shell
   :ensure t
@@ -132,6 +133,11 @@
   ;; (load-theme 'doom-tokyo-night t)
   ;; (load-theme 'doom-miramare t)
   (doom-themes-org-config))
+
+(use-package kaolin-themes
+  :config
+  (load-theme 'kaolin-eclipse t)
+  )
 
 (use-package popper
   :ensure t ; or :straight t
@@ -482,7 +488,7 @@
   :init
   (add-hook 'ruby-ts-mode-hook 'flycheck-mode)
   (add-hook 'elixir-ts-mode-hook 'flycheck-mode)
-  (add-hook 'ruby-ts-mode-hook
+  (add-hook 'ruby-mode-hook
             (lambda ()
               (setq-local flycheck-command-wrapper-function
                           (lambda (command) (append '("bundle" "exec") command))))))
@@ -644,7 +650,17 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("6f5bdd8dd506365a61c9fbfb430b58e7908796fe20d34e675ec9848b67e62350"
+   '("34cf3305b35e3a8132a0b1bdf2c67623bc2cb05b125f8d7d26bd51fd16d547ec"
+     "9cd57dd6d61cdf4f6aef3102c4cc2cfc04f5884d4f40b2c90a866c9b6267f2b3"
+     "788121c96b7a9b99a6f35e53b7c154991f4880bb0046a80330bb904c1a85e275"
+     "5a00018936fa1df1cd9d54bee02c8a64eafac941453ab48394e2ec2c498b834a"
+     "c95813797eb70f520f9245b349ff087600e2bd211a681c7a5602d039c91a6428"
+     "3c7a784b90f7abebb213869a21e84da462c26a1fda7e5bd0ffebf6ba12dbd041"
+     "249e100de137f516d56bcf2e98c1e3f9e1e8a6dce50726c974fa6838fbfcec6b"
+     "74e2ed63173b47d6dc9a82a9a8a6a9048d89760df18bc7033c5f91ff4d083e37"
+     "06ed754b259cb54c30c658502f843937ff19f8b53597ac28577ec33bb084fa52"
+     "4990532659bb6a285fee01ede3dfa1b1bdf302c5c3c8de9fad9b6bc63a9252f7"
+     "6f5bdd8dd506365a61c9fbfb430b58e7908796fe20d34e675ec9848b67e62350"
      "bb979d408eee95bbccdbda45bb0e4be8d55e4fc3d6f8739decafa82e6df93532"
      "2a9eb9743efe8a3602a90ef564b763f76cc9ecba73ea1f075ce3981bef7fa653"
      "2e7c6dfaaabcef29764b111a9ad4ff2037a1dc275ef191c90222b973542cd5ea"
