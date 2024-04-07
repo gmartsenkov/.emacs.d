@@ -56,7 +56,7 @@
 
 
 ;; ELPACA
-(defvar elpaca-installer-version 0.6)
+(defvar elpaca-installer-version 0.7)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
 (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
@@ -268,9 +268,9 @@
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>ta") 'rspec-verify-all)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>mp") 'rubocop-project)
   (evil-define-key 'normal ruby-mode-map (kbd "<leader>mbi") (lambda () (interactive) (me/run-command "bundle install")))
-  (evil-define-key 'normal rust-ts-mode-map (kbd "<leader>ta") 'rust-test)
-  (evil-define-key 'normal rust-ts-mode-map (kbd "<leader>mr") 'rust-run)
-  (evil-define-key 'normal rust-ts-mode-map (kbd "<leader>mb") 'rust-compile)
+  (evil-define-key 'normal rust-mode-map (kbd "<leader>ta") 'rust-test)
+  (evil-define-key 'normal rust-mode-map (kbd "<leader>mr") 'rust-run)
+  (evil-define-key 'normal rust-mode-map (kbd "<leader>mb") 'rust-compile)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>md") 'cider-clojuredocs)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>mc") 'cider)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>tt") 'projectile-toggle-between-implementation-and-test)
@@ -327,6 +327,7 @@
   (evil-collection-define-key 'insert 'vertico-map
     (kbd "C-k") 'vertico-previous))
 
+(use-package rust-mode :ensure t)
 (use-package transient)
 (use-package magit
   :ensure t
@@ -381,7 +382,7 @@
 	      ("M-h" . backward-kill-word)))
 
 (use-package vertico-directory
-  :elpaca nil
+  :ensure nil
   :after vertico
   ;; More convenient directory navigation commands
   :init
@@ -394,8 +395,7 @@
   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
 (use-package savehist
-  :elpaca nil
-  :ensure t
+  :ensure nil
   :init
   (savehist-mode))
 
@@ -477,17 +477,22 @@
   (setq eldoc-idle-delay 0.75)
   (setq company-idle-delay 0.75)
   (setq flymake-no-changes-timeout 0.5)
+  (add-hook 'eglot-managed-mode-hook (lambda ()
+                                       (flymake-mode-off)))
    (setq eglot-events-buffer-size 0
         eglot-ignored-server-capabilities '(:hoverProvider
-                                            :documentHighlightProvider)
+                                            :documentHighlightProvider
+                                            :inlayHintProvider)
         eglot-autoshutdown t))
 (use-package flycheck
   :ensure t
   :custom
   (flycheck-indication-mode nil)
   :init
+  ;; (add-hook 'rust-ts-mode-hook 'flycheck-mode)
   (add-hook 'ruby-ts-mode-hook 'flycheck-mode)
   (add-hook 'elixir-ts-mode-hook 'flycheck-mode)
+  (add-hook 'ruby-mode-hook 'flycheck-mode)
   (add-hook 'ruby-mode-hook
             (lambda ()
               (setq-local flycheck-command-wrapper-function
@@ -591,7 +596,7 @@
                    (string-remove-suffix strip-file-suffix (file-name-sans-extension file))
                    test-suffix))))
     target))
-  
+
 (defun gotospec ()
   (interactive
    (find-file (find-spec))))
@@ -630,9 +635,11 @@
 
 (add-hook 'ruby-mode-hook 'eglot-ensure)
 (add-hook 'ruby-ts-mode-hook 'eglot-ensure)
+(add-hook 'rust-mode-hook 'eglot-ensure)
 (add-hook 'elixir-ts-mode-hook 'eglot-ensure)
 (advice-add '+emacs-lisp-truncate-pin :override (lambda () ()) )
 
+;; (add-to-list 'auto-mode-alist '("\\.rs$" . rust-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.cr$" . crystal-mode))
 (add-to-list 'auto-mode-alist '("\\.ex\\'" . elixir-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.exs\\'" . elixir-ts-mode))
