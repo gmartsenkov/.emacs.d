@@ -12,6 +12,7 @@ transient/
 var/
 projects
 tree-sitter
+recentf
 org-roam.db
 elpaca
 type-break

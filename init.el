@@ -271,6 +271,7 @@
   (evil-define-key 'normal rust-mode-map (kbd "<leader>ta") 'rust-test)
   (evil-define-key 'normal rust-mode-map (kbd "<leader>mr") 'rust-run)
   (evil-define-key 'normal rust-mode-map (kbd "<leader>mb") 'rust-compile)
+  (evil-define-key 'normal rust-mode-map (kbd "<leader>mf") 'rust-format-buffer)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>md") 'cider-clojuredocs)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>mc") 'cider)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>tt") 'projectile-toggle-between-implementation-and-test)
@@ -399,6 +400,11 @@
   :init
   (savehist-mode))
 
+(use-package nerd-icons-corfu
+  :after corfu
+  :init
+  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+
 (use-package corfu
   ;; Optional customizations
   :custom
@@ -406,6 +412,7 @@
   (corfu-auto t)                 ;; Enable auto completion
   (completion-cycle-threshold 2)
   (tab-always-indent 'complete)
+  (corfu-popupinfo-delay 0.3)
   ;; (corfu-separator ?\s)          ;; Orderless field separator
   ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
   ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
@@ -414,6 +421,7 @@
   ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
   (corfu-scroll-margin 1)        ;; Use scroll margin
   :init
+  (corfu-popupinfo-mode)
   (global-corfu-mode))
 
 (use-package company :ensure t)

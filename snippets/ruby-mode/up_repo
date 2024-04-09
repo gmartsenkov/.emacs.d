@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: repo
-# key: repo
-# condition: (cl-search "uplisting-api" buffer-file-name)
-# --
-Rom::Repositories::${1:Repo}.new(Uplisting.db)
