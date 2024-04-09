@@ -421,7 +421,7 @@
   ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
   (corfu-scroll-margin 1)        ;; Use scroll margin
   :init
-  (corfu-popupinfo-mode)
+  ;; (corfu-popupinfo-mode)
   (global-corfu-mode))
 
 (use-package company :ensure t)
@@ -665,7 +665,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("34cf3305b35e3a8132a0b1bdf2c67623bc2cb05b125f8d7d26bd51fd16d547ec"
+   '("e266d44fa3b75406394b979a3addc9b7f202348099cfde69e74ee6432f781336"
+     "0170347031e5dfa93813765bc4ef9269a5e357c0be01febfa3ae5e5fcb351f09"
+     "f4d1b183465f2d29b7a2e9dbe87ccc20598e79738e5d29fc52ec8fb8c576fcfd"
+     "aec7b55f2a13307a55517fdf08438863d694550565dee23181d2ebd973ebd6b8"
+     "34cf3305b35e3a8132a0b1bdf2c67623bc2cb05b125f8d7d26bd51fd16d547ec"
      "9cd57dd6d61cdf4f6aef3102c4cc2cfc04f5884d4f40b2c90a866c9b6267f2b3"
      "788121c96b7a9b99a6f35e53b7c154991f4880bb0046a80330bb904c1a85e275"
      "5a00018936fa1df1cd9d54bee02c8a64eafac941453ab48394e2ec2c498b834a"
