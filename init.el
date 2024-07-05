@@ -1,13 +1,12 @@
-(set-face-attribute 'default nil :font "JetBrainsMono Nerd Font" :height 140 :weight 'medium)
+(set-face-attribute 'default nil :font "JetBrainsMono Nerd Font" :height 165 :weight 'normal)
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8)
-(tool-bar-mode -1)
+(tool-bar-mode 0)
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
 (winner-mode t)
 (electric-pair-mode t)
 (setq read-process-output-max (* 1024 1024))
-;;(setq gc-cons-threshold 100000000)
 (setq-default mode-line-mule-info "")
 (setq-default mode-line-modified "")
 (setq-default mode-line-front-space "")
@@ -61,7 +60,7 @@
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
 (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
 (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
-                              :ref nil
+                              :ref nil :depth 1
                               :files (:defaults "elpaca-test.el" (:exclude "extensions"))
                               :build (:not elpaca--activate-package)))
 (let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
@@ -74,8 +73,10 @@
     (when (< emacs-major-version 28) (require 'subr-x))
     (condition-case-unless-debug err
         (if-let ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
-                 ((zerop (call-process "git" nil buffer t "clone"
-                                       (plist-get order :repo) repo)))
+                 ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
+                                                 ,@(when-let ((depth (plist-get order :depth)))
+                                                     (list (format "--depth=%d" depth) "--no-single-branch"))
+                                                 ,(plist-get order :repo) ,repo))))
                  ((zerop (call-process "git" nil buffer t "checkout"
                                        (or (plist-get order :ref) "--"))))
                  (emacs (concat invocation-directory invocation-name))
@@ -98,20 +99,6 @@
   (setq elpaca-use-package-by-default t))
 
 (elpaca-wait)
-;; ELPACA END
-
-;; (use-package nano-theme
-;;   :ensure t
-;;   :elpaca (:repo "https://github.com/rougier/nano-theme")
-;;   :config
-;;   (load-theme 'nano-dark t)
-;;   (nano-dark))
-
-(use-package ef-themes
-  :ensure t
-  :config
-  ;; (load-theme 'ef-dark)
-  )
 
 (use-package exec-path-from-shell
   :ensure t
@@ -123,21 +110,28 @@
   :ensure t
   :hook prog-mode slim-mode)
 
-(use-package doom-themes
+(use-package catppuccin-theme
   :ensure t
+  :custom
+  (catppuccin-flavor 'mocha)
   :config
-  ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic t ; if nil, italics is universally disabled
-        doom-gruvbox-dark-variant "soft")
-  ;; (load-theme 'doom-tokyo-night t)
-  ;; (load-theme 'doom-miramare t)
-  (doom-themes-org-config))
+  (load-theme 'catppuccin :noconfirm))
 
-(use-package kaolin-themes
-  :config
-  (load-theme 'kaolin-eclipse t)
-  )
+;; (use-package doom-themes
+;;   :ensure t
+;;   :config
+;;   ;; Global settings (defaults)
+;;   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+;;         doom-themes-enable-italic t ; if nil, italics is universally disabled
+;;         doom-gruvbox-dark-variant "soft")
+;;   ;; (load-theme 'doom-tokyo-night t)
+;;   (load-theme 'doom-one t)
+;;   (doom-themes-org-config))
+
+;; (use-package kaolin-themes
+;;   :config
+;;   (load-theme 'kaolin-shiva t))
+
 
 (use-package popper
   :ensure t ; or :straight t
@@ -176,6 +170,26 @@
   ;; make evil-search-word look for symbol rather than word boundaries
   (setq-default evil-symbol-word-search t))
 
+
+(defun nano-modeline-relative-buffer-name (&optional name)
+  "Buffer name"
+
+  (propertize
+   (cond (name name)
+         ((buffer-narrowed-p) (format"%s [narrow]" (file-relative-name buffer-file-name (projectile-project-root))))
+         (t (file-relative-name buffer-file-name (projectile-project-root))))
+   'face (nano-modeline-face 'name)))
+
+;; (file-relative-name buffer-file-name projectile-project-root)
+
+(use-package nano-modeline
+  :after (projectile)
+  :ensure t
+  :config
+  (advice-add 'nano-modeline-buffer-name :override #'nano-modeline-relative-buffer-name)
+  (setq nano-modeline-position #'nano-modeline-footer)
+  (nano-modeline-text-mode t))
+
 (use-package evil
   :ensure t
   :init
@@ -198,28 +212,6 @@
                                                       (interactive)
                                                       (popper--bury-all)))
   (evil-define-key 'normal 'global (kbd "gt") 'evil-avy-goto-char-2)
-  (evil-define-key 'normal 'global (kbd "<leader>nt") 'org-roam-dailies-goto-today)
-  (evil-define-key 'normal 'global (kbd "<leader>nc") 'org-roam-dailies-capture-today)
-  (evil-define-key 'insert 'global (kbd "C-v") 'yank)
-  (evil-define-key 'normal 'global (kbd "<leader>T") (lambda
-						       ()
-						       (interactive)
-						       (split-window-sensibly)
-						       (other-window 1)
-						       (term "/bin/zsh")))
-  ;; (evil-define-key 'normal 'global (kbd "<leader><tab><tab>") (lambda
-  ;;                                                        ()
-  ;;                                                        (interactive)
-  ;;                                                        (->
-  ;;                                                         (let ((x 0)) (mapcar
-  ;;                                                                       (lambda (a) (string-join (list (concat "[" (number-to-string (cl-incf x)) "]") a) ""))
-  ;;                                                                       (persp-all-names)))
-  ;;                                                         (string-join " | ")
-  ;;                                                         (message))))
-  ;; (evil-define-key 'normal 'global (kbd "<leader><tab>1") (lambda () (interactive) (persp-switch-by-number 1)))
-  ;; (evil-define-key 'normal 'global (kbd "<leader><tab>2") (lambda () (interactive) (persp-switch-by-number 2)))
-  ;; (evil-define-key 'normal 'global (kbd "<leader><tab>3") (lambda () (interactive) (persp-switch-by-number 3)))
-  ;; (evil-define-key 'normal 'global (kbd "<leader><tab>4") (lambda () (interactive) (persp-switch-by-number 4)))
   (evil-define-key 'normal 'global (kbd "<leader>/") 'counsel-ag)
   (evil-define-key 'normal 'global (kbd "<leader>hv") 'describe-variable)
   (evil-define-key 'normal 'global (kbd "<leader>hf") 'describe-function)
@@ -301,6 +293,18 @@
   (evil-define-key 'normal crystal-mode-map (kbd "<leader>mf") (lambda () (interactive) (me/run-command "crystal tool format")))
   (evil-define-key 'normal crystal-mode-map (kbd "<leader>ta") (lambda () (interactive) (me/run-command "crystal spec"))))
 
+(use-package flycheck
+  :ensure t)
+
+(use-package flycheck-eglot
+  :ensure t
+  :after (flycheck eglot)
+  :config
+  (global-flycheck-eglot-mode 1))
+
+(use-package flycheck-clj-kondo
+  :ensure t)
+
 (use-package evil-surround
   :ensure t
   :config
@@ -310,6 +314,24 @@
   :ensure t
   :config
   (evil-commentary-mode))
+
+(use-package clojure-mode
+  :ensure t
+  :config
+  (require 'flycheck-clj-kondo))
+
+(use-package cider
+  :ensure t)
+
+(use-package eglot-booster
+  :ensure (:host github :repo "jdtsmith/eglot-booster")
+  :after eglot
+  :config (eglot-booster-mode))
+
+;; (use-package eglot-booster
+;;   :ensure t
+;;   :after eglot
+;;   :config (eglot-booster-mode))
 
 (use-package evil-collection
   :ensure t
@@ -329,9 +351,10 @@
     (kbd "C-k") 'vertico-previous))
 
 (use-package rust-mode :ensure t)
-(use-package transient)
+(use-package transient :ensure t)
 (use-package magit
   :ensure t
+  :after transient
   :config
   (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1)
   (add-hook 'git-commit-mode-hook 'evil-insert-state))
@@ -400,10 +423,10 @@
   :init
   (savehist-mode))
 
-(use-package nerd-icons-corfu
-  :after corfu
-  :init
-  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+;; (use-package nerd-icons-corfu
+;;   :after corfu
+;;   :init
+;;   (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
 (use-package corfu
   ;; Optional customizations
@@ -412,7 +435,9 @@
   (corfu-auto t)                 ;; Enable auto completion
   (completion-cycle-threshold 2)
   (tab-always-indent 'complete)
-  (corfu-popupinfo-delay 0.3)
+  (corfu-auto-delay 0.2)
+  (corfu-echo-delay 0.2)
+  (corfu-popupinfo-delay 0.2)
   ;; (corfu-separator ?\s)          ;; Orderless field separator
   ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
   ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
@@ -421,42 +446,40 @@
   ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
   (corfu-scroll-margin 1)        ;; Use scroll margin
   :init
-  ;; (corfu-popupinfo-mode)
+  (corfu-popupinfo-mode)
+  (corfu-echo-mode)
   (global-corfu-mode))
 
 (use-package company :ensure t)
 
-(use-package cape :ensure t)
-(defun my/eglot-capf ()
-  (setq-local completion-at-point-functions
-              (list (cape-capf-super
-                     #'eglot-completion-at-point (cape-company-to-capf #'company-yasnippet)
-                     #'cape-dabbrev
-                     #'cape-file
-                     ))))
-(add-hook 'eglot-managed-mode-hook #'my/eglot-capf)
+(use-package yasnippet-capf
+  :after cape
+  :config
+  (setq cape-file-directory-must-exist nil)
+  (setq cape-file-prefix '("\./" "\"~"))
+  (add-to-list 'completion-at-point-functions #'yasnippet-capf))
 
-;; (use-package company
-;;   :ensure t
-;;   :custom
-;;   (company-tooltip-limit 10)
-;;   (company-idle-delay .1)
-;;   (company-tooltip-align-annotations t)
-;;   (company-minimum-prefix-length 2)
-;;   (company-backends '((company-files company-yasnippet :separate company-tide company-capf)))
-;;   :init
-;;   (add-hook 'ruby-ts-mode-hook 'company-mode)
-;;   (add-hook 'js-ts-mode-hook 'company-mode)
-;;   (add-hook 'js-mode-hook 'company-mode)
-;;   (add-hook 'tsx-ts-mode-hook 'company-mode)
-;;   (add-hook 'go-mode-hook 'company-mode)
-;;   (add-hook 'rust-ts-mode-hook 'company-mode)
-;;   (add-hook 'clojure-mode-hook 'company-mode)
-;;   (add-hook 'cider-repl-mode-hook 'company-mode)
-;;   (add-hook 'elixir-mode-hook 'company-mode)
-;;   (add-hook 'inf-ruby-mode-hook 'company-mode)
-;;   (add-hook 'javascript-mode-hook 'company-mode)
-;;   (add-hook 'emacs-lisp-mode-hook 'company-mode))
+(use-package cape
+  :ensure t
+  :hook
+  (eglot-managed-mode . (lambda ()
+                          (setq-local completion-at-point-functions
+                                      (list (cape-capf-super
+                                             #'yasnippet-capf
+                                             #'eglot-completion-at-point
+                                             #'cape-file)
+                                            t)))))
+  ;; :init
+  ;;  (add-hook 'completion-at-point-functions #'cape-dabbrev))
+
+;; (defun my/eglot-capf ()
+;;   (setq-local completion-at-point-functions
+;;               (list (cape-capf-super
+;;                      #'eglot-completion-at-point (cape-company-to-capf #'company-yasnippet)
+;;                      #'cape-dabbrev
+;;                      #'cape-file
+;;                      ))))
+;; (add-hook 'eglot-managed-mode-hook #'my/eglot-capf)
 
 (use-package yasnippet
   :ensure t
@@ -475,9 +498,11 @@
   ;;(setq rspec-primary-source-dirs '("apps"))
   )
 
+(fset #'jsonrpc--log-event #'ignore)
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
-               '(elixir-ts-mode . ("/opt/homebrew/bin/elixir-ls")))
+   `((elixir-ts-mode heex-ts-mode elixir-mode) .
+     ("elixir-ls" "--stdio=true" :initializationOptions (:experimental (:completions (:enable t))))))
   (add-to-list 'eglot-server-programs
                '(ruby-ts-mode . ("/Users/gogo/.asdf/shims/solargraph" "stdio")))
   (add-to-list 'eglot-server-programs
@@ -492,19 +517,19 @@
                                             :documentHighlightProvider
                                             :inlayHintProvider)
         eglot-autoshutdown t))
-(use-package flycheck
-  :ensure t
-  :custom
-  (flycheck-indication-mode nil)
-  :init
-  ;; (add-hook 'rust-ts-mode-hook 'flycheck-mode)
-  (add-hook 'ruby-ts-mode-hook 'flycheck-mode)
-  (add-hook 'elixir-ts-mode-hook 'flycheck-mode)
-  (add-hook 'ruby-mode-hook 'flycheck-mode)
-  (add-hook 'ruby-mode-hook
-            (lambda ()
-              (setq-local flycheck-command-wrapper-function
-                          (lambda (command) (append '("bundle" "exec") command))))))
+;; (use-package flycheck
+;;   :ensure t
+;;   :custom
+;;   (flycheck-indication-mode nil)
+;;   :init
+;;   ;; (add-hook 'rust-ts-mode-hook 'flycheck-mode)
+;;   (add-hook 'ruby-ts-mode-hook 'flycheck-mode)
+;;   (add-hook 'elixir-ts-mode-hook 'flycheck-mode)
+;;   (add-hook 'ruby-mode-hook 'flycheck-mode)
+;;   (add-hook 'ruby-mode-hook
+;;             (lambda ()
+;;               (setq-local flycheck-command-wrapper-function
+;;                           (lambda (command) (append '("bundle" "exec") command))))))
 (use-package git-gutter
   :ensure t
   :hook (prog-mode . git-gutter-mode)
@@ -515,12 +540,6 @@
   :ensure t
   :config
   (setenv "CRYSTAL_OPTS" "--link-flags=-Wl,-ld_classic"))
-(use-package ameba
-  :ensure t)
-(use-package flycheck-ameba
-  :ensure t
-  :init
-  (flycheck-ameba-setup))
 
 (use-package git-gutter-fringe
   :ensure t
@@ -665,7 +684,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("e266d44fa3b75406394b979a3addc9b7f202348099cfde69e74ee6432f781336"
+   '("d77d6ba33442dd3121b44e20af28f1fae8eeda413b2c3d3b9f1315fbda021992"
+     "7af2a6fcd1e743d165c58fd95d20b46c2d96d9873ab67fc9371bdc8fda463de7"
+     "dccf4a8f1aaf5f24d2ab63af1aa75fd9d535c83377f8e26380162e888be0c6a9"
+     "4ade6b630ba8cbab10703b27fd05bb43aaf8a3e5ba8c2dc1ea4a2de5f8d45882"
+     "e266d44fa3b75406394b979a3addc9b7f202348099cfde69e74ee6432f781336"
      "0170347031e5dfa93813765bc4ef9269a5e357c0be01febfa3ae5e5fcb351f09"
      "f4d1b183465f2d29b7a2e9dbe87ccc20598e79738e5d29fc52ec8fb8c576fcfd"
      "aec7b55f2a13307a55517fdf08438863d694550565dee23181d2ebd973ebd6b8"
@@ -739,6 +762,9 @@
      "88f7ee5594021c60a4a6a1c275614103de8c1435d6d08cc58882f920e0cec65e"
      "9e1cf0f16477d0da814691c1b9add22d7cb34e0bb3334db7822424a449d20078"
      default))
+ '(package-selected-packages
+   '(ws-butler rust-mode popper magit exec-path-from-shell evil-surround
+               ef-themes))
  '(safe-local-variable-values
    '((eval set (make-local-variable 'rspec-primary-source-dirs)
            (setq rspec-primary-source-dirs '("app")))
