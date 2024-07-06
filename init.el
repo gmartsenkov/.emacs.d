@@ -300,6 +300,15 @@
   :hook (prog-mode . flycheck-mode)
   :ensure t)
 
+(use-package reformatter
+  :ensure t
+  :hook (clojure-mode . cljstyle-format-on-save-mode)
+  :config
+  (reformatter-define cljstyle-format
+                   :program "cljstyle"
+                   :args '("pipe")
+                   :lighter " CLJ"))
+
 (use-package flycheck-eglot
   :ensure t
   :after (flycheck eglot)
