@@ -135,7 +135,7 @@
 
 (use-package popper
   :ensure t ; or :straight t
-  :bind (("C-`"   . popper-toggle-latest)
+  :bind (("C-`"   . popper-toggle)
          ("M-`"   . popper-cycle)
          ("C-M-`" . popper-toggle-type))
   :init
@@ -144,6 +144,8 @@
           "*rspec-compilation*"
           "*mix test*"
           "*RuboCop"
+          "*cider-repl"
+          "*cider-test-report"
           "*Help*"
           "*grep"
           "*grep*"
@@ -268,7 +270,8 @@
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>mc") 'cider)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>tt") 'projectile-toggle-between-implementation-and-test)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>ta") 'cider-test-run-project-tests)
-  (evil-define-key 'normal clojure-mode-map (kbd "<leader>tv") 'cider-test-run-test)
+  (evil-define-key 'normal clojure-mode-map (kbd "<leader>tv") 'cider-test-run-ns-tests)
+  (evil-define-key 'normal clojure-mode-map (kbd "<leader>tc") 'cider-test-run-test)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>tn") 'cider-test-run-ns-tests)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>eb") 'cider-eval-buffer)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>ee") 'cider-eval-last-sexp)
@@ -294,11 +297,13 @@
   (evil-define-key 'normal crystal-mode-map (kbd "<leader>ta") (lambda () (interactive) (me/run-command "crystal spec"))))
 
 (use-package flycheck
+  :hook (prog-mode . flycheck-mode)
   :ensure t)
 
 (use-package flycheck-eglot
   :ensure t
   :after (flycheck eglot)
+  :custom (flycheck-eglot-exclusive nil)
   :config
   (global-flycheck-eglot-mode 1))
 
@@ -423,63 +428,17 @@
   :init
   (savehist-mode))
 
-;; (use-package nerd-icons-corfu
-;;   :after corfu
-;;   :init
-;;   (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
-
-(use-package corfu
-  ;; Optional customizations
-  :custom
-  (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
-  (corfu-auto t)                 ;; Enable auto completion
-  (completion-cycle-threshold 2)
-  (tab-always-indent 'complete)
-  (corfu-auto-delay 0.2)
-  (corfu-echo-delay 0.2)
-  (corfu-popupinfo-delay 0.2)
-  ;; (corfu-separator ?\s)          ;; Orderless field separator
-  ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
-  ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
-  ;; (corfu-preview-current nil)    ;; Disable current candidate preview
-  ;; (corfu-preselect 'prompt)      ;; Preselect the prompt
-  ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
-  (corfu-scroll-margin 1)        ;; Use scroll margin
-  :init
-  (corfu-popupinfo-mode)
-  (corfu-echo-mode)
-  (global-corfu-mode))
-
-(use-package company :ensure t)
-
-(use-package yasnippet-capf
-  :after cape
-  :config
-  (setq cape-file-directory-must-exist nil)
-  (setq cape-file-prefix '("\./" "\"~"))
-  (add-to-list 'completion-at-point-functions #'yasnippet-capf))
-
-(use-package cape
+(use-package company
   :ensure t
-  :hook
-  (eglot-managed-mode . (lambda ()
-                          (setq-local completion-at-point-functions
-                                      (list (cape-capf-super
-                                             #'yasnippet-capf
-                                             #'eglot-completion-at-point
-                                             #'cape-file)
-                                            t)))))
-  ;; :init
-  ;;  (add-hook 'completion-at-point-functions #'cape-dabbrev))
-
-;; (defun my/eglot-capf ()
-;;   (setq-local completion-at-point-functions
-;;               (list (cape-capf-super
-;;                      #'eglot-completion-at-point (cape-company-to-capf #'company-yasnippet)
-;;                      #'cape-dabbrev
-;;                      #'cape-file
-;;                      ))))
-;; (add-hook 'eglot-managed-mode-hook #'my/eglot-capf)
+  :after (eglot)
+  :hook ((emacs-lisp-mode . company-mode)
+         (prog-mode . company-mode) )
+  :config
+  (setq company-idle-delay 0.2)
+  (setq company-tooltip-idle-delay 0.2)
+  (setq company-minimum-prefix-length 3)
+  (setq eglot-stay-out-of '(company))
+  (setq company-backends '((company-yasnippet :separate company-capf company-dabbrev))))
 
 (use-package yasnippet
   :ensure t
