@@ -274,6 +274,7 @@
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>tc") 'cider-test-run-test)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>tn") 'cider-test-run-ns-tests)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>eb") 'cider-eval-buffer)
+  (evil-define-key 'normal clojure-mode-map (kbd "<leader>er") 'cider-eval-defun-at-point)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>ee") 'cider-eval-last-sexp)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>rn") 'cider-repl-set-ns)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>rb") 'cider-switch-to-repl-buffer)
@@ -297,7 +298,7 @@
   (evil-define-key 'normal crystal-mode-map (kbd "<leader>ta") (lambda () (interactive) (me/run-command "crystal spec"))))
 
 (use-package flycheck
-  :hook (prog-mode . flycheck-mode)
+  :hook ((rust-mode . flycheck-mode))
   :ensure t)
 
 (use-package reformatter
@@ -314,7 +315,8 @@
   :after (flycheck eglot)
   :custom (flycheck-eglot-exclusive nil)
   :config
-  (global-flycheck-eglot-mode 1))
+  ;; (global-flycheck-eglot-mode 1)
+  )
 
 (use-package flycheck-clj-kondo
   :ensure t)
