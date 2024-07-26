@@ -145,6 +145,7 @@
           "*mix test*"
           "*RuboCop"
           "*cider-repl"
+          "*cider-error*"
           "*cider-test-report"
           "*Help*"
           "*grep"
@@ -230,8 +231,8 @@
   (evil-define-key 'normal 'global (kbd "<leader>bk") 'kill-this-buffer)
   (evil-define-key 'normal 'global (kbd "<leader>bd") 'kill-this-buffer)
   (evil-define-key 'normal 'global (kbd "<leader>pp") 'projectile-switch-project)
-  (evil-define-key 'normal 'global (kbd "<leader>pf") 'projectile-find-file)
-  (evil-define-key 'normal 'global (kbd "<leader>SPC") 'projectile-find-file)
+  (evil-define-key 'normal 'global (kbd "<leader>pf") 'project-find-file)
+  (evil-define-key 'normal 'global (kbd "<leader>SPC") 'project-find-file)
   (evil-define-key 'normal 'global (kbd "<leader>ff") 'find-file)
   (evil-define-key 'normal 'global (kbd "<leader>fd") 'projectile-find-dir)
   (evil-define-key 'normal 'global (kbd "<leader>ca") 'lsp-execute-code-action)
@@ -298,7 +299,11 @@
   (evil-define-key 'normal crystal-mode-map (kbd "<leader>ta") (lambda () (interactive) (me/run-command "crystal spec"))))
 
 (use-package flycheck
-  :hook ((rust-mode . flycheck-mode))
+  :hook ((rust-mode . flycheck-mode)
+         (clojure-mode . flycheck-mode))
+  :custom
+  (flycheck-check-syntax-automatically '(save mode-enabled idle-buffer-switch))
+  (flycheck-idle-buffer-switch-delay 4)
   :ensure t)
 
 (use-package reformatter
@@ -315,7 +320,7 @@
   :after (flycheck eglot)
   :custom (flycheck-eglot-exclusive nil)
   :config
-  ;; (global-flycheck-eglot-mode 1)
+  ;; (global-flycheck-eglot-mode 1))
   )
 
 (use-package flycheck-clj-kondo
@@ -441,9 +446,10 @@
 
 (use-package company
   :ensure t
-  :after (eglot)
   :hook ((emacs-lisp-mode . company-mode)
-         (prog-mode . company-mode) )
+         (clojure-mode . company-mode)
+         (cider-repl-mode . company-mode)
+         (prog-mode . company-mode))
   :config
   (setq company-idle-delay 0.2)
   (setq company-tooltip-idle-delay 0.2)
