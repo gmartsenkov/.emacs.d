@@ -13,6 +13,8 @@
 (setq-default mode-line-remote "")
 (setq package-install-upgrade-built-in t)
 
+(setq uniquify-buffer-name-style 'forward)
+(setq uniquify-min-dir-content 1)
 (setq compilation-always-kill t)
 (setq max-lisp-eval-depth 10000)
 (setq ns-use-thin-smoothing t)
@@ -277,6 +279,7 @@
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>eb") 'cider-eval-buffer)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>er") 'cider-eval-defun-at-point)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>ee") 'cider-eval-last-sexp)
+  (evil-define-key 'normal clojure-mode-map (kbd "<leader>rr") 'cider-ns-refresh)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>rn") 'cider-repl-set-ns)
   (evil-define-key 'normal clojure-mode-map (kbd "<leader>rb") 'cider-switch-to-repl-buffer)
   (evil-define-key 'normal emacs-lisp-mode-map (kbd "<leader>eb") 'eval-buffer)
@@ -348,6 +351,16 @@
   :ensure (:host github :repo "jdtsmith/eglot-booster")
   :after eglot
   :config (eglot-booster-mode))
+
+;; (use-package indent-bars
+;;   :ensure (:host github :repo "jdtsmith/indent-bars")
+;;   :hook ((prog-mode) . indent-bars-mode)
+;;   :custom
+;;   (indent-bars-color '(cursor :face-bg t :blend 0.75))
+;;   (indent-bars-pattern ".")
+;;   (indent-bars-highlight-current-depth '(:face cursor))
+;;   (indent-bars-width-frac 0.1)
+;;   (indent-bars-pad-frac 0.1))
 
 ;; (use-package eglot-booster
 ;;   :ensure t
@@ -528,7 +541,7 @@
     [224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224]
     nil nil 'center)
   (define-fringe-bitmap 'git-gutter-fr:deleted
-    [0 0 0 0 0 0 0 0 0 0 0 0 0 128 192 224 240 248]
+    [224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224]
     nil nil 'center))
 
 (setf (cdr (assq 'continuation fringe-indicator-alist))
@@ -739,8 +752,8 @@
      "9e1cf0f16477d0da814691c1b9add22d7cb34e0bb3334db7822424a449d20078"
      default))
  '(package-selected-packages
-   '(ws-butler rust-mode popper magit exec-path-from-shell evil-surround
-               ef-themes))
+   '(consult ef-themes evil-surround exec-path-from-shell magit popper
+             rust-mode ws-butler))
  '(safe-local-variable-values
    '((eval set (make-local-variable 'rspec-primary-source-dirs)
            (setq rspec-primary-source-dirs '("app")))
