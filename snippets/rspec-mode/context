@@ -2,6 +2,6 @@
 # name: context ... end
 # key: cont
 # --
-context "${1:context}" do
+context "${1}" do
     $0
 end

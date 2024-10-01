@@ -2,6 +2,6 @@
 # name: describe ... end
 # key: desc
 # --
-describe "${1:context}" do
+describe "${1}" do
     $0
 end
