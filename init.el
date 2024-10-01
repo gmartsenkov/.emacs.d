@@ -119,6 +119,11 @@
   :config
   (load-theme 'catppuccin :noconfirm))
 
+(use-package balanced-windows
+  :ensure t
+  :config
+  (balanced-windows-mode))
+
 ;; (use-package doom-themes
 ;;   :ensure t
 ;;   :config
@@ -209,6 +214,12 @@
   (global-set-key (kbd "C-l") 'evil-window-right)
   (global-set-key (kbd "C-j") 'evil-window-down)
   (global-set-key (kbd "C-k") 'evil-window-up)
+  (evil-define-key 'normal 'magit-status-mode (kbd "<escape>") 'mu-magit-kill-buffers)
+  (evil-define-key 'normal 'transient-base-map (kbd "<escape>") 'transient-quit-one)
+  (evil-define-key 'normal 'popper-mode (kbd "J") 'compilation-next-error)
+  (evil-define-key 'normal 'popper-mode (kbd "K") 'compilation-previous-error)
+  (evil-define-key 'normal 'popper-mode (kbd "C-j") 'evil-window-down)
+  (evil-define-key 'normal 'popper-mode (kbd "C-k") 'evil-window-up)
   (evil-define-key 'normal 'global (kbd "]d") 'flycheck-next-error)
   (evil-define-key 'normal 'global (kbd "[d") 'flycheck-previous-error)
   (evil-define-key 'insert 'global (kbd "C-e") 'end-of-line)
