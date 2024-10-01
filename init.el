@@ -223,6 +223,8 @@
   (evil-define-key 'normal rspec-compilation-mode-map (kbd "C-k") (lambda () (interactive) (select-window (previous-window))))
   (evil-define-key 'normal 'global (kbd "]d") 'flycheck-next-error)
   (evil-define-key 'normal 'global (kbd "[d") 'flycheck-previous-error)
+  (evil-define-key 'normal 'global (kbd "]h") 'git-gutter:next-hunk)
+  (evil-define-key 'normal 'global (kbd "[h") 'git-gutter:previous-hunk)
   (evil-define-key 'insert 'global (kbd "C-e") 'end-of-line)
   (evil-define-key 'insert 'global (kbd "C-a") 'beginning-of-line)
   (evil-define-key 'normal 'global (kbd "<escape>") (lambda ()
