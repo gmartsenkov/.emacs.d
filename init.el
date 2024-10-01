@@ -215,6 +215,8 @@
   (global-set-key (kbd "C-j") 'evil-window-down)
   (global-set-key (kbd "C-k") 'evil-window-up)
   ;; (evil-define-key 'normal transient-base-map (kbd "<escape>") 'transient-quit-one)
+  (evil-define-key 'normal git-rebase-mode-map (kbd "C-j") 'git-rebase-move-line-down)
+  (evil-define-key 'normal git-rebase-mode-map (kbd "C-k") 'git-rebase-move-line-up)
   (evil-define-key 'normal rspec-compilation-mode-map (kbd "J") 'compilation-next-error)
   (evil-define-key 'normal rspec-compilation-mode-map (kbd "K") 'compilation-previous-error)
   (evil-define-key 'normal compilation-mode-map (kbd "C-k") (lambda () (interactive) (select-window (previous-window))))
