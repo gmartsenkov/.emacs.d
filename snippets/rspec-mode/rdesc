@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: rspec describe
+# key: rdesc
+# --
+RSpec.describe ${1:class} do
+  $0
+end
